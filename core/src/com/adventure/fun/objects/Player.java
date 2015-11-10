@@ -82,6 +82,7 @@ public class Player extends Object {
         //PLAYER
         batch.draw(region, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
 
+
         //BULLET
         for(int i = 0;i < bullets.size;i++){
             batch.draw(bullets.get(i).region, bullets.get(i).body.getPosition().x - bullets.get(i).sprite.getWidth() / 2,
