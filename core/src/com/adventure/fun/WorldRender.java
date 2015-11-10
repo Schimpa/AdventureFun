@@ -2,13 +2,10 @@ package com.adventure.fun;
 
 import com.adventure.fun.objects.Ground;
 import com.adventure.fun.objects.Player;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -37,18 +34,33 @@ public class WorldRender {
 
     public WorldRender(){
         grounds = new Array<Ground>();
-        world = new World(new Vector2(0,-60), true);
-        player = new Player(2,2,0.8f,0.8f,world);
+        world = new World(new Vector2(0,-30), true);
+        player = new Player(1,5,0.8f,0.8f,world);
 
         map = new TmxMapLoader().load("android/assets/maps/map01.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1/32f);
 
-        /*
-        for(int i = 0; i < 5;i++){
-            Ground ground = new Ground(0,i*10,100 - (i*20),1,world);
-            grounds.add(ground);
-        }
-        */
+        createMap();
+
+        world.setContactListener(new CollisionListener(this));
+    }
+
+
+    public void renderObjects(SpriteBatch batch){
+        player.render(batch);
+    }
+
+    public void renderMap(){
+        renderer.render();
+    }
+
+    public void updateWorld(float deltaTime){
+        world.step(deltaTime, 60, 20);
+        player.update(deltaTime);
+
+    }
+
+    public void createMap(){
         for(MapObject object: map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             BodyDef bdef = new BodyDef();
@@ -61,26 +73,26 @@ public class WorldRender {
             FixtureDef fdef = new FixtureDef();
             fdef.shape = shape;
             body.createFixture(fdef);
-
         }
-
-        world.setContactListener(new MyContactListener());
     }
 
 
-    public void renderWorld(SpriteBatch batch){
-        player.render(batch);
-        for(Ground ground : grounds){
-            ground.render(batch);
-        }
 
-    }
 
-    public void updateWorld(float deltaTime){
-        world.step(Gdx.graphics.getDeltaTime(), 60, 20);
-        player.update(deltaTime);
 
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public Player getPlayer() {
         return player;

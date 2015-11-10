@@ -3,7 +3,6 @@ package com.adventure.fun.objects;
 import com.adventure.fun.controls.PlayerControl;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,7 +23,7 @@ public class Player extends Object {
 
     private PlayerControl playerControl;
 
-    private Array<Bullet> bullets;
+    private Bullet bullet;
 
 
     public int getLives() {
@@ -60,11 +59,7 @@ public class Player extends Object {
         fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
 
-        bullets = new Array<Bullet>();
-        for(int i = 0;i < 5;i++){
-            Bullet bullet = new Bullet(0,0,1f,0.2f,world);
-            bullets.add(bullet);
-        }
+        bullet = new Bullet(-100,-100,0.2f,0.05f,world);
 
 
         region = new TextureRegion(Textures.player);
@@ -82,19 +77,17 @@ public class Player extends Object {
         //PLAYER
         batch.draw(region, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
 
-
         //BULLET
-        for(int i = 0;i < bullets.size;i++){
-            batch.draw(bullets.get(i).region, bullets.get(i).body.getPosition().x - bullets.get(i).sprite.getWidth() / 2,
-                    bullets.get(i).body.getPosition().y - bullets.get(i).sprite.getHeight() / 2, bullets.get(i).sprite.getWidth(), bullets.get(i).sprite.getHeight());
-        }
-
+        batch.draw(bullet.region, bullet.body.getPosition().x - bullet.sprite.getWidth() / 2,
+                    bullet.body.getPosition().y - bullet.sprite.getHeight() / 2, bullet.sprite.getWidth(), bullet.sprite.getHeight());
     }
+
+
 
 
     @Override
     public void update(float deltaTime) {
-        playerControl.controls();
+        playerControl.movementControls();
         checkIfLoose();
         sprite.setPosition(body.getPosition().x, body.getPosition().y);
     }
@@ -103,7 +96,7 @@ public class Player extends Object {
     public void checkIfLoose() {
         if (body.getPosition().y < 0) {
             body.setLinearVelocity(0, 0);
-            body.setTransform(0, 2, 0);
+            body.setTransform(1, 5, 0);
             lives -= 1;
             if (lives == 0){
                 try {
@@ -142,11 +135,6 @@ public class Player extends Object {
 
     }
 
-
-
-
-
-
     public Vector2 getMaxSpeed() {
         return maxSpeed;
     }
@@ -154,7 +142,6 @@ public class Player extends Object {
     public void setMaxSpeed(Vector2 maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
-
 
     public boolean getIsJumping() {
         return isJumping;
@@ -172,20 +159,19 @@ public class Player extends Object {
         this.playerControl = playerControl;
     }
 
-
-    public Array<Bullet> getBullets() {
-        return bullets;
-    }
-
-    public void setBullets(Array<Bullet> bullets) {
-        this.bullets = bullets;
-    }
-
     public Vector2 getSpeed() {
         return speed;
     }
 
     public void setSpeed(Vector2 speed) {
         this.speed = speed;
+    }
+
+    public Bullet getBullet() {
+        return bullet;
+    }
+
+    public void setBullet(Bullet bullet) {
+        this.bullet = bullet;
     }
 }

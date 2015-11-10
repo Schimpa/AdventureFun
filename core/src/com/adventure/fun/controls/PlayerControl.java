@@ -1,5 +1,6 @@
 package com.adventure.fun.controls;
 
+import com.adventure.fun.audio.AudioController;
 import com.adventure.fun.objects.Bullet;
 import com.adventure.fun.objects.Player;
 import com.badlogic.gdx.Gdx;
@@ -17,9 +18,7 @@ public class PlayerControl implements InputProcessor {
 
     }
 
-
-
-    public void controls(){
+    public void movementControls(){
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             if (player.getRegion().isFlipX() == true){
                 player.getRegion().flip(true, false);
@@ -40,50 +39,26 @@ public class PlayerControl implements InputProcessor {
     }
 
     public void bulletShot(){
-        for(int i = 0;i < player.getBullets().size;i++){
-            if ((player.getBullets().get(i).getBody().getPosition().x - player.getBody().getPosition().x) >= 50
-                    || (player.getBullets().get(i).getBody().getPosition().x - player.getBody().getPosition().x) <= -50 ){
-                player.getBullets().get(i).getBody().setTransform(0, 0, 0);
-                player.getBullets().get(i).getBody().setLinearVelocity(0, 0);
-            }
+
+        if ((player.getBullet().getBody().getPosition().x - player.getBody().getPosition().x) >= 50
+                || (player.getBullet().getBody().getPosition().x - player.getBody().getPosition().x) <= -50 ){
+            player.getBullet().getBody().setTransform(-100, -100, 0);
+            player.getBullet().getBody().setLinearVelocity(0, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)){
-            for(int j = 0;j < player.getBullets().size;j++){
-                if (player.getBullets().get(j).getBody().getLinearVelocity().x == 0){
-                    if (player.getRegion().isFlipX() == false){
-                        player.getBullets().get(j).getBody().setTransform(player.getBody().getPosition().x + player.getBullets().get(j).getSprite().getWidth() / 2, player.getBody().getPosition().y, 0);
-                        player.getBullets().get(j).getBody().setLinearVelocity(player.getBullets().get(j).getSpeedX(), 0);
-                    } else if (player.getRegion().isFlipX() == true) {
-                        player.getBullets().get(j).getBody().setTransform(player.getBody().getPosition().x - player.getBullets().get(j).getSprite().getWidth() / 2, player.getBody().getPosition().y, 0);
-                        player.getBullets().get(j).getBody().setLinearVelocity(-player.getBullets().get(j).getSpeedX(), 0);
-                    }
-                    break;
+            AudioController.sound_shoot.play(0.1f);
+            if (player.getBullet().getBody().getLinearVelocity().x == 0){
+                if (player.getRegion().isFlipX() == false){
+                    player.getBullet().getBody().setTransform(player.getBody().getPosition().x + player.getBullet().getSprite().getWidth() / 2, player.getBody().getPosition().y, 0);
+                    player.getBullet().getBody().setLinearVelocity(player.getBullet().getSpeedX(), 0);
+                } else if (player.getRegion().isFlipX() == true) {
+                    player.getBullet().getBody().setTransform(player.getBody().getPosition().x - player.getBullet().getSprite().getWidth() / 2, player.getBody().getPosition().y, 0);
+                    player.getBullet().getBody().setLinearVelocity(-player.getBullet().getSpeedX(), 0);
                 }
-            }
-        }
-        /*
-        if (Gdx.input.isKeyPressed(Input.Keys.S)){
-            if (player.getBullets().get(0).body.getLinearVelocity().x == 0 &&
-                    player.getBullets().get(1).body.getLinearVelocity().x == 0 &&
-                    player.getBullets().get(2).body.getLinearVelocity().x == 0){
+                }
 
-                if (player.region.isFlipX() == false){
-                    player.getBullets().get(0).body.setTransform(player.getBody().getPosition().x + player.bullet.sprite.getWidth()/2, player.getBody().getPosition().y, 0);
-                    player.getBullets().get(0).body.setLinearVelocity(20, 0);
-                    player.getBullets().get(1).body.setTransform(player.getBody().getPosition().x + player.bullet.sprite.getWidth()/2, player.getBody().getPosition().y, 0);
-                    player.getBullets().get(1).body.setLinearVelocity(20, 20);
-                    player.getBullets().get(2).body.setTransform(player.getBody().getPosition().x + player.bullet.sprite.getWidth()/2, player.getBody().getPosition().y, 0);
-                    player.getBullets().get(2).body.setLinearVelocity(20, -20);
-                } else if (player.region.isFlipX() == true) {
-                    player.getBullets().get(0).body.setTransform(player.getBody().getPosition().x - player.bullet.sprite.getWidth()/2,player.getBody().getPosition().y,0);
-                    player.getBullets().get(0).body.setLinearVelocity(-20, 0);
-                    player.getBullets().get(1).body.setTransform(player.getBody().getPosition().x - player.bullet.sprite.getWidth()/2,player.getBody().getPosition().y,0);
-                    player.getBullets().get(1).body.setLinearVelocity(-20, 20);
-                    player.getBullets().get(2).body.setTransform(player.getBody().getPosition().x - player.bullet.sprite.getWidth()/2,player.getBody().getPosition().y,0);
-                    player.getBullets().get(2).body.setLinearVelocity(-20, -20);
-                }
-            }
-        }*/
+        }
+
     }
 
     @Override
@@ -93,6 +68,7 @@ public class PlayerControl implements InputProcessor {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.getIsJumping() == false) {
             player.setIsJumping(true);
+            AudioController.sound_jump.play(0.1f);
             player.getBody().applyForceToCenter(0, 1500f, true);
         }
         bulletShot();
