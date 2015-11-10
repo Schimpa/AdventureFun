@@ -24,6 +24,6 @@ public class DesktopLauncher {
 		settings.maxHeight = 1024;
 		settings.duplicatePadding = false;
 		settings.debug = false;
-		TexturePacker.processIfModified(settings,"android/assets","android/assets","images.pack");
+		TexturePacker.processIfModified(settings,"android/assets/textures","android/assets/textures","images.pack");
 	}
 }

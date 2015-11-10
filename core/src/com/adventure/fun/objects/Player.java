@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -19,24 +20,31 @@ import com.badlogic.gdx.utils.Array;
  */
 public class Player extends Object {
 
-    public static final float ACCELERATION_X = 1;
+    private boolean isJumping = false;
 
-    public static final float SPEED_X_MAX = 10.5f;
+    private PlayerControl playerControl;
 
-    public boolean isJumping = false;
+    private Array<Bullet> bullets;
 
-    public PlayerControl playerControl;
 
-    public Bullet bullet;
-    public Array<Bullet> bullets;
-
-    public Player(float x,float y,float sizeX,float sizeY,World world) {
-        init(x,y,sizeX,sizeY,world);
-
+    public int getLives() {
+        return lives;
     }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    private Vector2 speed;
+    private Vector2 maxSpeed;
+
+    private int lives;
 
 
     public void init(float x,float y,float sizeX,float sizeY,World world) {
+        speed = new Vector2(1,1);
+        lives = 3;
+        maxSpeed = new Vector2(10,10);
         sprite = new Sprite();
         sprite.setPosition(x, y);
         sprite.setSize(sizeX, sizeY);
@@ -51,11 +59,10 @@ public class Player extends Object {
 
         fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 1f;
 
         bullets = new Array<Bullet>();
         for(int i = 0;i < 5;i++){
-            bullet = new Bullet(0,0,1f,0.5f,world);
+            Bullet bullet = new Bullet(0,0,1f,0.2f,world);
             bullets.add(bullet);
         }
 
@@ -66,6 +73,7 @@ public class Player extends Object {
         body.createFixture(fixtureDef).setUserData(this);
 
         shape.dispose();
+
         playerControl = new PlayerControl(this);
         Gdx.input.setInputProcessor(playerControl);
     }
@@ -95,6 +103,88 @@ public class Player extends Object {
         if (body.getPosition().y < 0) {
             body.setLinearVelocity(0, 0);
             body.setTransform(0, 2, 0);
+            lives -= 1;
+            if (lives == 0){
+                try {
+                    this.finalize();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public Player(float x,float y,float sizeX,float sizeY,World world) {
+        init(x,y,sizeX,sizeY,world);
+
+    }
+
+
+
+
+
+
+    public Vector2 getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public void setMaxSpeed(Vector2 maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+
+    public boolean getIsJumping() {
+        return isJumping;
+    }
+
+    public void setIsJumping(boolean isJumping) {
+        this.isJumping = isJumping;
+    }
+
+    public PlayerControl getPlayerControl() {
+        return playerControl;
+    }
+
+    public void setPlayerControl(PlayerControl playerControl) {
+        this.playerControl = playerControl;
+    }
+
+
+    public Array<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public void setBullets(Array<Bullet> bullets) {
+        this.bullets = bullets;
+    }
+
+    public Vector2 getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(Vector2 speed) {
+        this.speed = speed;
     }
 }

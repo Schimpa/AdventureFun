@@ -21,78 +21,79 @@ public class PlayerControl implements InputProcessor {
 
     public void controls(){
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            if (player.region.isFlipX() == true){
-                player.region.flip(true,false);
-                player.bullet.region.flip(true,false);
+            if (player.getRegion().isFlipX() == true){
+                player.getRegion().flip(true, false);
             }
-            if (player.body.getLinearVelocity().x <= player.SPEED_X_MAX) {
-                player.body.setLinearVelocity(player.body.getLinearVelocity().x += player.ACCELERATION_X, player.body.getLinearVelocity().y);
+
+            if (player.getBody().getLinearVelocity().x <= player.getMaxSpeed().x) {
+                player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x += player.getSpeed().x, player.getBody().getLinearVelocity().y);
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            if (player.region.isFlipX() == false){
-                player.region.flip(true,false);
-                player.bullet.region.flip(true,false);
+            if (player.getRegion().isFlipX() == false){
+                player.getRegion().flip(true, false);
             }
-            if (player.body.getLinearVelocity().x >= -player.SPEED_X_MAX) {
-                player.body.setLinearVelocity(player.body.getLinearVelocity().x -= player.ACCELERATION_X, player.body.getLinearVelocity().y);
+            if (player.getBody().getLinearVelocity().x >= -player.getMaxSpeed().x) {
+                player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x -= player.getSpeed().x, player.getBody().getLinearVelocity().y);
             }
         }
     }
 
     public void bulletShot(){
-        for(int i = 0;i < player.bullets.size;i++){
-            if ((player.bullets.get(i).body.getPosition().x - player.body.getPosition().x) >= 50 || (player.bullets.get(i).body.getPosition().x - player.body.getPosition().x) <= -50 ){
-                player.bullets.get(i).body.setTransform(0, 0, 0);
-                player.bullets.get(i).body.setLinearVelocity(0, 0);
+        for(int i = 0;i < player.getBullets().size;i++){
+            if ((player.getBullets().get(i).getBody().getPosition().x - player.getBody().getPosition().x) >= 50
+                    || (player.getBullets().get(i).getBody().getPosition().x - player.getBody().getPosition().x) <= -50 ){
+                player.getBullets().get(i).getBody().setTransform(0, 0, 0);
+                player.getBullets().get(i).getBody().setLinearVelocity(0, 0);
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)){
-            for(int j = 0;j < player.bullets.size;j++){
-                if (player.bullets.get(j).body.getLinearVelocity().x == 0){
-                    if (player.region.isFlipX() == false){
-                        player.bullets.get(j).body.setTransform(player.body.getPosition().x + player.bullet.sprite.getWidth()/2, player.body.getPosition().y, 0);
-                        player.bullets.get(j).body.setLinearVelocity(20, 0);
-                    } else if (player.region.isFlipX() == true) {
-                        player.bullets.get(j).body.setTransform(player.body.getPosition().x - player.bullet.sprite.getWidth()/2,player.body.getPosition().y,0);
-                        player.bullets.get(j).body.setLinearVelocity(-20, 0);
+            for(int j = 0;j < player.getBullets().size;j++){
+                if (player.getBullets().get(j).getBody().getLinearVelocity().x == 0){
+                    if (player.getRegion().isFlipX() == false){
+                        player.getBullets().get(j).getBody().setTransform(player.getBody().getPosition().x + player.getBullets().get(j).getSprite().getWidth() / 2, player.getBody().getPosition().y, 0);
+                        player.getBullets().get(j).getBody().setLinearVelocity(player.getBullets().get(j).getSpeedX(), 0);
+                    } else if (player.getRegion().isFlipX() == true) {
+                        player.getBullets().get(j).getBody().setTransform(player.getBody().getPosition().x - player.getBullets().get(j).getSprite().getWidth() / 2, player.getBody().getPosition().y, 0);
+                        player.getBullets().get(j).getBody().setLinearVelocity(-player.getBullets().get(j).getSpeedX(), 0);
                     }
                     break;
                 }
             }
         }
+        /*
         if (Gdx.input.isKeyPressed(Input.Keys.S)){
-            if (player.bullets.get(0).body.getLinearVelocity().x == 0 &&
-                    player.bullets.get(1).body.getLinearVelocity().x == 0 &&
-                    player.bullets.get(2).body.getLinearVelocity().x == 0){
+            if (player.getBullets().get(0).body.getLinearVelocity().x == 0 &&
+                    player.getBullets().get(1).body.getLinearVelocity().x == 0 &&
+                    player.getBullets().get(2).body.getLinearVelocity().x == 0){
 
                 if (player.region.isFlipX() == false){
-                    player.bullets.get(0).body.setTransform(player.body.getPosition().x + player.bullet.sprite.getWidth()/2, player.body.getPosition().y, 0);
-                    player.bullets.get(0).body.setLinearVelocity(20, 0);
-                    player.bullets.get(1).body.setTransform(player.body.getPosition().x + player.bullet.sprite.getWidth()/2, player.body.getPosition().y, 0);
-                    player.bullets.get(1).body.setLinearVelocity(20, 20);
-                    player.bullets.get(2).body.setTransform(player.body.getPosition().x + player.bullet.sprite.getWidth()/2, player.body.getPosition().y, 0);
-                    player.bullets.get(2).body.setLinearVelocity(20, -20);
+                    player.getBullets().get(0).body.setTransform(player.getBody().getPosition().x + player.bullet.sprite.getWidth()/2, player.getBody().getPosition().y, 0);
+                    player.getBullets().get(0).body.setLinearVelocity(20, 0);
+                    player.getBullets().get(1).body.setTransform(player.getBody().getPosition().x + player.bullet.sprite.getWidth()/2, player.getBody().getPosition().y, 0);
+                    player.getBullets().get(1).body.setLinearVelocity(20, 20);
+                    player.getBullets().get(2).body.setTransform(player.getBody().getPosition().x + player.bullet.sprite.getWidth()/2, player.getBody().getPosition().y, 0);
+                    player.getBullets().get(2).body.setLinearVelocity(20, -20);
                 } else if (player.region.isFlipX() == true) {
-                    player.bullets.get(0).body.setTransform(player.body.getPosition().x - player.bullet.sprite.getWidth()/2,player.body.getPosition().y,0);
-                    player.bullets.get(0).body.setLinearVelocity(-20, 0);
-                    player.bullets.get(1).body.setTransform(player.body.getPosition().x - player.bullet.sprite.getWidth()/2,player.body.getPosition().y,0);
-                    player.bullets.get(1).body.setLinearVelocity(-20, 20);
-                    player.bullets.get(2).body.setTransform(player.body.getPosition().x - player.bullet.sprite.getWidth()/2,player.body.getPosition().y,0);
-                    player.bullets.get(2).body.setLinearVelocity(-20, -20);
+                    player.getBullets().get(0).body.setTransform(player.getBody().getPosition().x - player.bullet.sprite.getWidth()/2,player.getBody().getPosition().y,0);
+                    player.getBullets().get(0).body.setLinearVelocity(-20, 0);
+                    player.getBullets().get(1).body.setTransform(player.getBody().getPosition().x - player.bullet.sprite.getWidth()/2,player.getBody().getPosition().y,0);
+                    player.getBullets().get(1).body.setLinearVelocity(-20, 20);
+                    player.getBullets().get(2).body.setTransform(player.getBody().getPosition().x - player.bullet.sprite.getWidth()/2,player.getBody().getPosition().y,0);
+                    player.getBullets().get(2).body.setLinearVelocity(-20, -20);
                 }
             }
-        }
+        }*/
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (player.body.getLinearVelocity().y <= 0.1f){
-            player.isJumping = false;
+        if (player.getBody().getLinearVelocity().y <= 0.5f){
+            player.setIsJumping(false);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.isJumping == false) {
-            player.isJumping = true;
-            player.body.applyForceToCenter(0, 2000f, true);
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.getIsJumping() == false) {
+            player.setIsJumping(true);
+            player.getBody().applyForceToCenter(0, 1500f, true);
         }
         bulletShot();
         return true;

@@ -45,6 +45,6 @@ public class Ground extends Object {
     public void render(SpriteBatch batch){
         sprite.setPosition(body.getPosition().x, body.getPosition().y);
 
-        batch.draw(sprite, sprite.getX() - sprite.getWidth()/2 , sprite.getY() - sprite.getHeight()/2,sprite.getWidth(),sprite.getHeight());
+        batch.draw(sprite, sprite.getX() - sprite.getWidth() / 2, sprite.getY() - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
     }
 }
