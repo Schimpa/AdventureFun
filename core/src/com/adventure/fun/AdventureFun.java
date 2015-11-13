@@ -1,22 +1,26 @@
 package com.adventure.fun;
 
+import com.adventure.fun.controls.Controls;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
-public class AdventureFun extends ApplicationAdapter {
+public class AdventureFun extends Game {
 	private SpriteBatch batch;
 
-	private WorldRender worldRender;
+	private WorldLoader worldLoader;
 
 	private OrthographicCamera camera;
 	private OrthographicCamera backgroundCamera;
 	private Box2DDebugRenderer debugRenderer;
+
+	Controls controls;
 	float x;
 
 
@@ -24,26 +28,34 @@ public class AdventureFun extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
-
-		worldRender = new WorldRender();
-
+		worldLoader = new WorldLoader();
 		debugRenderer = new Box2DDebugRenderer();
+
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth()/20,Gdx.graphics.getHeight()/20 );
+		camera.setToOrtho(false, Gdx.graphics.getWidth()/40,Gdx.graphics.getHeight()/40 );
+
+
 		backgroundCamera = new OrthographicCamera();
 		backgroundCamera.setToOrtho(false, Gdx.graphics.getWidth() / 20, Gdx.graphics.getHeight() / 20);
 
 		batch = new SpriteBatch();
+
+		controls = new Controls(worldLoader);
+
+		Gdx.input.setInputProcessor(controls);
 
 
 	}
 
 	@Override
 	public void render() {
-		worldRender.getRenderer().setView(camera);
 
+		controls.movementControls();
+
+		worldLoader.getRenderer().setView(camera);
 
 		//Reinigt Bildschirm
 		Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1);
@@ -51,11 +63,11 @@ public class AdventureFun extends ApplicationAdapter {
 
 
 		//Setzt Kamerapositionen
-		camera.position.x = worldRender.getPlayer().getSprite().getX();
-		camera.position.y = worldRender.getPlayer().getSprite().getY();
+		camera.position.x = worldLoader.getPlayer().getSprite().getX();
+		camera.position.y = worldLoader.getPlayer().getSprite().getY();
 
-		backgroundCamera.position.x = worldRender.getPlayer().getSprite().getX() / 5;
-		backgroundCamera.position.y = worldRender.getPlayer().getSprite().getY() / 5;
+		backgroundCamera.position.x = worldLoader.getPlayer().getSprite().getX() / 10;
+		backgroundCamera.position.y = worldLoader.getPlayer().getSprite().getY() / 10;
 
 		//Aktualisiert Kameras
 		camera.update();
@@ -63,21 +75,24 @@ public class AdventureFun extends ApplicationAdapter {
 
 
 		//Aktualisiert Logik
-		worldRender.updateWorld(Gdx.graphics.getDeltaTime());
+		worldLoader.updateWorld(Gdx.graphics.getDeltaTime());
 
 
 		//Rendert alle Objeckte innerhalb des batchs
+
 		batch.begin();
 		batch.setProjectionMatrix(backgroundCamera.combined);
 		batch.draw(Textures.background, -20, -20, 50, 50);
-		batch.setProjectionMatrix(camera.combined);
-		worldRender.renderObjects(batch);
+
 		batch.end();
-
+		batch.setProjectionMatrix(camera.combined);
 		//Rendert tmx map
-		worldRender.renderMap();
+		worldLoader.renderMap(batch);
 
-		debugRenderer.render(worldRender.getWorld(),camera.combined);
+
+
+
+		debugRenderer.render(worldLoader.getWorld(),camera.combined);
 
 
 
@@ -93,12 +108,12 @@ public class AdventureFun extends ApplicationAdapter {
 		this.batch = batch;
 	}
 
-	public WorldRender getWorldRender() {
-		return worldRender;
+	public WorldLoader getWorldLoader() {
+		return worldLoader;
 	}
 
-	public void setWorldRender(WorldRender worldRender) {
-		this.worldRender = worldRender;
+	public void setWorldLoader(WorldLoader worldLoader) {
+		this.worldLoader = worldLoader;
 	}
 
 

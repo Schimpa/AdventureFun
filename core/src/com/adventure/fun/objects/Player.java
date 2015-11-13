@@ -1,8 +1,7 @@
 package com.adventure.fun.objects;
 
-import com.adventure.fun.controls.PlayerControl;
+import com.adventure.fun.controls.Controls;
 import com.adventure.fun.texture.Textures;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,9 +18,9 @@ import com.badlogic.gdx.utils.Array;
  */
 public class Player extends Object {
 
-    private boolean isJumping = false;
+    private boolean isJumping = true;
 
-    private PlayerControl playerControl;
+    private Controls controls;
 
     private Bullet bullet;
 
@@ -36,14 +35,16 @@ public class Player extends Object {
 
     private Vector2 speed;
     private Vector2 maxSpeed;
+    private float jumpStartPosition;
 
     private int lives;
 
 
     public void init(float x,float y,float sizeX,float sizeY,World world) {
-        speed = new Vector2(1,1);
+        speed = new Vector2(0.3f,0.3f);
         lives = 3;
-        maxSpeed = new Vector2(10,10);
+        jumpStartPosition = 0;
+        maxSpeed = new Vector2(5,5);
         sprite = new Sprite();
         sprite.setPosition(x, y);
         sprite.setSize(sizeX, sizeY);
@@ -57,20 +58,22 @@ public class Player extends Object {
         shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
         fixtureDef = new FixtureDef();
+        fixtureDef.density = 0;
         fixtureDef.shape = shape;
 
-        bullet = new Bullet(-100,-100,0.2f,0.05f,world);
+        bullet = new Bullet(-100,-100,0.8f,0.2f,world);
 
 
         region = new TextureRegion(Textures.player);
 
         body = world.createBody(bodyDef);
+        body.setUserData("Player");
         body.createFixture(fixtureDef).setUserData(this);
 
         shape.dispose();
 
-        playerControl = new PlayerControl(this);
-        Gdx.input.setInputProcessor(playerControl);
+
+
     }
 
     public void render(SpriteBatch batch) {
@@ -87,7 +90,7 @@ public class Player extends Object {
 
     @Override
     public void update(float deltaTime) {
-        playerControl.movementControls();
+        bullet.getBody().setLinearVelocity(bullet.getBody().getLinearVelocity().x,0);
         checkIfLoose();
         sprite.setPosition(body.getPosition().x, body.getPosition().y);
     }
@@ -109,26 +112,13 @@ public class Player extends Object {
     }
 
 
+    public float getJumpStartPosition() {
+        return jumpStartPosition;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void setJumpStartPosition(float jumpStartPosition) {
+        this.jumpStartPosition = jumpStartPosition;
+    }
 
     public Player(float x,float y,float sizeX,float sizeY,World world) {
         init(x,y,sizeX,sizeY,world);
@@ -151,12 +141,12 @@ public class Player extends Object {
         this.isJumping = isJumping;
     }
 
-    public PlayerControl getPlayerControl() {
-        return playerControl;
+    public Controls getControls() {
+        return controls;
     }
 
-    public void setPlayerControl(PlayerControl playerControl) {
-        this.playerControl = playerControl;
+    public void setControls(Controls controls) {
+        this.controls = controls;
     }
 
     public Vector2 getSpeed() {
