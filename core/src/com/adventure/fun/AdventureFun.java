@@ -16,9 +16,9 @@ public class AdventureFun extends Game {
 
 	private WorldLoader worldLoader;
 
-	private OrthographicCamera camera;
-	private OrthographicCamera backgroundCamera;
 	private Box2DDebugRenderer debugRenderer;
+
+	private Cameras camera;
 
 	Controls controls;
 	float x;
@@ -28,20 +28,15 @@ public class AdventureFun extends Game {
 	
 	@Override
 	public void create () {
-
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
-		worldLoader = new WorldLoader();
 		debugRenderer = new Box2DDebugRenderer();
 
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, Gdx.graphics.getWidth()/40,Gdx.graphics.getHeight()/40 );
-
-
-		backgroundCamera = new OrthographicCamera();
-		backgroundCamera.setToOrtho(false, Gdx.graphics.getWidth() / 20, Gdx.graphics.getHeight() / 20);
-
 		batch = new SpriteBatch();
+
+		worldLoader = new WorldLoader();
+
+		camera = new Cameras(worldLoader,batch);
 
 		controls = new Controls(worldLoader);
 
@@ -52,53 +47,81 @@ public class AdventureFun extends Game {
 
 	@Override
 	public void render() {
-
-		controls.movementControls();
-
-		worldLoader.getRenderer().setView(camera);
-
 		//Reinigt Bildschirm
 		Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-		//Setzt Kamerapositionen
-		camera.position.x = worldLoader.getPlayer().getSprite().getX();
-		camera.position.y = worldLoader.getPlayer().getSprite().getY();
-
-		backgroundCamera.position.x = worldLoader.getPlayer().getSprite().getX() / 10;
-		backgroundCamera.position.y = worldLoader.getPlayer().getSprite().getY() / 10;
-
-		//Aktualisiert Kameras
 		camera.update();
-		backgroundCamera.update();
 
+		controls.movementControls();
 
 		//Aktualisiert Logik
+		worldLoader.getRenderer().setView(camera.getPlayerCamera());
 		worldLoader.updateWorld(Gdx.graphics.getDeltaTime());
 
 
 		//Rendert alle Objeckte innerhalb des batchs
-
 		batch.begin();
-		batch.setProjectionMatrix(backgroundCamera.combined);
+		batch.setProjectionMatrix(camera.getBackgroundCamera().combined);
 		batch.draw(Textures.background, -20, -20, 50, 50);
-
 		batch.end();
-		batch.setProjectionMatrix(camera.combined);
+
 		//Rendert tmx map
+		batch.setProjectionMatrix(camera.getPlayerCamera().combined);
 		worldLoader.renderMap(batch);
 
+		//Rendert Physik-Debug Texturen
+		debugRenderer.render(worldLoader.getWorld(),camera.getPlayerCamera().combined);
 
-
-
-		debugRenderer.render(worldLoader.getWorld(),camera.combined);
-
-
-
-
+		//Renderd HUD
+		camera.getHudStage().draw();
 
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	public SpriteBatch getBatch() {
 		return batch;
@@ -116,14 +139,6 @@ public class AdventureFun extends Game {
 		this.worldLoader = worldLoader;
 	}
 
-
-	public OrthographicCamera getCamera() {
-		return camera;
-	}
-
-	public void setCamera(OrthographicCamera camera) {
-		this.camera = camera;
-	}
 
 	public Box2DDebugRenderer getDebugRenderer() {
 		return debugRenderer;

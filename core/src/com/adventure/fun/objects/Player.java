@@ -38,11 +38,15 @@ public class Player extends Object {
     private float jumpStartPosition;
 
     private int lives;
+    private int score;
 
 
     public void init(float x,float y,float sizeX,float sizeY,World world) {
         speed = new Vector2(0.3f,0.3f);
+
+        score = 500;
         lives = 3;
+
         jumpStartPosition = 0;
         maxSpeed = new Vector2(5,5);
         sprite = new Sprite();
@@ -101,6 +105,7 @@ public class Player extends Object {
             body.setLinearVelocity(0, 0);
             body.setTransform(1, 5, 0);
             lives -= 1;
+            score -= 100;
             if (lives == 0){
                 try {
                     this.finalize();
@@ -111,6 +116,22 @@ public class Player extends Object {
         }
     }
 
+
+
+
+
+
+
+
+
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 
     public float getJumpStartPosition() {
         return jumpStartPosition;

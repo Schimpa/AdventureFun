@@ -40,11 +40,6 @@ public class Controls implements InputProcessor {
     public void bulletShot(){
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)){
-            if ((render.getPlayer().getBullet().getBody().getPosition().x - render.getPlayer().getBody().getPosition().x) >= 50
-                    || (render.getPlayer().getBullet().getBody().getPosition().x - render.getPlayer().getBody().getPosition().x) <= -50 ){
-                render.getPlayer().getBullet().getBody().setTransform(-1000, -1000, 0);
-                render.getPlayer().getBullet().getBody().setLinearVelocity(0, 0);
-            }
             if (render.getPlayer().getBullet().getBody().getLinearVelocity().x == 0){
                 AudioController.sound_shoot.play(0.1f);
                 if (render.getPlayer().getRegion().isFlipX() == false){
@@ -54,7 +49,12 @@ public class Controls implements InputProcessor {
                     render.getPlayer().getBullet().getBody().setTransform(render.getPlayer().getBody().getPosition().x - render.getPlayer().getBullet().getSprite().getWidth() / 2, render.getPlayer().getBody().getPosition().y, 0);
                     render.getPlayer().getBullet().getBody().setLinearVelocity(-render.getPlayer().getBullet().getSpeedX(), 0);
                 }
-                }
+            }
+            if ((render.getPlayer().getBullet().getBody().getPosition().x - render.getPlayer().getBody().getPosition().x) >= 50
+                    || (render.getPlayer().getBullet().getBody().getPosition().x - render.getPlayer().getBody().getPosition().x) <= -50 ){
+                render.getPlayer().getBullet().getBody().setTransform(-1000, -1000, 0);
+                render.getPlayer().getBullet().getBody().setLinearVelocity(0, 0);
+            }
 
         }
 
@@ -69,6 +69,10 @@ public class Controls implements InputProcessor {
             AudioController.sound_jump.play(0.1f);
             render.getPlayer().getBody().setLinearVelocity(render.getPlayer().getBody().getLinearVelocity().x,20);
         }
+    }
+
+    public void update(){
+        this.movementControls();
     }
 
     @Override
