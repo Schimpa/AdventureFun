@@ -18,10 +18,11 @@ public class Controls implements InputProcessor {
 
 
     public void movementControls(){
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if (render.getPlayer().getBody().getLinearVelocity().x > 0 ||render.getPlayer().getBody().getLinearVelocity().x < 0 ){
             render.getPlayer().setStateTime(render.getPlayer().getStateTime() + Gdx.graphics.getDeltaTime());
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             if (render.getPlayer().getCurrentFrame().isFlipX() == true){
-                //render.getPlayer().getCurrentFrame().flip(true, false);
                 for(int i = 0; i < render.getPlayer().getWalkFrames().length;i++){
                     render.getPlayer().getWalkFrames()[i].flip(true,false);
                 }
@@ -32,9 +33,7 @@ public class Controls implements InputProcessor {
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            render.getPlayer().setStateTime(render.getPlayer().getStateTime() + Gdx.graphics.getDeltaTime());
             if (render.getPlayer().getCurrentFrame().isFlipX() == false){
-                //render.getPlayer().getCurrentFrame().flip(true, false);
                 for(int i = 0; i < render.getPlayer().getWalkFrames().length;i++){
                     render.getPlayer().getWalkFrames()[i].flip(true,false);
                 }

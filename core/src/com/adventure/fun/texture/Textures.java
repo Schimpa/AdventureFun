@@ -16,7 +16,6 @@ public abstract class Textures {
 
     //PLAYER
     public static TextureRegion player = atlas.findRegion("player_astro");
-
     public static Texture player_move = new Texture(Gdx.files.internal("android/assets/textures/player/player_move.png"));
 
     //BULLET

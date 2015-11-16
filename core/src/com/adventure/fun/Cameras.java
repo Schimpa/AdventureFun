@@ -1,21 +1,16 @@
 package com.adventure.fun;
 
-import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import javafx.scene.image.ImageView;
 
 
 /**
@@ -79,8 +74,8 @@ public class Cameras {
         lives.setText(Integer.toString(worldLoader.getPlayer().getLives()));
 
         //Setzt Kamerapositionen des Spielers
-        playerCamera.position.x = worldLoader.getPlayer().getSprite().getX();
-        playerCamera.position.y = worldLoader.getPlayer().getSprite().getY();
+        playerCamera.position.x = worldLoader.getPlayer().getBody().getPosition().x;
+        playerCamera.position.y = worldLoader.getPlayer().getBody().getPosition().y;
 
         //Setzt position des Hintergrundes
         backgroundCamera.position.x = worldLoader.getPlayer().getSprite().getX() / 10;

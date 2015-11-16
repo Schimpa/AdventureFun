@@ -2,6 +2,7 @@ package com.adventure.fun;
 
 import com.adventure.fun.controls.Controls;
 import com.adventure.fun.effects.Particles;
+import com.adventure.fun.objects.Enemy;
 import com.adventure.fun.objects.Player;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
@@ -32,8 +33,9 @@ public class WorldLoader {
 
     //Spieler
     private Player player;
+    private Enemy enemy;
 
-    //
+    //Steuerung
     Controls controls = new Controls(this);
 
     //Welt
@@ -53,13 +55,7 @@ public class WorldLoader {
     public WorldLoader(){
         world = new World(new Vector2(0,-20), true);
         player = new Player(20,5,0.8f,1.7f,world);
-
-
-
-
-
-
-
+        enemy = new Enemy(25,5,0.8f,1.7f,world,this.player);
 
         particles = new Particles();
 
@@ -73,9 +69,8 @@ public class WorldLoader {
 
     public void renderMap(SpriteBatch batch){
         renderer.render();
-
-
         batch.begin();
+        enemy.render(batch);
         player.render(batch);
         particles.render(batch, Gdx.graphics.getDeltaTime());
         batch.end();
@@ -85,6 +80,7 @@ public class WorldLoader {
     public void updateWorld(float deltaTime){
         controls.movementControls();
         player.update(deltaTime);
+        enemy.update(deltaTime);
         player.getBullet().checkBulletCollision(player);
         world.step(deltaTime, 60, 20);
     }

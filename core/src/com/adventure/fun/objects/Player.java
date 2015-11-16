@@ -39,39 +39,49 @@ public class Player extends Object {
 
 
     public void init(float x,float y,float sizeX,float sizeY,World world) {
+        //ATTRIBUTE
         speed = new Vector2(0.3f,0.3f);
-
         score = 500;
         lives = 3;
-
         jumpStartPosition = 0;
         maxSpeed = new Vector2(5,5);
 
+
+        //SPRITE
         sprite = new Sprite();
         sprite.setPosition(x, y);
         sprite.setSize(sizeX, sizeY);
 
+        //PHYSIK KÖRPER DEFINITION
         bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(sprite.getX(), sprite.getY());
 
-
+        //PHYSIK KÖRPER HÜLLE
         shape = new PolygonShape();
         shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
 
+        //PHYSIK KÖRPER EIGENSCHAFTEN
         fixtureDef = new FixtureDef();
         fixtureDef.density = 0;
         fixtureDef.shape = shape;
 
+        //GESCHOSS
         bullet = new Bullet(-100,-100,0.8f,0.2f,world);
 
-        currentFrame = new TextureRegion(Textures.player);
+        //JETZTIGE ANIMATION
+        currentFrame = new TextureRegion();
+
+        createMoveAnimation();
 
         body = world.createBody(bodyDef);
         body.setUserData("Player");
         body.createFixture(fixtureDef).setUserData(this);
 
+        shape.dispose();
+    }
 
+    public void createMoveAnimation(){
         TextureRegion[][] tmp = TextureRegion.split(Textures.player_move,
                 Textures.player_move.getWidth()/4, Textures.player_move.getHeight());
         walkFrames = new TextureRegion[4];
@@ -83,15 +93,12 @@ public class Player extends Object {
         }
 
         walkAnimation = new Animation(0.15f, walkFrames);
-
         stateTime = 0f;
-
-        shape.dispose();
     }
 
     public void render(SpriteBatch batch) {
-        //PLAYER
 
+        //ANIMATION LAUFEN
         currentFrame = walkAnimation.getKeyFrame(stateTime,true);
 
         batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
@@ -103,9 +110,9 @@ public class Player extends Object {
 
     @Override
     public void update(float deltaTime) {
-        bullet.getBody().setLinearVelocity(bullet.getBody().getLinearVelocity().x,0);
+        bullet.getBody().setLinearVelocity(bullet.getBody().getLinearVelocity().x,-0.1f);
         checkIfLoose();
-        sprite.setPosition(body.getPosition().x, body.getPosition().y);
+        //sprite.setPosition(body.getPosition().x, body.getPosition().y);
     }
 
 
