@@ -19,7 +19,7 @@ public class Ground extends Object {
     }
 
     public void init(float x,float y,float sizeX,float sizeY,World world){
-        sprite = new Sprite(Textures.block_blue);
+        sprite = new Sprite();
         sprite.setPosition(x, y);
         sprite.setSize(sizeX, sizeY);
 

@@ -35,8 +35,9 @@ public class Cameras {
 
     private WorldLoader worldLoader;
     private SpriteBatch batch;
-    private Label test;
+
     private Label score;
+    private Label lives;
 
 
     public Cameras(WorldLoader worldLoader,SpriteBatch batch){
@@ -52,22 +53,22 @@ public class Cameras {
 
         createHUD();
 
-
-
-
     }
 
     public void createHUD(){
         viewport = new FitViewport(500,500,new OrthographicCamera());
         hudStage = new Stage(viewport,batch);
 
-        score = new Label(String.format("%03d", this.worldLoader.getPlayer().getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        score = new Label(String.format("%03d", this.worldLoader.getPlayer().getScore()), new Label.LabelStyle(new BitmapFont(), Color.CYAN));
+        lives = new Label(String.format("%03d", this.worldLoader.getPlayer().getLives()), new Label.LabelStyle(new BitmapFont(), Color.CYAN));
 
         Table table = new Table();
         table.top();
         table.setFillParent(true);
-
+        table.padTop(10);
         table.add(score);
+        table.row();
+        table.add(lives);
 
         hudStage.addActor(table);
     }
@@ -75,6 +76,8 @@ public class Cameras {
     public void update(){
 
         score.setText(Integer.toString(worldLoader.getPlayer().getScore()));
+        lives.setText(Integer.toString(worldLoader.getPlayer().getLives()));
+
         //Setzt Kamerapositionen des Spielers
         playerCamera.position.x = worldLoader.getPlayer().getSprite().getX();
         playerCamera.position.y = worldLoader.getPlayer().getSprite().getY();

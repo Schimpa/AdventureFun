@@ -19,8 +19,12 @@ public class Controls implements InputProcessor {
 
     public void movementControls(){
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            if (render.getPlayer().getRegion().isFlipX() == true){
-                render.getPlayer().getRegion().flip(true, false);
+            render.getPlayer().setStateTime(render.getPlayer().getStateTime() + Gdx.graphics.getDeltaTime());
+            if (render.getPlayer().getCurrentFrame().isFlipX() == true){
+                //render.getPlayer().getCurrentFrame().flip(true, false);
+                for(int i = 0; i < render.getPlayer().getWalkFrames().length;i++){
+                    render.getPlayer().getWalkFrames()[i].flip(true,false);
+                }
             }
 
             if (render.getPlayer().getBody().getLinearVelocity().x <= render.getPlayer().getMaxSpeed().x) {
@@ -28,8 +32,12 @@ public class Controls implements InputProcessor {
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            if (render.getPlayer().getRegion().isFlipX() == false){
-                render.getPlayer().getRegion().flip(true, false);
+            render.getPlayer().setStateTime(render.getPlayer().getStateTime() + Gdx.graphics.getDeltaTime());
+            if (render.getPlayer().getCurrentFrame().isFlipX() == false){
+                //render.getPlayer().getCurrentFrame().flip(true, false);
+                for(int i = 0; i < render.getPlayer().getWalkFrames().length;i++){
+                    render.getPlayer().getWalkFrames()[i].flip(true,false);
+                }
             }
             if (render.getPlayer().getBody().getLinearVelocity().x >= -render.getPlayer().getMaxSpeed().x) {
                 render.getPlayer().getBody().setLinearVelocity(render.getPlayer().getBody().getLinearVelocity().x -= render.getPlayer().getSpeed().x, render.getPlayer().getBody().getLinearVelocity().y);
@@ -38,6 +46,11 @@ public class Controls implements InputProcessor {
     }
 
     public void bulletShot(){
+        if ((render.getPlayer().getBullet().getBody().getPosition().x - render.getPlayer().getBody().getPosition().x) >= 50
+                || (render.getPlayer().getBullet().getBody().getPosition().x - render.getPlayer().getBody().getPosition().x) <= -50 ){
+            render.getPlayer().getBullet().getBody().setTransform(-1000, -1000, 0);
+            render.getPlayer().getBullet().getBody().setLinearVelocity(0, 0);
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)){
             if (render.getPlayer().getBullet().getBody().getLinearVelocity().x == 0){
@@ -50,11 +63,7 @@ public class Controls implements InputProcessor {
                     render.getPlayer().getBullet().getBody().setLinearVelocity(-render.getPlayer().getBullet().getSpeedX(), 0);
                 }
             }
-            if ((render.getPlayer().getBullet().getBody().getPosition().x - render.getPlayer().getBody().getPosition().x) >= 50
-                    || (render.getPlayer().getBullet().getBody().getPosition().x - render.getPlayer().getBody().getPosition().x) <= -50 ){
-                render.getPlayer().getBullet().getBody().setTransform(-1000, -1000, 0);
-                render.getPlayer().getBullet().getBody().setLinearVelocity(0, 0);
-            }
+
 
         }
 
@@ -67,7 +76,7 @@ public class Controls implements InputProcessor {
         if (render.getPlayer().getIsJumping() == false){
             render.getPlayer().setIsJumping(true);
             AudioController.sound_jump.play(0.1f);
-            render.getPlayer().getBody().setLinearVelocity(render.getPlayer().getBody().getLinearVelocity().x,20);
+            render.getPlayer().getBody().setLinearVelocity(render.getPlayer().getBody().getLinearVelocity().x,10);
         }
     }
 

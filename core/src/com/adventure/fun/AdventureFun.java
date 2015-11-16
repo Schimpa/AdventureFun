@@ -20,7 +20,6 @@ public class AdventureFun extends Game {
 
 	private Cameras camera;
 
-	Controls controls;
 	float x;
 
 
@@ -38,9 +37,7 @@ public class AdventureFun extends Game {
 
 		camera = new Cameras(worldLoader,batch);
 
-		controls = new Controls(worldLoader);
-
-		Gdx.input.setInputProcessor(controls);
+		Gdx.input.setInputProcessor(worldLoader.getControls());
 
 
 	}
@@ -52,8 +49,6 @@ public class AdventureFun extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camera.update();
-
-		controls.movementControls();
 
 		//Aktualisiert Logik
 		worldLoader.getRenderer().setView(camera.getPlayerCamera());

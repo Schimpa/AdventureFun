@@ -1,10 +1,14 @@
 package com.adventure.fun;
 
+import com.adventure.fun.controls.Controls;
 import com.adventure.fun.effects.Particles;
 import com.adventure.fun.objects.Player;
+import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -29,6 +33,9 @@ public class WorldLoader {
     //Spieler
     private Player player;
 
+    //
+    Controls controls = new Controls(this);
+
     //Welt
     private World world;
 
@@ -42,9 +49,17 @@ public class WorldLoader {
     private Particles particles;
 
 
+
     public WorldLoader(){
         world = new World(new Vector2(0,-20), true);
-        player = new Player(20,5,0.8f,0.8f,world);
+        player = new Player(20,5,0.8f,1.7f,world);
+
+
+
+
+
+
+
 
         particles = new Particles();
 
@@ -59,6 +74,7 @@ public class WorldLoader {
     public void renderMap(SpriteBatch batch){
         renderer.render();
 
+
         batch.begin();
         player.render(batch);
         particles.render(batch, Gdx.graphics.getDeltaTime());
@@ -67,6 +83,7 @@ public class WorldLoader {
     }
 
     public void updateWorld(float deltaTime){
+        controls.movementControls();
         player.update(deltaTime);
         player.getBullet().checkBulletCollision(player);
         world.step(deltaTime, 60, 20);
@@ -175,5 +192,9 @@ public class WorldLoader {
 
     public void setParticles(Particles particles) {
         this.particles = particles;
+    }
+
+    public Controls getControls() {
+        return controls;
     }
 }

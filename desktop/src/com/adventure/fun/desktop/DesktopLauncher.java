@@ -17,13 +17,13 @@ public class DesktopLauncher {
 
 
 
-
 	public static void createTextureAtlas(){
 		TexturePacker.Settings settings = new TexturePacker.Settings();
 		settings.maxWidth = 1024;
 		settings.maxHeight = 1024;
 		settings.duplicatePadding = false;
 		settings.debug = false;
-		TexturePacker.processIfModified(settings,"android/assets/textures","android/assets/textures","images.pack");
+		TexturePacker.processIfModified(settings,"android/assets/textures/player","android/assets/textures/player","images.pack");
 	}
+
 }

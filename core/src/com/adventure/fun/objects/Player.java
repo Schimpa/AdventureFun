@@ -2,20 +2,20 @@ package com.adventure.fun.objects;
 
 import com.adventure.fun.controls.Controls;
 import com.adventure.fun.texture.Textures;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 
 
-/**
- * Created by Dennis on 27.10.2015.
- */
+
 public class Player extends Object {
 
     private boolean isJumping = true;
@@ -25,20 +25,17 @@ public class Player extends Object {
     private Bullet bullet;
 
 
-    public int getLives() {
-        return lives;
-    }
-
-    public void setLives(int lives) {
-        this.lives = lives;
-    }
-
     private Vector2 speed;
     private Vector2 maxSpeed;
     private float jumpStartPosition;
 
     private int lives;
     private int score;
+
+    TextureRegion currentFrame;
+    Animation walkAnimation;
+    TextureRegion[] walkFrames;
+    float stateTime;
 
 
     public void init(float x,float y,float sizeX,float sizeY,World world) {
@@ -49,6 +46,7 @@ public class Player extends Object {
 
         jumpStartPosition = 0;
         maxSpeed = new Vector2(5,5);
+
         sprite = new Sprite();
         sprite.setPosition(x, y);
         sprite.setSize(sizeX, sizeY);
@@ -67,30 +65,41 @@ public class Player extends Object {
 
         bullet = new Bullet(-100,-100,0.8f,0.2f,world);
 
-
-        region = new TextureRegion(Textures.player);
+        currentFrame = new TextureRegion(Textures.player);
 
         body = world.createBody(bodyDef);
         body.setUserData("Player");
         body.createFixture(fixtureDef).setUserData(this);
 
+
+        TextureRegion[][] tmp = TextureRegion.split(Textures.player_move,
+                Textures.player_move.getWidth()/4, Textures.player_move.getHeight());
+        walkFrames = new TextureRegion[4];
+        int index = 0;
+        for (int i = 0; i < 1; i++) {
+            for (int j = 0; j < 4; j++) {
+                walkFrames[index++] = tmp[i][j];
+            }
+        }
+
+        walkAnimation = new Animation(0.15f, walkFrames);
+
+        stateTime = 0f;
+
         shape.dispose();
-
-
-
     }
 
     public void render(SpriteBatch batch) {
         //PLAYER
-        batch.draw(region, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
+
+        currentFrame = walkAnimation.getKeyFrame(stateTime,true);
+
+        batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
 
         //BULLET
         batch.draw(bullet.region, bullet.body.getPosition().x - bullet.sprite.getWidth() / 2,
                     bullet.body.getPosition().y - bullet.sprite.getHeight() / 2, bullet.sprite.getWidth(), bullet.sprite.getHeight());
     }
-
-
-
 
     @Override
     public void update(float deltaTime) {
@@ -106,24 +115,41 @@ public class Player extends Object {
             body.setTransform(1, 5, 0);
             lives -= 1;
             score -= 100;
-            if (lives == 0){
-                try {
-                    this.finalize();
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                }
-            }
         }
     }
 
 
+    public TextureRegion[] getWalkFrames() {
+        return walkFrames;
+    }
 
+    public void setWalkFrames(TextureRegion[] walkFrames) {
+        this.walkFrames = walkFrames;
+    }
 
+    public TextureRegion getCurrentFrame() {
+        return currentFrame;
+    }
 
+    public void setCurrentFrame(TextureRegion currentFrame) {
+        this.currentFrame = currentFrame;
+    }
 
+    public float getStateTime() {
+        return stateTime;
+    }
 
+    public void setStateTime(float stateTime) {
+        this.stateTime = stateTime;
+    }
 
+    public int getLives() {
+        return lives;
+    }
 
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
 
     public int getScore() {
         return score;
