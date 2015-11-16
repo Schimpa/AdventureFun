@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="39">
+ <tileset firstgid="1" name="Textures" tilewidth="32" tileheight="32" tilecount="4">
+  <image source="textures.png" width="128" height="32"/>
+  <tile id="0">
+   <objectgroup draworder="index"/>
+  </tile>
+ </tileset>
+ <layer name="Textures" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2QGKgzAQBVC36/3PvCxt0ZbEZMTogO9BqNTaOn6SQTtNAAAAAAAAAAAAAAAAAAAAAAAAAAAAANzNb+W99eh5v/Z9tWMoq+XR2u75/NYxlG3Nj+/9W3nU5oD5ETN6frR+i0+RfqB/wGJ+DXKYp3omc2Ew1rx6/d5uZcTx5q/t3mstkzFK61FrjbKGjdO6nqUeIoP93Bvk8pNw3Fm2+rOdz9nW9T8SDHksHpedBW/yyEUeuVyVx7tf8GlkHus+3dqvnz9lW6/ksdiTx9HrjjwW0evak0X0O+XxNKq/yiNmnccI8oiJ5hGdR/KIGV2/PGLkkctW/Uf0eHnEmB+5yCMXeeQysv7W88QSeSyu/q/W89189Wc7n7NdVX9tDZNH3BH3JPIo+69/zzq/V+t4eewXzawnS3mco3deySPfuLM/h60C/A==
+  </data>
+ </layer>
+ <objectgroup name="Collision">
+  <object id="1" x="0" y="2272" width="32" height="928"/>
+  <object id="2" x="32" y="3200" width="1056"/>
+  <object id="3" x="32" y="2272" width="1152" height="32"/>
+  <object id="4" x="1152" y="2304" width="32" height="64"/>
+  <object id="5" x="1152" y="2336" height="32"/>
+  <object id="8" x="96" y="2336" width="1056" height="32"/>
+  <object id="9" x="96" y="2368" width="32" height="288"/>
+  <object id="10" x="64" y="2624" width="32" height="96"/>
+  <object id="11" x="224" y="2784" width="64" height="32"/>
+  <object id="12" x="384" y="2688" width="64" height="32"/>
+  <object id="13" x="480" y="2592" width="64" height="32"/>
+  <object id="14" x="512" y="2560" width="64" height="32"/>
+  <object id="15" x="736" y="2496" width="96" height="32"/>
+  <object id="16" x="960" y="2464" width="64" height="32"/>
+  <object id="17" x="992" y="2496" width="160" height="32"/>
+  <object id="18" x="1152" y="2496" width="32" height="704"/>
+  <object id="25" x="32" y="3168" width="1120" height="64"/>
+  <object id="26" x="32" y="3072" width="416" height="32"/>
+  <object id="27" x="416" y="3040" width="32" height="32"/>
+  <object id="28" x="480" y="3104" width="256" height="32"/>
+  <object id="29" x="832" y="3136" width="64" height="32"/>
+  <object id="30" x="864" y="3104" width="64" height="32"/>
+  <object id="31" x="896" y="3072" width="64" height="32"/>
+  <object id="32" x="928" y="3040" width="64" height="32"/>
+  <object id="33" x="960" y="3008" width="32" height="32"/>
+  <object id="34" x="96" y="2944" width="1056" height="32"/>
+  <object id="35" x="736" y="2912" width="96" height="32"/>
+  <object id="36" x="768" y="2592" width="32" height="320"/>
+ </objectgroup>
+</map>
