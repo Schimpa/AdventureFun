@@ -134,7 +134,6 @@ public class AdventureFun extends Game {
 		this.worldLoader = worldLoader;
 	}
 
-
 	public Box2DDebugRenderer getDebugRenderer() {
 		return debugRenderer;
 	}
