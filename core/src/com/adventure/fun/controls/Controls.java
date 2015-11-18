@@ -45,25 +45,8 @@ public class Controls implements InputProcessor {
     }
 
     public void bulletShot(){
-        if ((render.getPlayer().getBullet().getBody().getPosition().x - render.getPlayer().getBody().getPosition().x) >= 50
-                || (render.getPlayer().getBullet().getBody().getPosition().x - render.getPlayer().getBody().getPosition().x) <= -50 ){
-            render.getPlayer().getBullet().getBody().setTransform(-1000, -1000, 0);
-            render.getPlayer().getBullet().getBody().setLinearVelocity(0, 0);
-        }
-
         if (Gdx.input.isKeyPressed(Input.Keys.A)){
-            if (render.getPlayer().getBullet().getBody().getLinearVelocity().x == 0){
-                AudioController.sound_shoot.play(0.1f);
-                if (render.getPlayer().getCurrentFrame().isFlipX() == false){
-                    render.getPlayer().getBullet().getBody().setTransform(render.getPlayer().getBody().getPosition().x + render.getPlayer().getBullet().getSprite().getWidth() / 2, render.getPlayer().getBody().getPosition().y, 0);
-                    render.getPlayer().getBullet().getBody().setLinearVelocity(render.getPlayer().getBullet().getSpeedX(), 0);
-                } else if (render.getPlayer().getCurrentFrame().isFlipX() == true) {
-                    render.getPlayer().getBullet().getBody().setTransform(render.getPlayer().getBody().getPosition().x - render.getPlayer().getBullet().getSprite().getWidth() / 2, render.getPlayer().getBody().getPosition().y, 0);
-                    render.getPlayer().getBullet().getBody().setLinearVelocity(-render.getPlayer().getBullet().getSpeedX(), 0);
-                }
-            }
-
-
+            render.getPlayer().getBullet().shootBullet(render.getPlayer());
         }
 
     }

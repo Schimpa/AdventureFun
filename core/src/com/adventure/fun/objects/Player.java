@@ -1,20 +1,17 @@
 package com.adventure.fun.objects;
 
+import com.adventure.fun.audio.AudioController;
 import com.adventure.fun.controls.Controls;
 import com.adventure.fun.texture.Textures;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-
-
 
 public class Player extends Object {
 
@@ -32,10 +29,8 @@ public class Player extends Object {
     private int lives;
     private int score;
 
-    TextureRegion currentFrame;
-    Animation walkAnimation;
-    TextureRegion[] walkFrames;
-    float stateTime;
+
+
 
 
     public void init(float x,float y,float sizeX,float sizeY,World world) {
@@ -67,7 +62,7 @@ public class Player extends Object {
         fixtureDef.shape = shape;
 
         //GESCHOSS
-        bullet = new Bullet(-100,-100,0.8f,0.2f,world);
+        bullet = new Bullet(-100,-100,0.8f,0.2f,world,Textures.bullet_02);
 
         //JETZTIGE ANIMATION
         currentFrame = new TextureRegion();
@@ -81,25 +76,10 @@ public class Player extends Object {
         shape.dispose();
     }
 
-    public void createMoveAnimation(){
-        TextureRegion[][] tmp = TextureRegion.split(Textures.player_move,
-                Textures.player_move.getWidth()/4, Textures.player_move.getHeight());
-        walkFrames = new TextureRegion[4];
-        int index = 0;
-        for (int i = 0; i < 1; i++) {
-            for (int j = 0; j < 4; j++) {
-                walkFrames[index++] = tmp[i][j];
-            }
-        }
 
-        walkAnimation = new Animation(0.15f, walkFrames);
-        stateTime = 0f;
-    }
 
     public void render(SpriteBatch batch) {
-
-        //ANIMATION LAUFEN
-        currentFrame = walkAnimation.getKeyFrame(stateTime,true);
+        super.render();
 
         batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
 
@@ -110,14 +90,14 @@ public class Player extends Object {
 
     @Override
     public void update(float deltaTime) {
-        bullet.getBody().setLinearVelocity(bullet.getBody().getLinearVelocity().x,-0.1f);
+        bullet.getBody().setLinearVelocity(bullet.getBody().getLinearVelocity().x, -0.1f);
         checkIfLoose();
-        //sprite.setPosition(body.getPosition().x, body.getPosition().y);
     }
 
 
     public void checkIfLoose() {
         if (body.getPosition().y < 0) {
+            AudioController.sound_die.play();
             body.setLinearVelocity(0, 0);
             body.setTransform(1, 5, 0);
             lives -= 1;
@@ -130,17 +110,7 @@ public class Player extends Object {
         return walkFrames;
     }
 
-    public void setWalkFrames(TextureRegion[] walkFrames) {
-        this.walkFrames = walkFrames;
-    }
 
-    public TextureRegion getCurrentFrame() {
-        return currentFrame;
-    }
-
-    public void setCurrentFrame(TextureRegion currentFrame) {
-        this.currentFrame = currentFrame;
-    }
 
     public float getStateTime() {
         return stateTime;

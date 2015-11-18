@@ -11,4 +11,6 @@ public abstract class AudioController {
     public static Sound sound_shoot = Gdx.audio.newSound(Gdx.files.internal("android/assets/audio/shoot.ogg"));
 
     public static Sound sound_jump = Gdx.audio.newSound(Gdx.files.internal("android/assets/audio/jump.ogg"));
+
+    public static Sound sound_die = Gdx.audio.newSound(Gdx.files.internal("android/assets/audio/papierstau.ogg"));
 }

@@ -1,5 +1,7 @@
 package com.adventure.fun.objects;
 
+import com.adventure.fun.texture.Textures;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -27,12 +29,81 @@ public abstract class Object {
     protected FixtureDef fixtureDef;
 
 
-    public void move(float x, float y, float deltaTime){
-        sprite.setPosition(body.getPosition().x + x * deltaTime,body.getPosition().y+y * deltaTime);
+
+    //Animation
+    TextureRegion currentFrame;
+    Animation walkAnimation;
+    TextureRegion[] walkFrames;
+    float stateTime;
+
+
+    public void render(){
+        //ANIMATION LAUFEN
+        currentFrame = walkAnimation.getKeyFrame(stateTime,true);
     }
 
 
     public void update(float deltaTime){};
+
+
+    public void createMoveAnimation(){
+        TextureRegion[][] tmp = TextureRegion.split(Textures.player_move,
+                Textures.player_move.getWidth()/4, Textures.player_move.getHeight());
+        walkFrames = new TextureRegion[4];
+        int index = 0;
+        for (int i = 0; i < 1; i++) {
+            for (int j = 0; j < 4; j++) {
+                walkFrames[index++] = tmp[i][j];
+            }
+        }
+
+        walkAnimation = new Animation(0.15f, walkFrames);
+        stateTime = 0f;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public Vector2 getSpeedMax() {
         return speedMax;
@@ -90,5 +161,19 @@ public abstract class Object {
         this.fixtureDef = fixtureDef;
     }
 
+    public TextureRegion getCurrentFrame() {
+        return currentFrame;
+    }
 
+    public void setCurrentFrame(TextureRegion currentFrame) {
+        this.currentFrame = currentFrame;
+    }
+
+    public void setWalkFrames(TextureRegion[] walkFrames) {
+        this.walkFrames = walkFrames;
+    }
+
+    public TextureRegion[] getWalkFrames() {
+        return walkFrames;
+    }
 }

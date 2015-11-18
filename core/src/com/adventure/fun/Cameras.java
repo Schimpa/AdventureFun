@@ -41,7 +41,7 @@ public class Cameras {
         this.batch = batch;
 
         playerCamera = new OrthographicCamera();
-        playerCamera.setToOrtho(false, Gdx.graphics.getWidth() / 40, Gdx.graphics.getHeight() / 40);
+        playerCamera.setToOrtho(false, Gdx.graphics.getWidth() / 20, Gdx.graphics.getHeight() / 20);
 
         backgroundCamera = new OrthographicCamera();
         backgroundCamera.setToOrtho(false, Gdx.graphics.getWidth() / 20, Gdx.graphics.getHeight() / 20);
@@ -78,8 +78,8 @@ public class Cameras {
         playerCamera.position.y = worldLoader.getPlayer().getBody().getPosition().y;
 
         //Setzt position des Hintergrundes
-        backgroundCamera.position.x = worldLoader.getPlayer().getSprite().getX() / 10;
-        backgroundCamera.position.y = worldLoader.getPlayer().getSprite().getY() / 10;
+        backgroundCamera.position.x = worldLoader.getPlayer().getBody().getPosition().x / 10;
+        backgroundCamera.position.y = worldLoader.getPlayer().getBody().getPosition().y / 10;
 
         //Aktualisiert Kameras
         playerCamera.update();

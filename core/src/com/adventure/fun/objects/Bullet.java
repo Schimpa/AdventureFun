@@ -1,7 +1,9 @@
 package com.adventure.fun.objects;
 
+import com.adventure.fun.audio.AudioController;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
@@ -16,12 +18,12 @@ public class Bullet extends Object {
     private int speedX;
     private boolean removeFlag = false;
 
-    public Bullet(float x,float y,float sizeX,float sizeY,World world){
-        init(x,y,sizeX,sizeY,world);
+    public Bullet(float x,float y,float sizeX,float sizeY,World world,TextureRegion region){
+        init(x,y,sizeX,sizeY,world,region);
 
     }
 
-    public void init(float x,float y,float sizeX,float sizeY,World world){
+    public void init(float x,float y,float sizeX,float sizeY,World world,TextureRegion region){
 
         speedX = 30;
 
@@ -50,9 +52,28 @@ public class Bullet extends Object {
         massData.mass = 0;
         body.setMassData(massData);
 
-        region = Textures.bullet_02;
+        this.region = region;
+
         shape.dispose();
 
+    }
+
+    public void shootBullet(Object object){
+        if ((this.getBody().getPosition().x - object.getBody().getPosition().x) >= 50
+                || (this.getBody().getPosition().x - object.getBody().getPosition().x) <= -50 ){
+            this.getBody().setTransform(-1000, -1000, 0);
+            this.getBody().setLinearVelocity(0, 0);
+        }
+        if (this.getBody().getLinearVelocity().x == 0){
+            AudioController.sound_shoot.play(0.1f);
+            if (object.getCurrentFrame().isFlipX() == false){
+                this.getBody().setTransform(object.getBody().getPosition().x + this.getSprite().getWidth() / 2, object.getBody().getPosition().y, 0);
+                this.getBody().setLinearVelocity(this.getSpeedX(), 0);
+            } else if (object.getCurrentFrame().isFlipX() == true) {
+                this.getBody().setTransform(object.getBody().getPosition().x - this.getSprite().getWidth() / 2, object.getBody().getPosition().y, 0);
+                this.getBody().setLinearVelocity(-this.getSpeedX(), 0);
+            }
+        }
     }
 
     public int getSpeedX() {
