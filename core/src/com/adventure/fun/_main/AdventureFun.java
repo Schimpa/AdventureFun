@@ -1,13 +1,10 @@
-package com.adventure.fun;
+package com.adventure.fun._main;
 
-import com.adventure.fun.controls.Controls;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Application;
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
@@ -27,15 +24,20 @@ public class AdventureFun extends Game {
 	
 	@Override
 	public void create () {
+
+
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
 		debugRenderer = new Box2DDebugRenderer();
 
 		batch = new SpriteBatch();
 
+
 		worldLoader = new WorldLoader();
 
+
 		camera = new Cameras(worldLoader,batch);
+
 
 		Gdx.input.setInputProcessor(worldLoader.getControls());
 
@@ -47,6 +49,7 @@ public class AdventureFun extends Game {
 		//Reinigt Bildschirm
 		Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
 		camera.update();
 
@@ -70,8 +73,13 @@ public class AdventureFun extends Game {
 
 		//Renderd HUD
 		camera.getHudStage().draw();
+	}
+
+	@Override
+	public void resize(int width,int height){
 
 	}
+
 
 
 

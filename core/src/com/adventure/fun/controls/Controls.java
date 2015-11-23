@@ -1,6 +1,6 @@
 package com.adventure.fun.controls;
 
-import com.adventure.fun.WorldLoader;
+import com.adventure.fun._main.WorldLoader;
 import com.adventure.fun.audio.AudioController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

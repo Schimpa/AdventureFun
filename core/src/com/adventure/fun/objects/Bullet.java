@@ -1,7 +1,7 @@
 package com.adventure.fun.objects;
 
 import com.adventure.fun.audio.AudioController;
-import com.adventure.fun.texture.Textures;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -13,19 +13,20 @@ import com.badlogic.gdx.physics.box2d.World;
 /**
  * Created by Dennis on 30.10.2015.
  */
-public class Bullet extends Object {
+public class Bullet extends LivingObject {
 
     private int speedX;
-    private boolean removeFlag = false;
+    private float reload;
 
-    public Bullet(float x,float y,float sizeX,float sizeY,World world,TextureRegion region){
-        init(x,y,sizeX,sizeY,world,region);
+    public Bullet(float x,float y,float sizeX,float sizeY,World world,TextureRegion region,String name){
+        init(x,y,sizeX,sizeY,world,region,name);
 
     }
 
-    public void init(float x,float y,float sizeX,float sizeY,World world,TextureRegion region){
+    public void init(float x,float y,float sizeX,float sizeY,World world,TextureRegion region,String name){
 
         speedX = 30;
+        reload = 5.0f;
 
         sprite = new Sprite();
         sprite.setPosition(x, y);
@@ -46,7 +47,7 @@ public class Bullet extends Object {
 
 
         body = world.createBody(bodyDef);
-        body.setUserData("Bullet");
+        body.setUserData(name);
         body.createFixture(fixtureDef);
         MassData massData = new MassData();
         massData.mass = 0;
@@ -58,23 +59,34 @@ public class Bullet extends Object {
 
     }
 
-    public void shootBullet(Object object){
-        if ((this.getBody().getPosition().x - object.getBody().getPosition().x) >= 50
-                || (this.getBody().getPosition().x - object.getBody().getPosition().x) <= -50 ){
-            this.getBody().setTransform(-1000, -1000, 0);
-            this.getBody().setLinearVelocity(0, 0);
-        }
-        if (this.getBody().getLinearVelocity().x == 0){
-            AudioController.sound_shoot.play(0.1f);
-            if (object.getCurrentFrame().isFlipX() == false){
-                this.getBody().setTransform(object.getBody().getPosition().x + this.getSprite().getWidth() / 2, object.getBody().getPosition().y, 0);
-                this.getBody().setLinearVelocity(this.getSpeedX(), 0);
-            } else if (object.getCurrentFrame().isFlipX() == true) {
-                this.getBody().setTransform(object.getBody().getPosition().x - this.getSprite().getWidth() / 2, object.getBody().getPosition().y, 0);
-                this.getBody().setLinearVelocity(-this.getSpeedX(), 0);
+    public void shootBullet(LivingObject object){
+        if (reload >= 1){
+            if ((this.getBody().getPosition().x - object.getBody().getPosition().x) >= 50
+                    || (this.getBody().getPosition().x - object.getBody().getPosition().x) <= -50 ){
+                this.getBody().setTransform(-1000, -1000, 0);
+                this.getBody().setLinearVelocity(0, 0);
+                reload = 0;
+            }
+            if (this.getBody().getLinearVelocity().x == 0){
+                AudioController.sound_shoot_01.play(0.1f);
+                if (object.getCurrentFrame().isFlipX() == false){
+                    this.getBody().setTransform(object.getBody().getPosition().x + this.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
+                    this.getBody().setLinearVelocity(this.getSpeedX(), 0);
+                } else if (object.getCurrentFrame().isFlipX() == true) {
+                    this.getBody().setTransform(object.getBody().getPosition().x - this.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
+                    this.getBody().setLinearVelocity(-this.getSpeedX(), 0);
+                }
             }
         }
+
     }
+
+    public void update()
+    {
+        checkBulletCollision();
+        reload += Gdx.graphics.getDeltaTime();
+    }
+
 
     public int getSpeedX() {
         return speedX;
@@ -92,10 +104,10 @@ public class Bullet extends Object {
         this.removeFlag = removeFlag;
     }
 
-    public void checkBulletCollision(Player player){
-        if (player.getBullet().getRemoveFlag() == true){
-            player.getBullet().getBody().setTransform(-1000,-1000,0);
-            player.getBullet().setRemoveFlag(false);
+    public void checkBulletCollision(){
+        if (this.removeFlag == true){
+            this.body.setTransform(-1000,-1000,0);
+            this.removeFlag = false;
         }
     }
 }

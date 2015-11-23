@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
 /**
  * Created by Dennis on 28.10.2015.
  */
-public class Enemy extends Object {
+public class Enemy extends LivingObject {
 
     private Vector2 speed;
     private Vector2 maxSpeed;
@@ -30,8 +30,11 @@ public class Enemy extends Object {
     public void init(float x,float y,float sizeX,float sizeY,World world){
         speed = new Vector2(0.3f,0.3f);
         maxSpeed = new Vector2(1,1);
+        removeFlag = false;
 
-        bullet = new Bullet(-100,-100,0.8f,0.2f,world,Textures.bullet_02);
+        lives = 2;
+
+        bullet = new Bullet(-100,-100,0.8f,0.2f,world,Textures.bullet,"Bullet_Enemy");
 
         sprite = new Sprite();
         sprite.setPosition(x, y);
@@ -58,7 +61,6 @@ public class Enemy extends Object {
         body.setUserData("Enemy");
 
         createMoveAnimation();
-        region = new TextureRegion(Textures.player);
 
         shape.dispose();
     }
@@ -68,7 +70,7 @@ public class Enemy extends Object {
         if (player.getBody().getPosition().x - this.getBody().getPosition().x > -10 &&
                 player.getBody().getPosition().x - this.getBody().getPosition().x < 10){
 
-            this.stateTime = this.stateTime + Gdx.graphics.getDeltaTime();
+            this.stateTime += Gdx.graphics.getDeltaTime();
             //LEFT OR RIGHT
             if (player.getBody().getPosition().x - this.getBody().getPosition().x < 0){
                 if (this.getCurrentFrame().isFlipX() == false){
@@ -92,24 +94,32 @@ public class Enemy extends Object {
             }
             this.bullet.shootBullet(this);
         }
-
-
-
     }
 
 
     public void update(float deltaTime){
-        bullet.getBody().setLinearVelocity(bullet.getBody().getLinearVelocity().x, -0.1f);
-        logic();
-
+        if (removeFlag != true){
+            logic();
+            bullet.update();
+            bullet.getBody().setLinearVelocity(bullet.getBody().getLinearVelocity().x, -0.1f);
+        }
     }
-
-
 
     public void render(SpriteBatch batch){
         super.render();
-        batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
-        batch.draw(bullet.region, bullet.body.getPosition().x - bullet.sprite.getWidth() / 2,
-                bullet.body.getPosition().y - bullet.sprite.getHeight() / 2, bullet.sprite.getWidth(), bullet.sprite.getHeight());
+        if (removeFlag != true){
+            batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
+            batch.draw(bullet.region, bullet.body.getPosition().x - bullet.sprite.getWidth() / 2,
+                    bullet.body.getPosition().y - bullet.sprite.getHeight() / 2, bullet.sprite.getWidth(), bullet.sprite.getHeight());
+
+        }
+    }
+
+    public Bullet getBullet() {
+        return bullet;
+    }
+
+    public void setBullet(Bullet bullet) {
+        this.bullet = bullet;
     }
 }

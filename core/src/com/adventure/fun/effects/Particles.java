@@ -13,8 +13,8 @@ public class Particles {
 
     public Particles(){
         explosion01 = new ParticleEffect();
-        explosion01.load(Gdx.files.internal("android/assets/particles/explosion02.p"),
-                Gdx.files.internal(""));
+        explosion01.load(Gdx.files.internal("particles/explosion01.p"),
+                Gdx.files.internal("particles"));
         explosion01.scaleEffect(0.01f);
     }
 

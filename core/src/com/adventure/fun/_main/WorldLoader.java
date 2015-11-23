@@ -1,15 +1,15 @@
-package com.adventure.fun;
+package com.adventure.fun._main;
 
 import com.adventure.fun.controls.Controls;
 import com.adventure.fun.effects.Particles;
+import com.adventure.fun.items.ScoreItem_100;
 import com.adventure.fun.objects.Enemy;
 import com.adventure.fun.objects.Player;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -22,8 +22,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 
 /**
@@ -34,6 +34,9 @@ public class WorldLoader {
     //Spieler
     private Player player;
     private Enemy enemy;
+
+    //Items
+    private ScoreItem_100 scoreItem_100;
 
     //Steuerung
     Controls controls = new Controls(this);
@@ -53,16 +56,19 @@ public class WorldLoader {
 
 
     public WorldLoader(){
+
+        //Pickup Items
+        scoreItem_100 = new ScoreItem_100();
+
+
         world = new World(new Vector2(0,-20), true);
         player = new Player(20,5,0.8f,1.7f,world);
-        enemy = new Enemy(25,5,0.8f,1.7f,world,this.player);
+        enemy = new Enemy(3,5,0.8f,1.7f,world,this.player);
 
         particles = new Particles();
 
-        map = new TmxMapLoader().load("android/assets/maps/map01.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1/32f);
-
         createMap();
+
         world.setContactListener(new com.adventure.fun.physics.CollisionListener(this));
     }
 
@@ -71,6 +77,9 @@ public class WorldLoader {
         renderer.render();
         batch.begin();
         enemy.render(batch);
+        scoreItem_100.render(batch);
+
+
         player.render(batch);
         particles.render(batch, Gdx.graphics.getDeltaTime());
         batch.end();
@@ -81,12 +90,20 @@ public class WorldLoader {
         controls.movementControls();
         player.update(deltaTime);
         enemy.update(deltaTime);
-        player.getBullet().checkBulletCollision(player);
+
+        scoreItem_100.checkDestruction();
+
         world.step(deltaTime, 60, 20);
     }
 
+
+
     //Lädt die Karte aus Tiled und erstellt Physik mit Box2d
     public void createMap(){
+        map = new TmxMapLoader().load("maps/map01.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map, 1/32f);
+
+        //GROUND
         int i = 0;
         for(MapObject object: map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -103,6 +120,8 @@ public class WorldLoader {
             body.createFixture(fdef);
             i++;
         }
+
+        //STAIRS
         i = 0;
         for(MapObject object: map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -127,6 +146,35 @@ public class WorldLoader {
             body.createFixture(fdef);
             i++;
         }
+
+        //ITEM - POINTS
+        i = 0;
+        for(MapObject object: map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            BodyDef bdef = new BodyDef();
+            bdef.type = BodyDef.BodyType.KinematicBody;
+            bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
+
+            Sprite sprite = new Sprite(Textures.point);
+            sprite.setPosition(rect.getX() / 32, rect.getY() / 32 );
+            sprite.setSize(1,1);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(rect.getWidth()/ 2 / 32,rect.getHeight() / 2 / 32);
+
+            FixtureDef fdef = new FixtureDef();
+            fdef.shape = shape;
+
+            Body body = world.createBody(bdef);
+            body.setUserData("Item_Point_"+i);
+            body.createFixture(fdef);
+
+            scoreItem_100.getItems().add(body);
+            scoreItem_100.getItems_texture().add(sprite);
+
+            i++;
+        }
     }
 
 
@@ -148,6 +196,26 @@ public class WorldLoader {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public Enemy getEnemy() {
+        return enemy;
+    }
+
+    public void setEnemy(Enemy enemy) {
+        this.enemy = enemy;
+    }
 
     public Player getPlayer() {
         return player;
@@ -192,5 +260,13 @@ public class WorldLoader {
 
     public Controls getControls() {
         return controls;
+    }
+
+    public ScoreItem_100 getScoreItem_100() {
+        return scoreItem_100;
+    }
+
+    public void setScoreItem_100(ScoreItem_100 scoreItem_100) {
+        this.scoreItem_100 = scoreItem_100;
     }
 }

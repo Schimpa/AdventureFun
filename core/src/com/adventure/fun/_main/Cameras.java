@@ -1,4 +1,4 @@
-package com.adventure.fun;
+package com.adventure.fun._main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -18,7 +18,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 public class Cameras {
 
-
     //Gamecamera
     private OrthographicCamera playerCamera;
 
@@ -27,6 +26,7 @@ public class Cameras {
 
     private Stage hudStage;
     private Viewport viewport;
+    private Viewport hudViewport;
 
     private WorldLoader worldLoader;
     private SpriteBatch batch;
@@ -41,18 +41,21 @@ public class Cameras {
         this.batch = batch;
 
         playerCamera = new OrthographicCamera();
-        playerCamera.setToOrtho(false, Gdx.graphics.getWidth() / 20, Gdx.graphics.getHeight() / 20);
+        playerCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 3, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 3 );
+        viewport = new FitViewport(16*1.5f,9*1.5f,playerCamera);
+        viewport.apply();
 
         backgroundCamera = new OrthographicCamera();
-        backgroundCamera.setToOrtho(false, Gdx.graphics.getWidth() / 20, Gdx.graphics.getHeight() / 20);
+        backgroundCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 3, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 3);
+
 
         createHUD();
 
     }
 
     public void createHUD(){
-        viewport = new FitViewport(500,500,new OrthographicCamera());
-        hudStage = new Stage(viewport,batch);
+        hudViewport = new FitViewport(500,500,new OrthographicCamera());
+        hudStage = new Stage(hudViewport,batch);
 
         score = new Label(String.format("%03d", this.worldLoader.getPlayer().getScore()), new Label.LabelStyle(new BitmapFont(), Color.CYAN));
         lives = new Label(String.format("%03d", this.worldLoader.getPlayer().getLives()), new Label.LabelStyle(new BitmapFont(), Color.CYAN));

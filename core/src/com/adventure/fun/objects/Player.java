@@ -1,9 +1,7 @@
 package com.adventure.fun.objects;
 
-import com.adventure.fun.audio.AudioController;
 import com.adventure.fun.controls.Controls;
 import com.adventure.fun.texture.Textures;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Player extends Object {
+public class Player extends LivingObject {
 
     private boolean isJumping = true;
 
@@ -21,13 +19,9 @@ public class Player extends Object {
 
     private Bullet bullet;
 
-
-    private Vector2 speed;
-    private Vector2 maxSpeed;
     private float jumpStartPosition;
 
-    private int lives;
-    private int score;
+
 
 
 
@@ -62,7 +56,7 @@ public class Player extends Object {
         fixtureDef.shape = shape;
 
         //GESCHOSS
-        bullet = new Bullet(-100,-100,0.8f,0.2f,world,Textures.bullet_02);
+        bullet = new Bullet(-100,-100,0.8f,0.2f,world,Textures.bullet,"Bullet_Player");
 
         //JETZTIGE ANIMATION
         currentFrame = new TextureRegion();
@@ -71,7 +65,7 @@ public class Player extends Object {
 
         body = world.createBody(bodyDef);
         body.setUserData("Player");
-        body.createFixture(fixtureDef).setUserData(this);
+        body.createFixture(fixtureDef);
 
         shape.dispose();
     }
@@ -85,32 +79,24 @@ public class Player extends Object {
 
         //BULLET
         batch.draw(bullet.region, bullet.body.getPosition().x - bullet.sprite.getWidth() / 2,
-                    bullet.body.getPosition().y - bullet.sprite.getHeight() / 2, bullet.sprite.getWidth(), bullet.sprite.getHeight());
+                bullet.body.getPosition().y - bullet.sprite.getHeight() / 2, bullet.sprite.getWidth(), bullet.sprite.getHeight());
     }
 
     @Override
     public void update(float deltaTime) {
+        super.update(deltaTime);
+        bullet.update();
         bullet.getBody().setLinearVelocity(bullet.getBody().getLinearVelocity().x, -0.1f);
         checkIfLoose();
     }
 
 
-    public void checkIfLoose() {
-        if (body.getPosition().y < 0) {
-            AudioController.sound_die.play();
-            body.setLinearVelocity(0, 0);
-            body.setTransform(1, 5, 0);
-            lives -= 1;
-            score -= 100;
-        }
-    }
+
 
 
     public TextureRegion[] getWalkFrames() {
         return walkFrames;
     }
-
-
 
     public float getStateTime() {
         return stateTime;
