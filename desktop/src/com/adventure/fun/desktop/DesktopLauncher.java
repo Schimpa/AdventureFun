@@ -2,13 +2,13 @@ package com.adventure.fun.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.adventure.fun.AdventureFun;
+import com.adventure.fun._main.AdventureFun;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 
-		createTextureAtlas();
+		//createTextureAtlas();
 
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -23,7 +23,7 @@ public class DesktopLauncher {
 		settings.maxHeight = 1024;
 		settings.duplicatePadding = false;
 		settings.debug = false;
-		TexturePacker.processIfModified(settings,"android/assets/textures/player","android/assets/textures/player","images.pack");
+		TexturePacker.processIfModified(settings,"texture_data","texture_data","images.pack");
 	}
 
 }

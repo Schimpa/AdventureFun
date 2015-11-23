@@ -4,18 +4,11 @@ size: 256,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-bullet02
+bullet
   rotate: false
   xy: 2, 2
   size: 32, 32
   orig: 32, 32
-  offset: 0, 0
-  index: -1
-player_astro
-  rotate: false
-  xy: 132, 36
-  size: 32, 64
-  orig: 32, 64
   offset: 0, 0
   index: -1
 player_move
@@ -23,5 +16,12 @@ player_move
   xy: 2, 36
   size: 128, 64
   orig: 128, 64
+  offset: 0, 0
+  index: -1
+point
+  rotate: false
+  xy: 132, 68
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1

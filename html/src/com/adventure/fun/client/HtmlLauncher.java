@@ -3,7 +3,7 @@ package com.adventure.fun.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.adventure.fun.AdventureFun;
+import com.adventure.fun._main.AdventureFun;
 
 public class HtmlLauncher extends GwtApplication {
 
