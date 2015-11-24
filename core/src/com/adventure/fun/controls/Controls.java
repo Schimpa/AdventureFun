@@ -18,7 +18,7 @@ public class Controls implements InputProcessor {
 
 
     public void movementControls(){
-        if (render.getPlayer().getBody().getLinearVelocity().x > 0 ||render.getPlayer().getBody().getLinearVelocity().x < 0 ){
+        if (render.getPlayer().getBody().getLinearVelocity().x > 0 || render.getPlayer().getBody().getLinearVelocity().x < 0 ){
             render.getPlayer().setStateTime(render.getPlayer().getStateTime() + Gdx.graphics.getDeltaTime());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {

@@ -13,6 +13,7 @@ public class Textures {
 
     //PLAYER
     public static Texture player_move = new Texture(Gdx.files.internal("texture_data/player_move.png"));
+    public static Texture alien_move = new Texture(Gdx.files.internal("texture_data/alien_move.png"));
 
     //BULLET
     public static TextureRegion bullet = atlas.findRegion("bullet");

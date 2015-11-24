@@ -1,5 +1,6 @@
 package com.adventure.fun._main;
 
+import com.adventure.fun.audio.AudioController;
 import com.adventure.fun.controls.Controls;
 import com.adventure.fun.effects.Particles;
 import com.adventure.fun.items.ScoreItem_100;
@@ -34,6 +35,7 @@ public class WorldLoader {
     //Spieler
     private Player player;
     private Enemy enemy;
+    private Array<Enemy> enemies;
 
     //Items
     private ScoreItem_100 scoreItem_100;
@@ -56,18 +58,19 @@ public class WorldLoader {
 
 
     public WorldLoader(){
-
         //Pickup Items
-        scoreItem_100 = new ScoreItem_100();
-
+        scoreItem_100 = new ScoreItem_100(this);
+        enemies = new Array<Enemy>();
 
         world = new World(new Vector2(0,-20), true);
-        player = new Player(20,5,0.8f,1.7f,world);
-        enemy = new Enemy(3,5,0.8f,1.7f,world,this.player);
+        player = new Player(3,5,0.8f,1.7f,world);
 
         particles = new Particles();
 
         createMap();
+
+        AudioController.music_ambient.play();
+        AudioController.music_ambient.setVolume(0.2f);
 
         world.setContactListener(new com.adventure.fun.physics.CollisionListener(this));
     }
@@ -76,7 +79,11 @@ public class WorldLoader {
     public void renderMap(SpriteBatch batch){
         renderer.render();
         batch.begin();
-        enemy.render(batch);
+
+        for(Enemy enemy: enemies){
+            enemy.render(batch);
+        }
+
         scoreItem_100.render(batch);
 
 
@@ -89,7 +96,10 @@ public class WorldLoader {
     public void updateWorld(float deltaTime){
         controls.movementControls();
         player.update(deltaTime);
-        enemy.update(deltaTime);
+
+        for(Enemy enemy: enemies){
+            enemy.update(deltaTime);
+        }
 
         scoreItem_100.checkDestruction();
 
@@ -105,7 +115,7 @@ public class WorldLoader {
 
         //GROUND
         int i = 0;
-        for(MapObject object: map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object: map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             BodyDef bdef = new BodyDef();
             bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
@@ -120,9 +130,8 @@ public class WorldLoader {
             body.createFixture(fdef);
             i++;
         }
-
         //STAIRS
-        i = 0;
+        /*
         for(MapObject object: map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             BodyDef bdef = new BodyDef();
@@ -146,6 +155,7 @@ public class WorldLoader {
             body.createFixture(fdef);
             i++;
         }
+        */
 
         //ITEM - POINTS
         i = 0;
@@ -172,6 +182,15 @@ public class WorldLoader {
 
             i++;
         }
+        i = 0;
+        for(MapObject object: map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            Enemy newEnemy = new Enemy(rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,0.8f,1.7f,world,this.player);
+            newEnemy.getBody().setUserData("Enemy_"+i);
+            enemies.add(newEnemy);
+            i++;
+        }
     }
 
 
@@ -205,6 +224,29 @@ public class WorldLoader {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public Array<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void setEnemies(Array<Enemy> enemies) {
+        this.enemies = enemies;
+    }
 
     public Enemy getEnemy() {
         return enemy;

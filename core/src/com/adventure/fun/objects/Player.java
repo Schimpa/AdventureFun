@@ -33,7 +33,7 @@ public class Player extends LivingObject {
         lives = 3;
         jumpStartPosition = 0;
         maxSpeed = new Vector2(5,5);
-        stepCounter = 0;
+        sound_reload = 0.25f;
 
 
         //SPRITE
@@ -89,9 +89,6 @@ public class Player extends LivingObject {
         bullet.getBody().setLinearVelocity(bullet.getBody().getLinearVelocity().x, -0.1f);
         checkIfLoose();
     }
-
-
-
 
 
     public TextureRegion[] getWalkFrames() {

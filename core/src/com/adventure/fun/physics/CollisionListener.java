@@ -28,6 +28,7 @@ public class CollisionListener implements ContactListener {
 
         Gdx.app.debug("Collision", "Collision between " + contactBody01.getUserData().toString() + " and " + contactBody02.getUserData().toString());
 
+        /*
         if (contactBody01.getUserData().toString().equals("Bullet_Player") || contactBody01.getUserData().toString().equals("Bullet_Enemy")) {
             worldLoader.getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y, worldLoader.getParticles().getExplosion01());
             if (contactBody01.getUserData().toString().equals("Bullet_Player")){
@@ -37,6 +38,7 @@ public class CollisionListener implements ContactListener {
                 worldLoader.getEnemy().getBullet().setRemoveFlag(true);
             }
         }
+        */
 
 
         for(int i = 0;i < worldLoader.getScoreItem_100().getItems().size;i++){
@@ -49,13 +51,16 @@ public class CollisionListener implements ContactListener {
             }
         }
 
-        if (contactBody01.getUserData().toString().equals("Enemy") && contactBody02.getUserData().toString().equals("Bullet_Player") ||
-                contactBody02.getUserData().toString().equals("Enemy") && contactBody01.getUserData().toString().equals("Bullet_Player")){
-            worldLoader.getEnemy().setLives(worldLoader.getEnemy().getLives() -1);
-            if (worldLoader.getEnemy().getLives() <= 0){
-                worldLoader.getEnemy().setRemoveFlag(true);
+        for(int i = 0;i < worldLoader.getEnemies().size;i++){
+            if (contactBody01.getUserData().toString().equals("Enemy_"+i) && contactBody02.getUserData().toString().equals("Bullet_Player") ||
+                    contactBody02.getUserData().toString().equals("Enemy_"+i) && contactBody01.getUserData().toString().equals("Bullet_Player")){
+                worldLoader.getEnemies().get(i).setLives(worldLoader.getEnemies().get(i).getLives() - 1);
+                if (worldLoader.getEnemies().get(i).getLives() <= 0){
+                    worldLoader.getEnemies().get(i).setRemoveFlag(true);
+                }
             }
         }
+
 
 
 

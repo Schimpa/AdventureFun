@@ -16,8 +16,6 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public class Enemy extends LivingObject {
 
-    private Vector2 speed;
-    private Vector2 maxSpeed;
     private Player player;
     private Bullet bullet;
 
@@ -28,9 +26,10 @@ public class Enemy extends LivingObject {
     }
 
     public void init(float x,float y,float sizeX,float sizeY,World world){
-        speed = new Vector2(0.3f,0.3f);
-        maxSpeed = new Vector2(1,1);
+        speed = new Vector2(12f,12f);
+        maxSpeed = new Vector2(2,2);
         removeFlag = false;
+        sound_reload = 0;
 
         lives = 2;
 
@@ -40,7 +39,7 @@ public class Enemy extends LivingObject {
         sprite.setPosition(x, y);
         sprite.setSize(sizeX, sizeY);
 
-        currentFrame = new TextureRegion();
+        currentFrame = new TextureRegion(Textures.point);
 
         //PHYSIK KÖRPER DEFINITION
         bodyDef = new BodyDef();
@@ -65,14 +64,15 @@ public class Enemy extends LivingObject {
         shape.dispose();
     }
 
-    public void logic(){
-
+    public void logic(float deltaTime){
         if (player.getBody().getPosition().x - this.getBody().getPosition().x > -10 &&
                 player.getBody().getPosition().x - this.getBody().getPosition().x < 10){
 
-            this.stateTime += Gdx.graphics.getDeltaTime();
+            this.stateTime += deltaTime;
             //LEFT OR RIGHT
             if (player.getBody().getPosition().x - this.getBody().getPosition().x < 0){
+                this.move(false,deltaTime);
+                /*
                 if (this.getCurrentFrame().isFlipX() == false){
                     for(int i = 0; i < this.getWalkFrames().length;i++){
                         this.getWalkFrames()[i].flip(true,false);
@@ -81,8 +81,13 @@ public class Enemy extends LivingObject {
                 if (this.body.getLinearVelocity().x <= this.maxSpeed.x && this.body.getLinearVelocity().x >= -this.maxSpeed.x){
                     this.body.setLinearVelocity(this.body.getLinearVelocity().x - this.speed.x, this.body.getLinearVelocity().y);
                 }
+                */
             }
+
             if (player.getBody().getPosition().x - this.getBody().getPosition().x > 0){
+                this.move(true,deltaTime);
+            }
+                /*
                 if (this.getCurrentFrame().isFlipX() == true){
                     for(int i = 0; i < this.getWalkFrames().length;i++){
                         this.getWalkFrames()[i].flip(true,false);
@@ -92,6 +97,7 @@ public class Enemy extends LivingObject {
                     this.body.setLinearVelocity(this.body.getLinearVelocity().x + this.speed.x,this.body.getLinearVelocity().y);
                 }
             }
+            */
             this.bullet.shootBullet(this);
         }
     }
@@ -99,9 +105,9 @@ public class Enemy extends LivingObject {
 
     public void update(float deltaTime){
         if (removeFlag != true){
-            logic();
             bullet.update();
             bullet.getBody().setLinearVelocity(bullet.getBody().getLinearVelocity().x, -0.1f);
+            logic(deltaTime);
         }
     }
 
