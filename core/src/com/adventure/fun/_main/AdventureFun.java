@@ -32,12 +32,9 @@ public class AdventureFun extends Game {
 
 		batch = new SpriteBatch();
 
-
 		worldLoader = new WorldLoader();
 
-
 		camera = new Cameras(worldLoader,batch);
-
 
 		Gdx.input.setInputProcessor(worldLoader.getControls());
 
@@ -51,7 +48,7 @@ public class AdventureFun extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-		camera.update();
+		camera.update(Gdx.graphics.getDeltaTime());
 
 		//Aktualisiert Logik
 		worldLoader.getRenderer().setView(camera.getPlayerCamera());

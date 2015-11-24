@@ -71,7 +71,7 @@ public class Cameras {
         hudStage.addActor(table);
     }
 
-    public void update(){
+    public void update(float deltaTime){
 
         score.setText(Integer.toString(worldLoader.getPlayer().getScore()));
         lives.setText(Integer.toString(worldLoader.getPlayer().getLives()));

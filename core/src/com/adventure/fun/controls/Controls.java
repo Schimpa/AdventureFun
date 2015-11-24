@@ -22,25 +22,11 @@ public class Controls implements InputProcessor {
             render.getPlayer().setStateTime(render.getPlayer().getStateTime() + Gdx.graphics.getDeltaTime());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            if (render.getPlayer().getCurrentFrame().isFlipX() == true){
-                for(int i = 0; i < render.getPlayer().getWalkFrames().length;i++){
-                    render.getPlayer().getWalkFrames()[i].flip(true,false);
-                }
-            }
-
-            if (render.getPlayer().getBody().getLinearVelocity().x <= render.getPlayer().getMaxSpeed().x) {
-                render.getPlayer().getBody().setLinearVelocity(render.getPlayer().getBody().getLinearVelocity().x += render.getPlayer().getSpeed().x, render.getPlayer().getBody().getLinearVelocity().y);
-            }
+            render.getPlayer().move(true,Gdx.graphics.getDeltaTime());
         }
+
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            if (render.getPlayer().getCurrentFrame().isFlipX() == false){
-                for(int i = 0; i < render.getPlayer().getWalkFrames().length;i++){
-                    render.getPlayer().getWalkFrames()[i].flip(true,false);
-                }
-            }
-            if (render.getPlayer().getBody().getLinearVelocity().x >= -render.getPlayer().getMaxSpeed().x) {
-                render.getPlayer().getBody().setLinearVelocity(render.getPlayer().getBody().getLinearVelocity().x -= render.getPlayer().getSpeed().x, render.getPlayer().getBody().getLinearVelocity().y);
-            }
+            render.getPlayer().move(false,Gdx.graphics.getDeltaTime());
         }
     }
 

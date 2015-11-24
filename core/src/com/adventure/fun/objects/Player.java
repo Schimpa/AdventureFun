@@ -21,19 +21,19 @@ public class Player extends LivingObject {
 
     private float jumpStartPosition;
 
+    public Player(float x,float y,float sizeX,float sizeY,World world) {
+        init(x,y,sizeX,sizeY,world);
 
-
-
-
-
+    }
 
     public void init(float x,float y,float sizeX,float sizeY,World world) {
         //ATTRIBUTE
-        speed = new Vector2(0.3f,0.3f);
+        speed = new Vector2(12f,12f);
         score = 500;
         lives = 3;
         jumpStartPosition = 0;
         maxSpeed = new Vector2(5,5);
+        stepCounter = 0;
 
 
         //SPRITE
@@ -130,10 +130,6 @@ public class Player extends LivingObject {
         this.jumpStartPosition = jumpStartPosition;
     }
 
-    public Player(float x,float y,float sizeX,float sizeY,World world) {
-        init(x,y,sizeX,sizeY,world);
-
-    }
 
     public Vector2 getMaxSpeed() {
         return maxSpeed;

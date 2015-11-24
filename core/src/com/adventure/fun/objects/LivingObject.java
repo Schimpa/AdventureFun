@@ -45,6 +45,8 @@ public abstract class LivingObject {
     TextureRegion[] walkFrames;
     float stateTime;
 
+    protected float stepCounter;
+
     public void render(){
         //ANIMATION LAUFEN
         if (removeFlag == true && isDestroyed == false) {
@@ -62,7 +64,7 @@ public abstract class LivingObject {
 
 
     public void update(float deltaTime){
-
+        checkIfLoose();
     }
 
     public void createMoveAnimation(){
@@ -90,6 +92,39 @@ public abstract class LivingObject {
             score -= 100;
         }
     }
+
+    public void move(boolean direction,float deltaTime){
+        //LEFT == FALSE | RIGHT == TRUE
+        if (direction == false){
+            stepCounter += deltaTime;
+            if (stepCounter >= 0.5){
+                AudioController.sound_step_02.play(0.2f);
+                stepCounter = 0;
+            }
+            if (this.getCurrentFrame().isFlipX() == false){
+                for(int i = 0; i < this.getWalkFrames().length;i++){
+                    this.getWalkFrames()[i].flip(true,false);
+                }
+            }
+            if (this.getBody().getLinearVelocity().x >= -this.getMaxSpeed().x) {
+
+                this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x -= this.getSpeed().x * deltaTime, this.getBody().getLinearVelocity().y);
+            }
+        }
+        else if (direction == true){
+            if (this.getCurrentFrame().isFlipX() == true){
+                for(int i = 0; i < this.getWalkFrames().length;i++){
+                    this.getWalkFrames()[i].flip(true,false);
+                }
+            }
+            if (this.getBody().getLinearVelocity().x <= this.getMaxSpeed().x) {
+                this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x += this.getSpeed().x * deltaTime, this.getBody().getLinearVelocity().y);
+            }
+        }
+
+
+
+}
 
 
 

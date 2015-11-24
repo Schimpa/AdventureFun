@@ -38,15 +38,17 @@ public class CollisionListener implements ContactListener {
             }
         }
 
-        if (contactBody01.getUserData().toString().equals("Item_Point_0") || contactBody02.getUserData().toString().equals("Item_Point_0")) {
-            for(int i = 0;i < worldLoader.getScoreItem_100().getItems().size; i++) {
-                Body body = worldLoader.getScoreItem_100().getItems().get(i);
-                Gdx.app.debug("Item:" ,body.getUserData().toString());
-                if (body.getUserData().toString().equals("Item_Point_0")){
-                    body.setUserData("Item_Point_0_Destroy");
-                }
+
+        for(int i = 0;i < worldLoader.getScoreItem_100().getItems().size;i++){
+            if (contactBody01.getUserData().toString().equals("Item_Point_"+i) || contactBody02.getUserData().toString().equals("Item_Point_"+i)) {
+                    Body body = worldLoader.getScoreItem_100().getItems().get(i);
+                    Gdx.app.debug("Item:", body.getUserData().toString());
+                    if (body.getUserData().toString().equals("Item_Point_"+i)){
+                        body.setUserData("Item_Point_" + i + "_Destroy");
+                    }
             }
         }
+
         if (contactBody01.getUserData().toString().equals("Enemy") && contactBody02.getUserData().toString().equals("Bullet_Player") ||
                 contactBody02.getUserData().toString().equals("Enemy") && contactBody01.getUserData().toString().equals("Bullet_Player")){
             worldLoader.getEnemy().setLives(worldLoader.getEnemy().getLives() -1);
@@ -54,7 +56,6 @@ public class CollisionListener implements ContactListener {
                 worldLoader.getEnemy().setRemoveFlag(true);
             }
         }
-
 
 
 

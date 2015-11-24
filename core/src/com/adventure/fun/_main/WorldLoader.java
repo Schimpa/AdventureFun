@@ -153,25 +153,22 @@ public class WorldLoader {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             BodyDef bdef = new BodyDef();
-            bdef.type = BodyDef.BodyType.KinematicBody;
+            bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
-
-            Sprite sprite = new Sprite(Textures.point);
-            sprite.setPosition(rect.getX() / 32, rect.getY() / 32 );
-            sprite.setSize(1,1);
 
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(rect.getWidth()/ 2 / 32,rect.getHeight() / 2 / 32);
 
             FixtureDef fdef = new FixtureDef();
             fdef.shape = shape;
+            fdef.isSensor = true;
 
             Body body = world.createBody(bdef);
             body.setUserData("Item_Point_"+i);
             body.createFixture(fdef);
 
             scoreItem_100.getItems().add(body);
-            scoreItem_100.getItems_texture().add(sprite);
+            scoreItem_100.getItems_texture().add(scoreItem_100.createSpriteForBody(rect));
 
             i++;
         }
