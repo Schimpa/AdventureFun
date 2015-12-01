@@ -27,12 +27,12 @@ highMax: 200.0
 relative: false
 scalingCount: 3
 scaling0: 1.0
-scaling1: 0.43137255
+scaling1: 0.47058824
 scaling2: 0.0
 timelineCount: 3
 timeline0: 0.0
-timeline1: 0.47945204
-timeline2: 0.9794521
+timeline1: 0.5
+timeline2: 1.0
 - Life Offset - 
 active: false
 - X Offset - 
@@ -170,12 +170,12 @@ highMax: 200.0
 relative: false
 scalingCount: 3
 scaling0: 1.0
-scaling1: 0.43137255
+scaling1: 0.49019608
 scaling2: 0.0
 timelineCount: 3
 timeline0: 0.0
-timeline1: 0.47945204
-timeline2: 0.9794521
+timeline1: 0.51369864
+timeline2: 1.0
 - Life Offset - 
 active: false
 - X Offset - 
@@ -224,7 +224,7 @@ highMin: 180.0
 highMax: 300.0
 relative: false
 scalingCount: 2
-scaling0: 0.1764706
+scaling0: 1.0
 scaling1: 0.0
 timelineCount: 2
 timeline0: 0.0

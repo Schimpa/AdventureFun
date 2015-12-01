@@ -26,7 +26,7 @@ public abstract class Item{
         name = "DEFAULT";
         this.worldLoader = worldLoader;
         isDestroyed = new Array<Boolean>();
-        for(int i = 0;i < 10;i++){
+        for(int i = 0;i < 100;i++){
             isDestroyed.add(false);
         }
 

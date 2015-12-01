@@ -36,26 +36,27 @@ public class Cameras {
 
 
     public Cameras(WorldLoader worldLoader,SpriteBatch batch){
-
         this.worldLoader = worldLoader;
         this.batch = batch;
 
         playerCamera = new OrthographicCamera();
         playerCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 3, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 3 );
-        viewport = new FitViewport(16*1.5f,9*1.5f,playerCamera);
-        viewport.apply();
+
+
+
+        //viewport = new FitViewport(16*1.5f,9*1.5f,playerCamera);
+        //viewport.apply();
 
         backgroundCamera = new OrthographicCamera();
-        backgroundCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 3, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 3);
-
+        backgroundCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 5, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 5);
 
         createHUD();
+
 
     }
 
     public void createHUD(){
-        hudViewport = new FitViewport(500,500,new OrthographicCamera());
-        hudStage = new Stage(hudViewport,batch);
+        hudStage = new Stage(new FitViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),batch);
 
         score = new Label(String.format("%03d", this.worldLoader.getPlayer().getScore()), new Label.LabelStyle(new BitmapFont(), Color.CYAN));
         lives = new Label(String.format("%03d", this.worldLoader.getPlayer().getLives()), new Label.LabelStyle(new BitmapFont(), Color.CYAN));

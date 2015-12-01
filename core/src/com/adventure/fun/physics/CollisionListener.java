@@ -28,17 +28,33 @@ public class CollisionListener implements ContactListener {
 
         Gdx.app.debug("Collision", "Collision between " + contactBody01.getUserData().toString() + " and " + contactBody02.getUserData().toString());
 
-        /*
-        if (contactBody01.getUserData().toString().equals("Bullet_Player") || contactBody01.getUserData().toString().equals("Bullet_Enemy")) {
-            worldLoader.getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y, worldLoader.getParticles().getExplosion01());
-            if (contactBody01.getUserData().toString().equals("Bullet_Player")){
-                worldLoader.getPlayer().getBullet().setRemoveFlag(true);
+
+
+        for(int i = 0;i < worldLoader.getEnemies().size;i++) {
+            if (contactBody01.getUserData().toString().equals("Bullet_Enemy_"+i) && !contactBody02.getUserData().toString().equals("Enemy_"+i) ) {
+                worldLoader.getEnemies().get(i).getBullet().setRemoveFlag(true);
+                if (contactBody02.getUserData().toString().equals("Player")){
+                    worldLoader.getPlayer().setLives(worldLoader.getPlayer().getLives()-1);
+                }
+                worldLoader.getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y, worldLoader.getParticles().getExplosion01());
             }
-            if (contactBody01.getUserData().toString().equals("Bullet_Enemy")){
-                worldLoader.getEnemy().getBullet().setRemoveFlag(true);
+            if (contactBody02.getUserData().toString().equals("Bullet_Enemy_"+i) && !contactBody01.getUserData().toString().equals("Enemy_"+i) ) {
+                if (contactBody01.getUserData().toString().equals("Player")){
+                    worldLoader.getPlayer().setLives(worldLoader.getPlayer().getLives()-1);
+                }
+                worldLoader.getParticles().playEffect(contactBody02.getPosition().x, contactBody02.getPosition().y, worldLoader.getParticles().getExplosion01());
+                worldLoader.getEnemies().get(i).getBullet().setRemoveFlag(true);
             }
         }
-        */
+
+        if (contactBody02.getUserData().toString().equals("Bullet_Player")) {
+            worldLoader.getParticles().playEffect(contactBody02.getPosition().x, contactBody02.getPosition().y, worldLoader.getParticles().getExplosion01());
+            worldLoader.getPlayer().getBullet().setRemoveFlag(true);
+        }
+        if (contactBody01.getUserData().toString().equals("Bullet_Player")) {
+            worldLoader.getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y, worldLoader.getParticles().getExplosion01());
+            worldLoader.getPlayer().getBullet().setRemoveFlag(true);
+        }
 
 
         for(int i = 0;i < worldLoader.getScoreItem_100().getItems().size;i++){
@@ -60,37 +76,6 @@ public class CollisionListener implements ContactListener {
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 

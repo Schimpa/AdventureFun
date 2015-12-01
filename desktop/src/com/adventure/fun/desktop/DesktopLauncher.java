@@ -1,5 +1,6 @@
 package com.adventure.fun.desktop;
 
+import com.adventure.fun._main.MainWindow;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.adventure.fun._main.AdventureFun;
@@ -12,7 +13,16 @@ public class DesktopLauncher {
 
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new AdventureFun(), config);
+		config.width = 1920;
+		config.height = 1080;
+
+
+		// fullscreen
+		config.fullscreen = true;
+		// vSync
+		config.vSyncEnabled = true;
+		System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
+		new LwjglApplication(new MainWindow(), config);
 	}
 
 

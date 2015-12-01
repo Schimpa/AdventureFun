@@ -4,11 +4,14 @@ import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
-public class AdventureFun extends Game {
+public class AdventureFun implements Screen {
+	private Game game;
+
 	private SpriteBatch batch;
 
 	private WorldLoader worldLoader;
@@ -17,15 +20,8 @@ public class AdventureFun extends Game {
 
 	private Cameras camera;
 
-	float x;
-
-
-
-	
-	@Override
-	public void create () {
-
-
+	public AdventureFun(Game game){
+		this.game = game;
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
 		debugRenderer = new Box2DDebugRenderer();
@@ -38,21 +34,34 @@ public class AdventureFun extends Game {
 
 		Gdx.input.setInputProcessor(worldLoader.getControls());
 
+	}
+
+	public void create() {
+
+	}
+
+
+	public void render() {
+
 
 	}
 
 	@Override
-	public void render() {
+	public void show() {
+	}
+
+	@Override
+	public void render(float delta) {
 		//Reinigt Bildschirm
 		Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-		camera.update(Gdx.graphics.getDeltaTime());
+		camera.update(delta);
 
 		//Aktualisiert Logik
 		worldLoader.getRenderer().setView(camera.getPlayerCamera());
-		worldLoader.updateWorld(Gdx.graphics.getDeltaTime());
+		worldLoader.updateWorld(delta);
 
 
 		//Rendert alle Objeckte innerhalb des batchs
@@ -74,53 +83,31 @@ public class AdventureFun extends Game {
 
 	@Override
 	public void resize(int width,int height){
+		camera.getPlayerCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 2, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 2 );
+		camera.getBackgroundCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 2, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 2 );
+}
+
+
+	@Override
+	public void pause() {
+
+	}
+
+	@Override
+	public void resume() {
+
+	}
+
+	@Override
+	public void hide() {
 
 	}
 
 
+	@Override
+	public void dispose() {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	}
 
 
 	public SpriteBatch getBatch() {

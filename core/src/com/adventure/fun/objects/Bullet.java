@@ -44,6 +44,7 @@ public class Bullet extends LivingObject {
         fixtureDef.isSensor = true;
         fixtureDef.restitution = 0;
         fixtureDef.density = 0;
+        fixtureDef.isSensor = true;
 
 
         body = world.createBody(bodyDef);
@@ -56,7 +57,6 @@ public class Bullet extends LivingObject {
         this.region = region;
 
         shape.dispose();
-
     }
 
     public void shootBullet(LivingObject object){
@@ -78,7 +78,6 @@ public class Bullet extends LivingObject {
                 }
             }
         }
-
     }
 
     public void update()

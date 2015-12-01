@@ -30,12 +30,14 @@ public class Enemy extends LivingObject {
         maxSpeed = new Vector2(2,2);
         removeFlag = false;
         sound_reload = 0;
+        sprite = new Sprite();
 
         lives = 2;
 
         bullet = new Bullet(-100,-100,0.8f,0.2f,world,Textures.bullet,"Bullet_Enemy");
+        this.bullet.setSpeedX(10);
 
-        sprite = new Sprite();
+
         sprite.setPosition(x, y);
         sprite.setSize(sizeX, sizeY);
 
@@ -59,45 +61,26 @@ public class Enemy extends LivingObject {
         body.createFixture(fixtureDef);
         body.setUserData("Enemy");
 
-        createMoveAnimation();
+        createAnimation(Textures.alien_move,3,1);
 
         shape.dispose();
     }
 
     public void logic(float deltaTime){
         if (player.getBody().getPosition().x - this.getBody().getPosition().x > -10 &&
-                player.getBody().getPosition().x - this.getBody().getPosition().x < 10){
+                player.getBody().getPosition().x - this.getBody().getPosition().x < 10&&
+                player.getBody().getPosition().y - this.getBody().getPosition().y > -5 &&
+                player.getBody().getPosition().y - this.getBody().getPosition().y < 5 ){
 
             this.stateTime += deltaTime;
             //LEFT OR RIGHT
             if (player.getBody().getPosition().x - this.getBody().getPosition().x < 0){
                 this.move(false,deltaTime);
-                /*
-                if (this.getCurrentFrame().isFlipX() == false){
-                    for(int i = 0; i < this.getWalkFrames().length;i++){
-                        this.getWalkFrames()[i].flip(true,false);
-                    }
-                }
-                if (this.body.getLinearVelocity().x <= this.maxSpeed.x && this.body.getLinearVelocity().x >= -this.maxSpeed.x){
-                    this.body.setLinearVelocity(this.body.getLinearVelocity().x - this.speed.x, this.body.getLinearVelocity().y);
-                }
-                */
             }
 
             if (player.getBody().getPosition().x - this.getBody().getPosition().x > 0){
                 this.move(true,deltaTime);
             }
-                /*
-                if (this.getCurrentFrame().isFlipX() == true){
-                    for(int i = 0; i < this.getWalkFrames().length;i++){
-                        this.getWalkFrames()[i].flip(true,false);
-                    }
-                }
-                if (this.body.getLinearVelocity().x <= this.maxSpeed.x && this.body.getLinearVelocity().x >= -this.maxSpeed.x){
-                    this.body.setLinearVelocity(this.body.getLinearVelocity().x + this.speed.x,this.body.getLinearVelocity().y);
-                }
-            }
-            */
             this.bullet.shootBullet(this);
         }
     }

@@ -34,7 +34,6 @@ public class WorldLoader {
 
     //Spieler
     private Player player;
-    private Enemy enemy;
     private Array<Enemy> enemies;
 
     //Items
@@ -62,8 +61,8 @@ public class WorldLoader {
         scoreItem_100 = new ScoreItem_100(this);
         enemies = new Array<Enemy>();
 
-        world = new World(new Vector2(0,-20), true);
-        player = new Player(3,5,0.8f,1.7f,world);
+        world = new World(new Vector2(0,-10), true);
+        player = new Player(17,18,0.8f,1.7f,world);
 
         particles = new Particles();
 
@@ -110,12 +109,12 @@ public class WorldLoader {
 
     //Lädt die Karte aus Tiled und erstellt Physik mit Box2d
     public void createMap(){
-        map = new TmxMapLoader().load("maps/map01.tmx");
+        map = new TmxMapLoader().load("maps/map04.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1/32f);
 
         //GROUND
         int i = 0;
-        for(MapObject object: map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object: map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             BodyDef bdef = new BodyDef();
             bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
@@ -159,7 +158,7 @@ public class WorldLoader {
 
         //ITEM - POINTS
         i = 0;
-        for(MapObject object: map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object: map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             BodyDef bdef = new BodyDef();
@@ -183,11 +182,12 @@ public class WorldLoader {
             i++;
         }
         i = 0;
-        for(MapObject object: map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object: map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             Enemy newEnemy = new Enemy(rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,0.8f,1.7f,world,this.player);
             newEnemy.getBody().setUserData("Enemy_"+i);
+            newEnemy.getBullet().getBody().setUserData("Bullet_Enemy_"+i);
             enemies.add(newEnemy);
             i++;
         }
@@ -246,14 +246,6 @@ public class WorldLoader {
 
     public void setEnemies(Array<Enemy> enemies) {
         this.enemies = enemies;
-    }
-
-    public Enemy getEnemy() {
-        return enemy;
-    }
-
-    public void setEnemy(Enemy enemy) {
-        this.enemy = enemy;
     }
 
     public Player getPlayer() {

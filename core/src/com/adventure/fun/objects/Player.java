@@ -61,7 +61,8 @@ public class Player extends LivingObject {
         //JETZTIGE ANIMATION
         currentFrame = new TextureRegion();
 
-        createMoveAnimation();
+        createAnimation(Textures.player_move,4,1);
+        createAnimation(Textures.alien_move,3,1);
 
         body = world.createBody(bodyDef);
         body.setUserData("Player");

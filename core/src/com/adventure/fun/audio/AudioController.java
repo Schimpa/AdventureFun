@@ -19,5 +19,5 @@ public class AudioController {
 
     public static Sound sound_die = Gdx.audio.newSound(Gdx.files.internal("audio/papierstau.ogg"));
 
-    public static Music music_ambient = Gdx.audio.newMusic(Gdx.files.internal("audio/Ambient.mp3"));
+    public static Music music_ambient = Gdx.audio.newMusic(Gdx.files.internal("audio/Ambient2.mp3"));
 }

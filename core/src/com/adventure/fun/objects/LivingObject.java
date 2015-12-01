@@ -3,6 +3,7 @@ package com.adventure.fun.objects;
 import com.adventure.fun.audio.AudioController;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -69,14 +70,14 @@ public abstract class LivingObject {
         sound_reload += deltaTime;
     }
 
-    public void createMoveAnimation(){
-        TextureRegion[][] tmp = TextureRegion.split(Textures.alien_move,
-                Textures.alien_move.getWidth()/3, Textures.alien_move.getHeight());
+    public void createAnimation(Texture texture,int lengthX,int lengthY){
+        TextureRegion[][] tmp = TextureRegion.split(texture,
+                texture.getWidth()/lengthX, texture.getHeight()/lengthY);
 
-        walkFrames = new TextureRegion[3];
+        walkFrames = new TextureRegion[lengthX*lengthY];
         int index = 0;
-        for (int i = 0; i < 1; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < lengthY; i++) {
+            for (int j = 0; j < lengthX; j++) {
                 walkFrames[index++] = tmp[i][j];
             }
         }
@@ -92,6 +93,8 @@ public abstract class LivingObject {
             body.setTransform(1, 5, 0);
             lives -= 1;
             score -= 100;
+        }else if (lives <= 0){
+            this.getBody().getWorld().destroyBody(this.body);
         }
     }
 
@@ -130,38 +133,6 @@ public abstract class LivingObject {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
