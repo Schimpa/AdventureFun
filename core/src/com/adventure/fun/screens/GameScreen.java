@@ -1,18 +1,20 @@
-package com.adventure.fun._main;
+package com.adventure.fun.screens;
 
+import com.adventure.fun._main.Cameras;
+import com.adventure.fun._main.MainWindow;
+import com.adventure.fun._main.WorldLoader;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
-public class AdventureFun implements Screen {
-	private Game game;
-
-	private SpriteBatch batch;
+public class GameScreen implements Screen {
+	private MainWindow game;
 
 	private WorldLoader worldLoader;
 
@@ -20,20 +22,24 @@ public class AdventureFun implements Screen {
 
 	private Cameras camera;
 
-	public AdventureFun(Game game){
+	public GameScreen(MainWindow game){
 		this.game = game;
+
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
 		debugRenderer = new Box2DDebugRenderer();
 
-		batch = new SpriteBatch();
+		worldLoader = new WorldLoader(this);
 
-		worldLoader = new WorldLoader();
+		camera = new Cameras(worldLoader,game.getBatch());
 
-		camera = new Cameras(worldLoader,batch);
+		InputMultiplexer multiplexer = new InputMultiplexer();
 
-		Gdx.input.setInputProcessor(worldLoader.getControls());
 
+		multiplexer.addProcessor(camera.getHudStage());
+		multiplexer.addProcessor(worldLoader.getControls());
+
+		Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	public void create() {
@@ -56,7 +62,6 @@ public class AdventureFun implements Screen {
 		Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
 		camera.update(delta);
 
 		//Aktualisiert Logik
@@ -65,14 +70,14 @@ public class AdventureFun implements Screen {
 
 
 		//Rendert alle Objeckte innerhalb des batchs
-		batch.begin();
-		batch.setProjectionMatrix(camera.getBackgroundCamera().combined);
-		batch.draw(Textures.background, -20, -20, 50, 50);
-		batch.end();
+		game.getBatch().begin();
+		game.getBatch().setProjectionMatrix(camera.getBackgroundCamera().combined);
+		game.getBatch().draw(Textures.background, -20, -20, 50, 50);
+		game.getBatch().end();
 
 		//Rendert tmx map
-		batch.setProjectionMatrix(camera.getPlayerCamera().combined);
-		worldLoader.renderMap(batch);
+		game.getBatch().setProjectionMatrix(camera.getPlayerCamera().combined);
+		worldLoader.renderMap(game.getBatch());
 
 		//Rendert Physik-Debug Texturen
 		debugRenderer.render(worldLoader.getWorld(),camera.getPlayerCamera().combined);
@@ -83,8 +88,9 @@ public class AdventureFun implements Screen {
 
 	@Override
 	public void resize(int width,int height){
-		camera.getPlayerCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 2, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 2 );
+		//camera.getPlayerCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 2, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 2 );
 		camera.getBackgroundCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 2, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 2 );
+		camera.getHudStage().getViewport().update(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 }
 
 
@@ -106,17 +112,20 @@ public class AdventureFun implements Screen {
 
 	@Override
 	public void dispose() {
-
+		worldLoader.dispose();
+		debugRenderer.dispose();
+		camera.dispose();
+		game.dispose();
 	}
 
 
-	public SpriteBatch getBatch() {
-		return batch;
-	}
 
-	public void setBatch(SpriteBatch batch) {
-		this.batch = batch;
-	}
+
+
+
+
+
+
 
 	public WorldLoader getWorldLoader() {
 		return worldLoader;
@@ -132,5 +141,21 @@ public class AdventureFun implements Screen {
 
 	public void setDebugRenderer(Box2DDebugRenderer debugRenderer) {
 		this.debugRenderer = debugRenderer;
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(MainWindow game) {
+		this.game = game;
+	}
+
+	public Cameras getCamera() {
+		return camera;
+	}
+
+	public void setCamera(Cameras camera) {
+		this.camera = camera;
 	}
 }

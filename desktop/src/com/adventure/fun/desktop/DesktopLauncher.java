@@ -3,7 +3,6 @@ package com.adventure.fun.desktop;
 import com.adventure.fun._main.MainWindow;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.adventure.fun._main.AdventureFun;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
 public class DesktopLauncher {
@@ -13,15 +12,14 @@ public class DesktopLauncher {
 
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+
 		config.width = 1920;
 		config.height = 1080;
-
-
 		// fullscreen
-		config.fullscreen = true;
+		config.fullscreen = false;
 		// vSync
 		config.vSyncEnabled = true;
-		System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
+		//System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 		new LwjglApplication(new MainWindow(), config);
 	}
 

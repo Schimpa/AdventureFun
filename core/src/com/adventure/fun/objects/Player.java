@@ -2,6 +2,7 @@ package com.adventure.fun.objects;
 
 import com.adventure.fun.controls.Controls;
 import com.adventure.fun.texture.Textures;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,13 +14,16 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Player extends LivingObject {
 
-    private boolean isJumping = true;
+
 
     private Controls controls;
 
     private Bullet bullet;
 
     private float jumpStartPosition;
+
+    private boolean isMovingRight;
+    private boolean isMovingLeft;
 
     public Player(float x,float y,float sizeX,float sizeY,World world) {
         init(x,y,sizeX,sizeY,world);
@@ -35,6 +39,8 @@ public class Player extends LivingObject {
         maxSpeed = new Vector2(5,5);
         sound_reload = 0.25f;
 
+        isMovingRight = false;
+        isMovingLeft = false;
 
         //SPRITE
         sprite = new Sprite();
@@ -86,6 +92,12 @@ public class Player extends LivingObject {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+        if (isMovingRight == true){
+            this.move(true, Gdx.graphics.getDeltaTime());
+        }
+        if (isMovingLeft == true){
+            this.move(false, Gdx.graphics.getDeltaTime());
+        }
         bullet.update();
         bullet.getBody().setLinearVelocity(bullet.getBody().getLinearVelocity().x, -0.1f);
         checkIfLoose();
@@ -137,13 +149,7 @@ public class Player extends LivingObject {
         this.maxSpeed = maxSpeed;
     }
 
-    public boolean getIsJumping() {
-        return isJumping;
-    }
 
-    public void setIsJumping(boolean isJumping) {
-        this.isJumping = isJumping;
-    }
 
     public Controls getControls() {
         return controls;
@@ -167,5 +173,21 @@ public class Player extends LivingObject {
 
     public void setBullet(Bullet bullet) {
         this.bullet = bullet;
+    }
+
+    public boolean isMovingRight() {
+        return isMovingRight;
+    }
+
+    public void setIsMovingRight(boolean isMovingRight) {
+        this.isMovingRight = isMovingRight;
+    }
+
+    public boolean isMovingLeft() {
+        return isMovingLeft;
+    }
+
+    public void setIsMovingLeft(boolean isMovingLeft) {
+        this.isMovingLeft = isMovingLeft;
     }
 }

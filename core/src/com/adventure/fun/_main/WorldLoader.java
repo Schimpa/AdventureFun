@@ -6,7 +6,9 @@ import com.adventure.fun.effects.Particles;
 import com.adventure.fun.items.ScoreItem_100;
 import com.adventure.fun.objects.Enemy;
 import com.adventure.fun.objects.Player;
+import com.adventure.fun.screens.GameScreen;
 import com.adventure.fun.texture.Textures;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -36,11 +38,13 @@ public class WorldLoader {
     private Player player;
     private Array<Enemy> enemies;
 
+    private GameScreen gameScreen;
+
     //Items
     private ScoreItem_100 scoreItem_100;
 
     //Steuerung
-    Controls controls = new Controls(this);
+    Controls controls;
 
     //Welt
     private World world;
@@ -54,15 +58,26 @@ public class WorldLoader {
     //Partikel
     private Particles particles;
 
+    public void dispose(){
+        world.dispose();
+        for(Enemy enemy: enemies){
+            enemy.destroy();
+        }
+        player.destroy();
+        map.dispose();
+        renderer.dispose();
+        particles.dispose();
+    }
 
-
-    public WorldLoader(){
+    public WorldLoader(GameScreen gameScreen){
         //Pickup Items
+        this.gameScreen = gameScreen;
         scoreItem_100 = new ScoreItem_100(this);
         enemies = new Array<Enemy>();
+        controls = new Controls(this);
 
         world = new World(new Vector2(0,-10), true);
-        player = new Player(17,18,0.8f,1.7f,world);
+        player = new Player(17,38,0.8f*2,1.7f*2,world);
 
         particles = new Particles();
 
@@ -71,7 +86,8 @@ public class WorldLoader {
         AudioController.music_ambient.play();
         AudioController.music_ambient.setVolume(0.2f);
 
-        world.setContactListener(new com.adventure.fun.physics.CollisionListener(this));
+        world.setContactListener(new com.adventure.fun.physics.CollisionListener(this.gameScreen));
+
     }
 
 
@@ -93,7 +109,7 @@ public class WorldLoader {
     }
 
     public void updateWorld(float deltaTime){
-        controls.movementControls();
+        controls.update();
         player.update(deltaTime);
 
         for(Enemy enemy: enemies){
@@ -109,7 +125,7 @@ public class WorldLoader {
 
     //Lädt die Karte aus Tiled und erstellt Physik mit Box2d
     public void createMap(){
-        map = new TmxMapLoader().load("maps/map04.tmx");
+        map = new TmxMapLoader().load("maps/map01.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1/32f);
 
         //GROUND

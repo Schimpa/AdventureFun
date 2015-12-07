@@ -29,6 +29,9 @@ public class Particles {
 
 
     }
+    public void dispose(){
+        explosion01.dispose();
+    }
 
     public void render(SpriteBatch batch,float deltaTime){
         explosion01.draw(batch,deltaTime);

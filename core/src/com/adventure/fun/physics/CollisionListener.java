@@ -2,6 +2,8 @@ package com.adventure.fun.physics;
 
 import com.adventure.fun._main.WorldLoader;
 import com.adventure.fun.objects.Bullet;
+import com.adventure.fun.screens.GameScreen;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -15,10 +17,10 @@ import com.badlogic.gdx.physics.box2d.Manifold;
  */
 public class CollisionListener implements ContactListener {
 
-    private WorldLoader worldLoader;
+    private GameScreen gameScreen;
 
-    public CollisionListener(WorldLoader worldLoader){
-        this.worldLoader = worldLoader;
+    public CollisionListener(GameScreen gameScreen){
+        this.gameScreen = gameScreen;
     }
 
     @Override
@@ -30,36 +32,36 @@ public class CollisionListener implements ContactListener {
 
 
 
-        for(int i = 0;i < worldLoader.getEnemies().size;i++) {
+        for(int i = 0;i < gameScreen.getWorldLoader().getEnemies().size;i++) {
             if (contactBody01.getUserData().toString().equals("Bullet_Enemy_"+i) && !contactBody02.getUserData().toString().equals("Enemy_"+i) ) {
-                worldLoader.getEnemies().get(i).getBullet().setRemoveFlag(true);
+                gameScreen.getWorldLoader().getEnemies().get(i).getBullet().setRemoveFlag(true);
                 if (contactBody02.getUserData().toString().equals("Player")){
-                    worldLoader.getPlayer().setLives(worldLoader.getPlayer().getLives()-1);
+                    gameScreen.getWorldLoader().getPlayer().setLives(gameScreen.getWorldLoader().getPlayer().getLives()-1);
                 }
-                worldLoader.getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y, worldLoader.getParticles().getExplosion01());
+                gameScreen.getWorldLoader().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y, gameScreen.getWorldLoader().getParticles().getExplosion01());
             }
             if (contactBody02.getUserData().toString().equals("Bullet_Enemy_"+i) && !contactBody01.getUserData().toString().equals("Enemy_"+i) ) {
                 if (contactBody01.getUserData().toString().equals("Player")){
-                    worldLoader.getPlayer().setLives(worldLoader.getPlayer().getLives()-1);
+                    gameScreen.getWorldLoader().getPlayer().setLives(gameScreen.getWorldLoader().getPlayer().getLives()-1);
                 }
-                worldLoader.getParticles().playEffect(contactBody02.getPosition().x, contactBody02.getPosition().y, worldLoader.getParticles().getExplosion01());
-                worldLoader.getEnemies().get(i).getBullet().setRemoveFlag(true);
+                gameScreen.getWorldLoader().getParticles().playEffect(contactBody02.getPosition().x, contactBody02.getPosition().y, gameScreen.getWorldLoader().getParticles().getExplosion01());
+                gameScreen.getWorldLoader().getEnemies().get(i).getBullet().setRemoveFlag(true);
             }
         }
 
         if (contactBody02.getUserData().toString().equals("Bullet_Player")) {
-            worldLoader.getParticles().playEffect(contactBody02.getPosition().x, contactBody02.getPosition().y, worldLoader.getParticles().getExplosion01());
-            worldLoader.getPlayer().getBullet().setRemoveFlag(true);
+            gameScreen.getWorldLoader().getParticles().playEffect(contactBody02.getPosition().x, contactBody02.getPosition().y, gameScreen.getWorldLoader().getParticles().getExplosion01());
+            gameScreen.getWorldLoader().getPlayer().getBullet().setRemoveFlag(true);
         }
         if (contactBody01.getUserData().toString().equals("Bullet_Player")) {
-            worldLoader.getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y, worldLoader.getParticles().getExplosion01());
-            worldLoader.getPlayer().getBullet().setRemoveFlag(true);
+            gameScreen.getWorldLoader().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y, gameScreen.getWorldLoader().getParticles().getExplosion01());
+            gameScreen.getWorldLoader().getPlayer().getBullet().setRemoveFlag(true);
         }
 
 
-        for(int i = 0;i < worldLoader.getScoreItem_100().getItems().size;i++){
+        for(int i = 0;i < gameScreen.getWorldLoader().getScoreItem_100().getItems().size;i++){
             if (contactBody01.getUserData().toString().equals("Item_Point_"+i) || contactBody02.getUserData().toString().equals("Item_Point_"+i)) {
-                    Body body = worldLoader.getScoreItem_100().getItems().get(i);
+                    Body body = gameScreen.getWorldLoader().getScoreItem_100().getItems().get(i);
                     Gdx.app.debug("Item:", body.getUserData().toString());
                     if (body.getUserData().toString().equals("Item_Point_"+i)){
                         body.setUserData("Item_Point_" + i + "_Destroy");
@@ -67,12 +69,12 @@ public class CollisionListener implements ContactListener {
             }
         }
 
-        for(int i = 0;i < worldLoader.getEnemies().size;i++){
+        for(int i = 0;i < gameScreen.getWorldLoader().getEnemies().size;i++){
             if (contactBody01.getUserData().toString().equals("Enemy_"+i) && contactBody02.getUserData().toString().equals("Bullet_Player") ||
                     contactBody02.getUserData().toString().equals("Enemy_"+i) && contactBody01.getUserData().toString().equals("Bullet_Player")){
-                worldLoader.getEnemies().get(i).setLives(worldLoader.getEnemies().get(i).getLives() - 1);
-                if (worldLoader.getEnemies().get(i).getLives() <= 0){
-                    worldLoader.getEnemies().get(i).setRemoveFlag(true);
+                gameScreen.getWorldLoader().getEnemies().get(i).setLives(gameScreen.getWorldLoader().getEnemies().get(i).getLives() - 1);
+                if (gameScreen.getWorldLoader().getEnemies().get(i).getLives() <= 0){
+                    gameScreen.getWorldLoader().getEnemies().get(i).setRemoveFlag(true);
                 }
             }
         }
@@ -94,4 +96,5 @@ public class CollisionListener implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
+
 }

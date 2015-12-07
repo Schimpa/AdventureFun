@@ -5,6 +5,10 @@
  </tileset>
  <tileset firstgid="257" name="Shadow" tilewidth="32" tileheight="32" tilecount="30">
   <image source="Texturen_PlanetEscape/TexturblockPack/Shadows/schattenblöcke_Packet.png" width="160" height="192"/>
+  <terraintypes>
+   <terrain name="Neues Terrain" tile="-1"/>
+   <terrain name="" tile="-1"/>
+  </terraintypes>
  </tileset>
  <layer name="Background" width="500" height="100">
   <data encoding="base64" compression="zlib">
@@ -26,7 +30,7 @@
    eJzt3U1uozAAgFHIIh2pzG4OyNE4So42WJQZBDaGFmjivid5kx+FrL4YjFNVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBdV49fdVW9RUZ4Lvaee1211x4lAJASev2773ZqvNdV17d7IfS8f66NvQcAuE6u5c0wP4/ScwD4frmWT+bmXez9eg5AyWLXoJ9xvGdanuv52u8BAHh1uUa+0kj1/D48F52b6zkAJUhch35cObYcw1d6HvTz807PASjVvG23vp1vF4/bbO4cO4b5axK/AUK329j3dP0cgJLN57ep9eFn6nvdNpPWxubY89ekeu5+NQB+oq3nq88SOnsbWrzo+Z/6/9jS87XfI3oOQMm+u+djp4+Yn+fWtzeunwNQqGfrebh2fnTPx/Xteg5AqSLnq9v7MEc+fEyNj92W6/G62P3n89d9Zn27ngNQqkgTTxnzdefh/Hdqj5gmMnItz/Xc9XMASralk18dzTDn7qafu+X8+Sc+x/p2AH6kwnr+SK1v/zgfkPw8AHhlpfS8+dh3JvYdrYcDoHQl9Hyt5aOwHs75dgDYbkfPD9n/PdfywPVzANhn0vFxLHpeD48dsv977Bjq4T72f/fF2U8GAPbZ0vMz1cP/tyzumdNzANhu3vMr/+dlbPmee9gBgKVYz6/YR3at5XoOAPtEzrdXZ+4jO907NtXytaYDAEuxnjeR69lHj1zL9RwAtkv1/BmGngPANlfsUXPkAAAAgDP8BRENxWM=
   </data>
  </layer>
- <objectgroup name="Ground">
+ <objectgroup name="Ground" opacity="0.3">
   <object id="6" x="1311.5" y="2691.25" width="385.167" height="32"/>
   <object id="7" x="512" y="2690.75" width="704" height="32"/>
   <object id="9" x="481" y="2550.91" width="32" height="146"/>

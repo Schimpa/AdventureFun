@@ -25,6 +25,7 @@ public abstract class LivingObject {
     protected Vector2 maxSpeed;
     protected int lives;
     protected int score;
+    private boolean isJumping = true;
 
     //Grafikattribute
     protected Sprite sprite;
@@ -134,6 +135,16 @@ public abstract class LivingObject {
 
 }
 
+    public void playerJump(){
+        if (this.getBody().getLinearVelocity().y <= 0.1f && this.getBody().getLinearVelocity().y >= -0.1f ){
+            this.setIsJumping(false);
+        }
+        if (this.getIsJumping() == false){
+            this.setIsJumping(true);
+            AudioController.sound_jump.play(0.1f);
+            this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x,10);
+        }
+    }
 
 
 
@@ -147,6 +158,13 @@ public abstract class LivingObject {
 
 
 
+    public boolean getIsJumping() {
+        return isJumping;
+    }
+
+    public void setIsJumping(boolean isJumping) {
+        this.isJumping = isJumping;
+    }
 
     public Sprite getSprite() {
         return sprite;
