@@ -76,8 +76,8 @@ public class WorldLoader {
         enemies = new Array<Enemy>();
         controls = new Controls(this);
 
-        world = new World(new Vector2(0,-10), true);
-        player = new Player(17,38,0.8f*2,1.7f*2,world);
+        world = new World(new Vector2(0,-9.81f), true);
+        player = new Player(17,38,1.6f,3.4f,world);
 
         particles = new Particles();
 
@@ -201,7 +201,7 @@ public class WorldLoader {
         for(MapObject object: map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            Enemy newEnemy = new Enemy(rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,0.8f,1.7f,world,this.player);
+            Enemy newEnemy = new Enemy(rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world,this.player);
             newEnemy.getBody().setUserData("Enemy_"+i);
             newEnemy.getBullet().getBody().setUserData("Bullet_Enemy_"+i);
             enemies.add(newEnemy);

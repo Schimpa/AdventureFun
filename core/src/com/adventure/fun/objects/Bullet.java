@@ -70,10 +70,10 @@ public class Bullet extends LivingObject {
             if (this.getBody().getLinearVelocity().x == 0){
                 AudioController.sound_shoot_02.play(0.5f);
                 if (object.getCurrentFrame().isFlipX() == false){
-                    this.getBody().setTransform(object.getBody().getPosition().x + this.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
+                    this.getBody().setTransform(object.getBody().getPosition().x + object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
                     this.getBody().setLinearVelocity(this.getSpeedX(), 0);
                 } else if (object.getCurrentFrame().isFlipX() == true) {
-                    this.getBody().setTransform(object.getBody().getPosition().x - this.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
+                    this.getBody().setTransform(object.getBody().getPosition().x - object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
                     this.getBody().setLinearVelocity(-this.getSpeedX(), 0);
                 }
             }

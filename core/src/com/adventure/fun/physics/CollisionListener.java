@@ -30,6 +30,17 @@ public class CollisionListener implements ContactListener {
 
         Gdx.app.debug("Collision", "Collision between " + contactBody01.getUserData().toString() + " and " + contactBody02.getUserData().toString());
 
+        for(int i = 0;i < gameScreen.getWorldLoader().getEnemies().size;i++){
+            if (contactBody01.getUserData().toString().equals("Player") && contactBody02.getUserData().toString().equals("Enemy_"+i) ||
+                    contactBody02.getUserData().toString().equals("Player") && contactBody01.getUserData().toString().equals("Enemy_"+i)){
+                if (gameScreen.getWorldLoader().getPlayer().getDamageCoolDownTime() >= 1){
+                    gameScreen.getWorldLoader().getPlayer().setLives(gameScreen.getWorldLoader().getPlayer().getLives() -1);
+                    gameScreen.getWorldLoader().getPlayer().setDamageCoolDownTime(0);
+                }
+            }
+        }
+
+
 
 
         for(int i = 0;i < gameScreen.getWorldLoader().getEnemies().size;i++) {
@@ -78,7 +89,6 @@ public class CollisionListener implements ContactListener {
                 }
             }
         }
-
     }
 
 

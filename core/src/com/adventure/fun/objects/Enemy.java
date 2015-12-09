@@ -81,7 +81,7 @@ public class Enemy extends LivingObject {
             if (player.getBody().getPosition().x - this.getBody().getPosition().x > 0){
                 this.move(true,deltaTime);
             }
-            this.bullet.shootBullet(this);
+            //this.bullet.shootBullet(this);
         }
     }
 

@@ -95,7 +95,7 @@ public abstract class LivingObject {
             lives -= 1;
             score -= 100;
         }else if (lives <= 0){
-            this.getBody().getWorld().destroyBody(this.body);
+            Gdx.app.exit();
         }
     }
 
@@ -108,7 +108,6 @@ public abstract class LivingObject {
             AudioController.sound_step_01.play(0.2f);
             sound_reload = 0;
         }
-
 
         if (direction == false){
             if (this.getCurrentFrame().isFlipX() == false){
@@ -130,9 +129,6 @@ public abstract class LivingObject {
                 this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x += this.getSpeed().x * deltaTime, this.getBody().getLinearVelocity().y);
             }
         }
-
-
-
 }
 
     public void playerJump(){
@@ -142,19 +138,9 @@ public abstract class LivingObject {
         if (this.getIsJumping() == false){
             this.setIsJumping(true);
             AudioController.sound_jump.play(0.1f);
-            this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x,10);
+            this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x,9);
         }
     }
-
-
-
-
-
-
-
-
-
-
 
 
 

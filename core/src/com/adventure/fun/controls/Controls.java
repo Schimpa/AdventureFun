@@ -19,7 +19,6 @@ public class Controls implements InputProcessor {
         this.worldLoader = worldLoader;
     }
 
-
     public void movementControls(){
         if (this.worldLoader.getPlayer().getBody().getLinearVelocity().x > 0 || this.worldLoader.getPlayer().getBody().getLinearVelocity().x < 0 ){
             this.worldLoader.getPlayer().setStateTime(this.worldLoader.getPlayer().getStateTime() + Gdx.graphics.getDeltaTime());
@@ -37,19 +36,8 @@ public class Controls implements InputProcessor {
         if (Gdx.input.isKeyPressed(Input.Keys.A)){
             this.worldLoader.getPlayer().getBullet().shootBullet(this.worldLoader.getPlayer());
         }
-
     }
 
-    public void playerJump(){
-        if (this.worldLoader.getPlayer().getBody().getLinearVelocity().y <= 0.1f && this.worldLoader.getPlayer().getBody().getLinearVelocity().y >= -0.1f ){
-            this.worldLoader.getPlayer().setIsJumping(false);
-        }
-        if (this.worldLoader.getPlayer().getIsJumping() == false){
-            this.worldLoader.getPlayer().setIsJumping(true);
-            AudioController.sound_jump.play(0.1f);
-            this.worldLoader.getPlayer().getBody().setLinearVelocity(this.worldLoader.getPlayer().getBody().getLinearVelocity().x,10);
-        }
-    }
 
     public void update(){
         this.movementControls();
@@ -59,7 +47,7 @@ public class Controls implements InputProcessor {
     public boolean keyDown(int keycode) {
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            playerJump();
+            worldLoader.getPlayer().playerJump();
         }
         bulletShot();
         return true;

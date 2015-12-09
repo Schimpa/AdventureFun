@@ -42,15 +42,6 @@ public class GameScreen implements Screen {
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 
-	public void create() {
-
-	}
-
-
-	public void render() {
-
-
-	}
 
 	@Override
 	public void show() {

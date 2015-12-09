@@ -25,6 +25,8 @@ public class Player extends LivingObject {
     private boolean isMovingRight;
     private boolean isMovingLeft;
 
+    private float damageCoolDownTime;
+
     public Player(float x,float y,float sizeX,float sizeY,World world) {
         init(x,y,sizeX,sizeY,world);
 
@@ -32,7 +34,8 @@ public class Player extends LivingObject {
 
     public void init(float x,float y,float sizeX,float sizeY,World world) {
         //ATTRIBUTE
-        speed = new Vector2(12f,12f);
+        speed = new Vector2(15f,15f);
+        damageCoolDownTime = 0;
         score = 500;
         lives = 3;
         jumpStartPosition = 0;
@@ -68,7 +71,6 @@ public class Player extends LivingObject {
         currentFrame = new TextureRegion();
 
         createAnimation(Textures.player_move,4,1);
-        createAnimation(Textures.alien_move,3,1);
 
         body = world.createBody(bodyDef);
         body.setUserData("Player");
@@ -92,6 +94,7 @@ public class Player extends LivingObject {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+        this.damageCoolDownTime += deltaTime;
         if (isMovingRight == true){
             this.move(true, Gdx.graphics.getDeltaTime());
         }
@@ -140,7 +143,6 @@ public class Player extends LivingObject {
         this.jumpStartPosition = jumpStartPosition;
     }
 
-
     public Vector2 getMaxSpeed() {
         return maxSpeed;
     }
@@ -148,8 +150,6 @@ public class Player extends LivingObject {
     public void setMaxSpeed(Vector2 maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
-
-
 
     public Controls getControls() {
         return controls;
@@ -189,5 +189,13 @@ public class Player extends LivingObject {
 
     public void setIsMovingLeft(boolean isMovingLeft) {
         this.isMovingLeft = isMovingLeft;
+    }
+
+    public float getDamageCoolDownTime() {
+        return damageCoolDownTime;
+    }
+
+    public void setDamageCoolDownTime(float damageCoolDownTime) {
+        this.damageCoolDownTime = damageCoolDownTime;
     }
 }
