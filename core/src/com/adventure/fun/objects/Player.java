@@ -1,5 +1,6 @@
 package com.adventure.fun.objects;
 
+import com.adventure.fun._main.MainWindow;
 import com.adventure.fun.controls.Controls;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
@@ -13,9 +14,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Player extends LivingObject {
-
-
-
     private Controls controls;
 
     private Bullet bullet;
@@ -27,8 +25,9 @@ public class Player extends LivingObject {
 
     private float damageCoolDownTime;
 
-    public Player(float x,float y,float sizeX,float sizeY,World world) {
-        init(x,y,sizeX,sizeY,world);
+    public Player(MainWindow game,float x,float y,float sizeX,float sizeY,World world) {
+        super(game);
+        init(x, y, sizeX, sizeY, world);
 
     }
 
@@ -65,7 +64,7 @@ public class Player extends LivingObject {
         fixtureDef.shape = shape;
 
         //GESCHOSS
-        bullet = new Bullet(-100,-100,0.8f,0.2f,world,Textures.bullet,"Bullet_Player");
+        bullet = new Bullet(game,-100,-100,0.8f,0.2f,world,Textures.bullet,"Bullet_Player");
 
         //JETZTIGE ANIMATION
         currentFrame = new TextureRegion();

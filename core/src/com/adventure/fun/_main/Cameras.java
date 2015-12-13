@@ -33,6 +33,7 @@ public class Cameras {
 
     private Stage hudStage;
 
+    private MainWindow game;
     private WorldLoader worldLoader;
     private SpriteBatch batch;
 
@@ -52,7 +53,8 @@ public class Cameras {
     }
 
 
-    public Cameras(WorldLoader worldLoader,SpriteBatch batch){
+    public Cameras(MainWindow game,WorldLoader worldLoader,SpriteBatch batch){
+        this.game = game;
         this.worldLoader = worldLoader;
         this.batch = batch;
 
@@ -86,7 +88,7 @@ public class Cameras {
                 }
                 if (worldLoader.getPlayer().getIsJumping() == false) {
                     worldLoader.getPlayer().setIsJumping(true);
-                    AudioController.sound_jump.play(0.1f);
+                    game.getAssets().getSound_jump().play(0.1f);
                     worldLoader.getPlayer().getBody().setLinearVelocity(worldLoader.getPlayer().getBody().getLinearVelocity().x, 10);
                 }
                 return super.touchDown(event, x, y, pointer, button);
@@ -184,7 +186,7 @@ public class Cameras {
 
         //Setzt Kamerapositionen des Spielers
         playerCamera.position.x = worldLoader.getPlayer().getBody().getPosition().x;
-        playerCamera.position.y = worldLoader.getPlayer().getBody().getPosition().y;
+        playerCamera.position.y = worldLoader.getPlayer().getBody().getPosition().y + 2;
 
         //Setzt position des Hintergrundes
         backgroundCamera.position.x = worldLoader.getPlayer().getBody().getPosition().x / 10;

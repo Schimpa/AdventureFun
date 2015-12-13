@@ -1,15 +1,14 @@
-package com.adventure.fun.audio;
+package com.adventure.fun._main;
+
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-/**
- * Created by Dennis on 31.10.2015.
- */
-public class AudioController {
+public class Assets {
 
-    public AssetManager assetManager;
+    private AssetManager assetManager;
     private Sound sound_shoot_01;
     private Sound sound_shoot_02;
 
@@ -22,12 +21,24 @@ public class AudioController {
 
     private Music music_ambient;
 
-    public AudioController(AssetManager assetManager){
-        this.assetManager = assetManager;
+
+    public Assets(){
+        assetManager = new AssetManager();
+        load();
     }
 
-    public void init(){
-            sound_shoot_01 = assetManager.get("audio/shoot_01.ogg", Sound.class);
+    public void load() {
+        assetManager.load("audio/shoot_01.ogg",Sound.class);
+        assetManager.load("audio/shoot_02.ogg",Sound.class);
+        assetManager.load("audio/step_stone_01.ogg",Sound.class);
+        assetManager.load("audio/step_stone_02.ogg",Sound.class);
+        assetManager.load("audio/jump.ogg", Sound.class);
+        assetManager.load("audio/papierstau.ogg",Sound.class);
+        assetManager.load("audio/Ambient2.mp3", Music.class);
+    }
+
+    public void done() {
+        sound_shoot_01 = assetManager.get("audio/shoot_01.ogg", Sound.class);
         if (assetManager.isLoaded("audio/shoot_02.ogg")){
             sound_shoot_02 = assetManager.get("audio/shoot_02.ogg", Sound.class);
         }
@@ -46,9 +57,20 @@ public class AudioController {
         if (assetManager.isLoaded("audio/Ambient2.mp3")){
             music_ambient = assetManager.get("audio/Ambient2.mp3",Music.class);
         }
-
     }
 
+    public void dispose() {
+        assetManager.dispose();
+    }
+
+
+    public AssetManager getAssetManager() {
+        return assetManager;
+    }
+
+    public void setAssetManager(AssetManager assetManager) {
+        this.assetManager = assetManager;
+    }
 
     public Sound getSound_shoot_01() {
         return sound_shoot_01;

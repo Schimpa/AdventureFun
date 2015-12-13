@@ -29,9 +29,9 @@ public class GameScreen implements Screen {
 
 		debugRenderer = new Box2DDebugRenderer();
 
-		worldLoader = new WorldLoader(this);
+		worldLoader = new WorldLoader(game,this);
 
-		camera = new Cameras(worldLoader,game.getBatch());
+		camera = new Cameras(game,worldLoader,game.getBatch());
 
 		InputMultiplexer multiplexer = new InputMultiplexer();
 

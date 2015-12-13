@@ -1,5 +1,6 @@
 package com.adventure.fun.objects;
 
+import com.adventure.fun._main.MainWindow;
 import com.adventure.fun.audio.AudioController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -18,8 +19,10 @@ public class Bullet extends LivingObject {
     private int speedX;
     private float reload;
 
-    public Bullet(float x,float y,float sizeX,float sizeY,World world,TextureRegion region,String name){
-        init(x,y,sizeX,sizeY,world,region,name);
+
+    public Bullet(MainWindow game,float x,float y,float sizeX,float sizeY,World world,TextureRegion region,String name){
+        super(game);
+        init(x, y, sizeX, sizeY, world, region, name);
 
     }
 
@@ -68,7 +71,7 @@ public class Bullet extends LivingObject {
                 reload = 0;
             }
             if (this.getBody().getLinearVelocity().x == 0){
-                AudioController.sound_shoot_02.play(0.5f);
+                game.getAssets().getSound_shoot_02().play(0.5f);
                 if (object.getCurrentFrame().isFlipX() == false){
                     this.getBody().setTransform(object.getBody().getPosition().x + object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
                     this.getBody().setLinearVelocity(this.getSpeedX(), 0);

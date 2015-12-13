@@ -1,5 +1,6 @@
 package com.adventure.fun.objects;
 
+import com.adventure.fun._main.MainWindow;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -19,13 +20,18 @@ public class Enemy extends LivingObject {
     private Player player;
     private Bullet bullet;
 
-    public Enemy(float x, float y, float sizeX, float sizeY, World world,Player player){
+    private int reactionDistance;    //Der Abstand, bei den Gegner den Spieler anfangen zu bemerken
+
+    public Enemy(MainWindow game,float x, float y, float sizeX, float sizeY, World world,Player player){
+        super(game);
         init(x,y,sizeX,sizeY,world);
         this.player = player;
 
     }
 
     public void init(float x,float y,float sizeX,float sizeY,World world){
+
+        reactionDistance = 15;
         speed = new Vector2(12f,12f);
         maxSpeed = new Vector2(2,2);
         removeFlag = false;
@@ -34,9 +40,8 @@ public class Enemy extends LivingObject {
 
         lives = 2;
 
-        bullet = new Bullet(-100,-100,0.8f,0.2f,world,Textures.bullet,"Bullet_Enemy");
+        bullet = new Bullet(game,-100,-100,0.8f,0.2f,world,Textures.bullet,"Bullet_Enemy");
         this.bullet.setSpeedX(10);
-
 
         sprite.setPosition(x, y);
         sprite.setSize(sizeX, sizeY);
@@ -67,8 +72,8 @@ public class Enemy extends LivingObject {
     }
 
     public void logic(float deltaTime){
-        if (player.getBody().getPosition().x - this.getBody().getPosition().x > -10 &&
-                player.getBody().getPosition().x - this.getBody().getPosition().x < 10&&
+        if (player.getBody().getPosition().x - this.getBody().getPosition().x > -reactionDistance &&
+                player.getBody().getPosition().x - this.getBody().getPosition().x < reactionDistance&&
                 player.getBody().getPosition().y - this.getBody().getPosition().y > -5 &&
                 player.getBody().getPosition().y - this.getBody().getPosition().y < 5 ){
 

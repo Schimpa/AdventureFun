@@ -1,5 +1,6 @@
 package com.adventure.fun.objects;
 
+import com.adventure.fun._main.MainWindow;
 import com.adventure.fun.audio.AudioController;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
  */
 public abstract class LivingObject {
 
+    protected MainWindow game;
 
     //Attribute
     protected Vector2 speed;
@@ -49,6 +51,10 @@ public abstract class LivingObject {
     TextureRegion[] walkFrames;
     Float stateTime;
 
+    public LivingObject(MainWindow game){
+        this.game = game;
+    }
+
     public void render(){
         //ANIMATION LAUFEN
         if (removeFlag == true && isDestroyed == false) {
@@ -75,11 +81,11 @@ public abstract class LivingObject {
         TextureRegion[][] tmp = TextureRegion.split(texture,
                 texture.getWidth()/lengthX, texture.getHeight()/lengthY);
 
-        walkFrames = new TextureRegion[lengthX*lengthY];
+        this.walkFrames = new TextureRegion[lengthX*lengthY];
         int index = 0;
         for (int i = 0; i < lengthY; i++) {
             for (int j = 0; j < lengthX; j++) {
-                walkFrames[index++] = tmp[i][j];
+                this.walkFrames[index++] = tmp[i][j];
             }
         }
 
@@ -89,7 +95,7 @@ public abstract class LivingObject {
 
     public void checkIfLoose() {
         if (body.getPosition().y < 0) {
-            AudioController.sound_die.play();
+            game.getAssets().getSound_die().play();
             body.setLinearVelocity(0, 0);
             body.setTransform(1, 5, 0);
             lives -= 1;
@@ -102,10 +108,10 @@ public abstract class LivingObject {
     public void move(boolean direction,float deltaTime){
         //LEFT == FALSE | RIGHT == TRUE
         if (currentFrame.getRegionX() == 32 && sound_reload >= 0.25f){
-            AudioController.sound_step_02.play(0.2f);
+            game.getAssets().getSound_step_02().play(0.2f);
             sound_reload = 0;
         }else if(currentFrame.getRegionX() == 96 && sound_reload >= 0.25f){
-            AudioController.sound_step_01.play(0.2f);
+            game.getAssets().getSound_step_01().play(0.2f);
             sound_reload = 0;
         }
 
@@ -137,7 +143,7 @@ public abstract class LivingObject {
         }
         if (this.getIsJumping() == false){
             this.setIsJumping(true);
-            AudioController.sound_jump.play(0.1f);
+            game.getAssets().getSound_jump().play(0.1f);
             this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x,9);
         }
     }

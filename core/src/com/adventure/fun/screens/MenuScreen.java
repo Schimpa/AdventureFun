@@ -1,15 +1,12 @@
 package com.adventure.fun.screens;
 
 import com.adventure.fun._main.MainWindow;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
 
 /**
  * Created by Dennis on 04.12.2015.
@@ -67,11 +65,16 @@ public class MenuScreen implements Screen {
 
         buttonPlay.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
+                System.out.println("lolö");
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("lolö");
                 game.setScreen(new GameScreen(game));
-                isActivated = true;
+                return super.touchDown(event, x, y, pointer, button);
             }
         });
-
 
 
         stage.addActor(buttonPlay);

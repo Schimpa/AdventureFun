@@ -38,6 +38,7 @@ public class WorldLoader {
     private Player player;
     private Array<Enemy> enemies;
 
+    private MainWindow game;
     private GameScreen gameScreen;
 
     //Items
@@ -69,23 +70,22 @@ public class WorldLoader {
         particles.dispose();
     }
 
-    public WorldLoader(GameScreen gameScreen){
+    public WorldLoader(MainWindow game, GameScreen gameScreen){
         //Pickup Items
+        this.game = game;
         this.gameScreen = gameScreen;
         scoreItem_100 = new ScoreItem_100(this);
         enemies = new Array<Enemy>();
         controls = new Controls(this);
 
         world = new World(new Vector2(0,-9.81f), true);
-        player = new Player(17,38,1.6f,3.4f,world);
+        player = new Player(game,17,38,1.6f,3.4f,world);
 
         particles = new Particles();
 
         createMap();
-
-        AudioController.music_ambient.play();
-        AudioController.music_ambient.setVolume(0.2f);
-
+        game.getAssets().getMusic_ambient().play();
+        game.getAssets().getMusic_ambient().setVolume(0.2f);
         world.setContactListener(new com.adventure.fun.physics.CollisionListener(this.gameScreen));
 
     }
@@ -201,7 +201,7 @@ public class WorldLoader {
         for(MapObject object: map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            Enemy newEnemy = new Enemy(rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world,this.player);
+            Enemy newEnemy = new Enemy(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world,this.player);
             newEnemy.getBody().setUserData("Enemy_"+i);
             newEnemy.getBullet().getBody().setUserData("Bullet_Enemy_"+i);
             enemies.add(newEnemy);
