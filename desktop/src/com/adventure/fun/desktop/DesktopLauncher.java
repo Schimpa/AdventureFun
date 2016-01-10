@@ -13,12 +13,12 @@ public class DesktopLauncher {
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-		config.width = 1920;
-		config.height = 1080;
+		config.width = 800;
+		config.height = 600;
 		// fullscreen
 		config.fullscreen = false;
 		// vSync
-		config.vSyncEnabled = true;
+		config.vSyncEnabled = false;
 		//System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 		new LwjglApplication(new MainWindow(), config);
 	}

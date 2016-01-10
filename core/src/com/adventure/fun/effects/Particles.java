@@ -20,7 +20,6 @@ public class Particles {
     }
 
     public void playEffect(float x,float y,ParticleEffect effect){
-        System.out.println("EFFEKTE");
         if (effect.isComplete()){
             effect.reset();
         }

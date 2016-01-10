@@ -2,7 +2,9 @@ package com.adventure.fun.controls;
 
 import com.adventure.fun._main.WorldLoader;
 import com.adventure.fun.audio.AudioController;
+import com.adventure.fun.objects.Bullet;
 import com.adventure.fun.screens.GameScreen;
+import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -24,17 +26,19 @@ public class Controls implements InputProcessor {
             this.worldLoader.getPlayer().setStateTime(this.worldLoader.getPlayer().getStateTime() + Gdx.graphics.getDeltaTime());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            this.worldLoader.getPlayer().move(true,Gdx.graphics.getDeltaTime());
+            this.worldLoader.getPlayer().move(true, Gdx.graphics.getDeltaTime());
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            this.worldLoader.getPlayer().move(false,Gdx.graphics.getDeltaTime());
+            this.worldLoader.getPlayer().move(false, Gdx.graphics.getDeltaTime());
+
         }
+
     }
 
     public void bulletShot(){
         if (Gdx.input.isKeyPressed(Input.Keys.A)){
-            this.worldLoader.getPlayer().getBullet().shootBullet(this.worldLoader.getPlayer());
+            this.worldLoader.getPlayer().getBullet().setBulletShoot(true);
         }
     }
 
@@ -46,15 +50,25 @@ public class Controls implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            worldLoader.getPlayer().playerJump();
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)  && worldLoader.getPlayer().getBody().getLinearVelocity().y <= 0.1f &&
+                worldLoader.getPlayer().getBody().getLinearVelocity().y >= -0.1f) {
+            worldLoader.getPlayer().setIsJumping(true);
+            worldLoader.getPlayer().setJumpTimer(0);
+            worldLoader.getGame().getAssets().getSound_jump().play(0.1f);
         }
+
         bulletShot();
+
+        System.out.println("pressed");
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        if (keycode == Input.Keys.SPACE){
+            worldLoader.getPlayer().setIsJumping(false);
+        }
+        System.out.println("released");
         return true;
     }
 

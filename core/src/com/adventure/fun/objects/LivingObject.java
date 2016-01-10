@@ -1,11 +1,7 @@
 package com.adventure.fun.objects;
 
 import com.adventure.fun._main.MainWindow;
-import com.adventure.fun.audio.AudioController;
-import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 
 
 /**
@@ -27,7 +24,7 @@ public abstract class LivingObject {
     protected Vector2 maxSpeed;
     protected int lives;
     protected int score;
-    private boolean isJumping = true;
+    private boolean isJumping;
 
     //Grafikattribute
     protected Sprite sprite;
@@ -44,111 +41,87 @@ public abstract class LivingObject {
 
     protected float sound_reload;
 
+    protected float jumpTimer;
 
     //Animation
-    TextureRegion currentFrame;
-    Animation walkAnimation;
-    TextureRegion[] walkFrames;
-    Float stateTime;
+    protected TextureRegion currentFrame;
+    protected float stateTime;
 
     public LivingObject(MainWindow game){
         this.game = game;
     }
 
-    public void render(){
-        //ANIMATION LAUFEN
-        if (removeFlag == true && isDestroyed == false) {
-            destroy();
-        }else{
-            currentFrame = walkAnimation.getKeyFrame(stateTime,true);
+    public void init(float x,float y,float sizeX,float sizeY,World world){
+        //SPRITE
+        sprite = new Sprite();
+        sprite.setPosition(x, y);
+        sprite.setSize(sizeX, sizeY);
 
-        }
+        //PHYSIK KÖRPER DEFINITION
+        bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(sprite.getX(), sprite.getY());
+
+        //PHYSIK KÖRPER HÜLLE
+        shape = new PolygonShape();
+        shape.setAsBox((sprite.getWidth() / 2) * 0.8f,sprite.getHeight() / 2 );
+
+        //PHYSIK KÖRPER EIGENSCHAFTEN
+        fixtureDef = new FixtureDef();
+        fixtureDef.density = 0;
+        fixtureDef.isSensor = false;
+        fixtureDef.friction = 1;
+        fixtureDef.shape = shape;
+
+        body = world.createBody(bodyDef);
+
 
     }
 
-    public void destroy(){
+    public void render(){
+        //ANIMATION LAUFEN
+        if (removeFlag == true && isDestroyed == false) {
+            this.body.setTransform(-1000,-1000,0);
+            this.dispose();
+        }
+    }
+
+    public void dispose(){
         this.body.getWorld().destroyBody(this.body);
         isDestroyed = true;
     }
 
 
     public void update(float deltaTime){
-        checkIfLoose();
+        jumpTimer += deltaTime;
         sound_reload += deltaTime;
     }
 
-    public void createAnimation(Texture texture,int lengthX,int lengthY){
-        TextureRegion[][] tmp = TextureRegion.split(texture,
-                texture.getWidth()/lengthX, texture.getHeight()/lengthY);
 
-        this.walkFrames = new TextureRegion[lengthX*lengthY];
-        int index = 0;
-        for (int i = 0; i < lengthY; i++) {
-            for (int j = 0; j < lengthX; j++) {
-                this.walkFrames[index++] = tmp[i][j];
-            }
-        }
 
-        walkAnimation = new Animation(0.15f, walkFrames);
-        stateTime = 0f;
-    }
-
-    public void checkIfLoose() {
-        if (body.getPosition().y < 0) {
-            game.getAssets().getSound_die().play();
-            body.setLinearVelocity(0, 0);
-            body.setTransform(1, 5, 0);
-            lives -= 1;
-            score -= 100;
-        }else if (lives <= 0){
-            Gdx.app.exit();
-        }
-    }
 
     public void move(boolean direction,float deltaTime){
         //LEFT == FALSE | RIGHT == TRUE
-        if (currentFrame.getRegionX() == 32 && sound_reload >= 0.25f){
-            game.getAssets().getSound_step_02().play(0.2f);
-            sound_reload = 0;
-        }else if(currentFrame.getRegionX() == 96 && sound_reload >= 0.25f){
-            game.getAssets().getSound_step_01().play(0.2f);
-            sound_reload = 0;
-        }
-
         if (direction == false){
-            if (this.getCurrentFrame().isFlipX() == false){
-                for(int i = 0; i < this.getWalkFrames().length;i++){
-                    this.getWalkFrames()[i].flip(true,false);
-                }
-            }
             if (this.getBody().getLinearVelocity().x >= -this.getMaxSpeed().x) {
                 this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x -= this.getSpeed().x * deltaTime, this.getBody().getLinearVelocity().y);
             }
         }
         else if (direction == true){
-            if (this.getCurrentFrame().isFlipX() == true){
-                for(int i = 0; i < this.getWalkFrames().length;i++){
-                    this.getWalkFrames()[i].flip(true,false);
-                }
-            }
             if (this.getBody().getLinearVelocity().x <= this.getMaxSpeed().x) {
                 this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x += this.getSpeed().x * deltaTime, this.getBody().getLinearVelocity().y);
             }
         }
-}
-
-    public void playerJump(){
-        if (this.getBody().getLinearVelocity().y <= 0.1f && this.getBody().getLinearVelocity().y >= -0.1f ){
-            this.setIsJumping(false);
-        }
-        if (this.getIsJumping() == false){
-            this.setIsJumping(true);
-            game.getAssets().getSound_jump().play(0.1f);
-            this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x,9);
-        }
     }
 
-
+    public void jump(){
+        if (jumpTimer <= 0.5 && getIsJumping() == true){
+            this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x, 10);
+            System.out.println(jumpTimer);
+        }else if (this.getBody().getLinearVelocity().y <= 0.1f){
+            setIsJumping(false);
+        }
+    }
 
     public boolean getIsJumping() {
         return isJumping;
@@ -206,14 +179,6 @@ public abstract class LivingObject {
         this.currentFrame = currentFrame;
     }
 
-    public void setWalkFrames(TextureRegion[] walkFrames) {
-        this.walkFrames = walkFrames;
-    }
-
-    public TextureRegion[] getWalkFrames() {
-        return walkFrames;
-    }
-
     public Vector2 getSpeed() {
         return speed;
     }
@@ -254,13 +219,6 @@ public abstract class LivingObject {
         this.region = region;
     }
 
-    public Animation getWalkAnimation() {
-        return walkAnimation;
-    }
-
-    public void setWalkAnimation(Animation walkAnimation) {
-        this.walkAnimation = walkAnimation;
-    }
 
     public float getStateTime() {
         return stateTime;
@@ -277,4 +235,6 @@ public abstract class LivingObject {
     public void setRemoveFlag(boolean removeFlag) {
         this.removeFlag = removeFlag;
     }
+
+
 }

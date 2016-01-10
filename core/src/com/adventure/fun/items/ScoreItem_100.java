@@ -20,9 +20,9 @@ public class ScoreItem_100 extends Item {
     }
 
     public Sprite createSpriteForBody(Rectangle rect){
-        Sprite sprite = new Sprite(Textures.point);
+        Sprite sprite = new Sprite(worldLoader.getGame().getAssets().getPoint());
         sprite.setPosition(rect.getX() / 32, rect.getY() / 32);
-        sprite.setSize(1,1);
+        sprite.setSize(0.5f,0.5f);
 
         return sprite;
     }

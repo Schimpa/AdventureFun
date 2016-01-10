@@ -2,6 +2,8 @@ package com.adventure.fun.objects;
 
 import com.adventure.fun._main.MainWindow;
 import com.adventure.fun.controls.Controls;
+import com.adventure.fun.effects.ObjectAnimation;
+import com.adventure.fun.screens.GameScreen;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -13,15 +15,20 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import java.util.ArrayList;
+
 public class Player extends LivingObject {
     private Controls controls;
 
     private Bullet bullet;
 
-    private float jumpStartPosition;
-
     private boolean isMovingRight;
     private boolean isMovingLeft;
+
+    private ObjectAnimation walkAnimation;
+    private ObjectAnimation jumpAnimation;
+
+    private Vector2 respawnPoint;
 
     private float damageCoolDownTime;
 
@@ -32,58 +39,60 @@ public class Player extends LivingObject {
     }
 
     public void init(float x,float y,float sizeX,float sizeY,World world) {
+        super.init(x,y,sizeX,sizeY,world);
+        body.createFixture(fixtureDef);
         //ATTRIBUTE
-        speed = new Vector2(15f,15f);
+        speed = new Vector2(25f,25f);
         damageCoolDownTime = 0;
         score = 500;
         lives = 3;
-        jumpStartPosition = 0;
         maxSpeed = new Vector2(5,5);
         sound_reload = 0.25f;
+
+        respawnPoint = new Vector2(x,y);
+        stateTime = 0.0f;
 
         isMovingRight = false;
         isMovingLeft = false;
 
-        //SPRITE
-        sprite = new Sprite();
-        sprite.setPosition(x, y);
-        sprite.setSize(sizeX, sizeY);
-
-        //PHYSIK KÖRPER DEFINITION
-        bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(sprite.getX(), sprite.getY());
-
-        //PHYSIK KÖRPER HÜLLE
-        shape = new PolygonShape();
-        shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
-
-        //PHYSIK KÖRPER EIGENSCHAFTEN
-        fixtureDef = new FixtureDef();
-        fixtureDef.density = 0;
-        fixtureDef.shape = shape;
-
         //GESCHOSS
-        bullet = new Bullet(game,-100,-100,0.8f,0.2f,world,Textures.bullet,"Bullet_Player");
+        bullet = new Bullet(game,-100,-100,0.4f,0.4f,world,game.getAssets().getBullet(),"Bullet_Player");
+        bullet.setSpeedX(30);
 
         //JETZTIGE ANIMATION
         currentFrame = new TextureRegion();
 
-        createAnimation(Textures.player_move,4,1);
+        walkAnimation = new ObjectAnimation(game.getAssets().getPlayer_move(),6,1,0,3);
+        walkAnimation.setIsActive(true);
 
-        body = world.createBody(bodyDef);
+        jumpAnimation = new ObjectAnimation(game.getAssets().getPlayer_move(),6,1,4,5);
+
+
         body.setUserData("Player");
-        body.createFixture(fixtureDef);
 
         shape.dispose();
     }
 
 
 
+
     public void render(SpriteBatch batch) {
         super.render();
 
-        batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
+        if (walkAnimation.isActive() == true){
+            currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
+        }
+        else if (jumpAnimation.isActive() == true){
+            currentFrame = jumpAnimation.getAnimation().getKeyFrame(stateTime, true);
+        }
+
+        try{
+            batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
+        }catch (NullPointerException e) {
+            System.out.println("error: " + e);
+        }
+
+
 
         //BULLET
         batch.draw(bullet.region, bullet.body.getPosition().x - bullet.sprite.getWidth() / 2,
@@ -93,21 +102,71 @@ public class Player extends LivingObject {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+        checkIfLoose();
         this.damageCoolDownTime += deltaTime;
         if (isMovingRight == true){
-            this.move(true, Gdx.graphics.getDeltaTime());
+            this.move(true, deltaTime);
         }
         if (isMovingLeft == true){
-            this.move(false, Gdx.graphics.getDeltaTime());
+            this.move(false, deltaTime);
         }
-        bullet.update();
-        bullet.getBody().setLinearVelocity(bullet.getBody().getLinearVelocity().x, -0.1f);
+        bullet.shootBullet(this);
+        bullet.update(deltaTime);
         checkIfLoose();
+        jump();
     }
 
+    public void move(boolean direction,float deltaTime){
+        super.move(direction, deltaTime);
+        //LEFT == FALSE | RIGHT == TRUE
+        if (currentFrame.getRegionX() == 32 && sound_reload >= 0.25f){
+            game.getAssets().getSound_step_02().play(0.2f);
+            sound_reload = 0;
+        }else if(currentFrame.getRegionX() == 96 && sound_reload >= 0.25f){
+            game.getAssets().getSound_step_01().play(0.2f);
+            sound_reload = 0;
+        }
+        if (direction == false){
+            if (this.getCurrentFrame().isFlipX() == false){
+                for(int i = 0; i < this.walkAnimation.getFrames().length;i++){
+                    this.walkAnimation.getFrames()[i].flip(true,false);
+                }
+                for(int i = 0; i < this.jumpAnimation.getFrames().length;i++){
+                    this.jumpAnimation.getFrames()[i].flip(true,false);
+                }
+            }
+        }
+        else if (direction == true){
+            if (this.getCurrentFrame().isFlipX() == true){
+                for(int i = 0; i < this.walkAnimation.getFrames().length;i++){
+                    this.walkAnimation.getFrames()[i].flip(true,false);
+                }
+                for(int i = 0; i < this.jumpAnimation.getFrames().length;i++){
+                    this.jumpAnimation.getFrames()[i].flip(true,false);
+                }
+            }
+        }
+    }
 
-    public TextureRegion[] getWalkFrames() {
-        return walkFrames;
+    public void checkIfLoose() {
+        if (body.getPosition().y < 0) {
+            game.getAssets().getSound_die().play();
+            body.setLinearVelocity(0, 0);
+            body.setTransform(respawnPoint.x, respawnPoint.y, 0);
+            lives -= 1;
+            score -= 100;
+        }else if (lives <= 0){
+            Gdx.app.exit();
+        }
+    }
+
+    @Override
+    public void jump(){
+        super.jump();
+        if (getIsJumping() == true){
+            jumpAnimation.setIsActive(true);
+            walkAnimation.setIsActive(false);
+        }
     }
 
     public float getStateTime() {
@@ -132,14 +191,6 @@ public class Player extends LivingObject {
 
     public void setScore(int score) {
         this.score = score;
-    }
-
-    public float getJumpStartPosition() {
-        return jumpStartPosition;
-    }
-
-    public void setJumpStartPosition(float jumpStartPosition) {
-        this.jumpStartPosition = jumpStartPosition;
     }
 
     public Vector2 getMaxSpeed() {
@@ -196,5 +247,29 @@ public class Player extends LivingObject {
 
     public void setDamageCoolDownTime(float damageCoolDownTime) {
         this.damageCoolDownTime = damageCoolDownTime;
+    }
+
+    public float getJumpTimer() {
+        return jumpTimer;
+    }
+
+    public void setJumpTimer(float jumpTimer) {
+        this.jumpTimer = jumpTimer;
+    }
+
+    public ObjectAnimation getWalkAnimation() {
+        return walkAnimation;
+    }
+
+    public void setWalkAnimation(ObjectAnimation walkAnimation) {
+        this.walkAnimation = walkAnimation;
+    }
+
+    public ObjectAnimation getJumpAnimation() {
+        return jumpAnimation;
+    }
+
+    public void setJumpAnimation(ObjectAnimation jumpAnimation) {
+        this.jumpAnimation = jumpAnimation;
     }
 }

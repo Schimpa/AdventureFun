@@ -1,6 +1,8 @@
 package com.adventure.fun.objects;
 
+import com.adventure.fun._main.Assets;
 import com.adventure.fun._main.MainWindow;
+import com.adventure.fun.effects.ObjectAnimation;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -12,17 +14,25 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import java.util.Random;
+
 /**
  * Created by Dennis on 28.10.2015.
  */
-public class Enemy extends LivingObject {
+public class Enemy_Alien_Zombie extends LivingObject {
 
     private Player player;
     private Bullet bullet;
 
+    //Für zufällige Ereignisse
+    Random rand = new Random();
+    private int randomInt;
+
     private int reactionDistance;    //Der Abstand, bei den Gegner den Spieler anfangen zu bemerken
 
-    public Enemy(MainWindow game,float x, float y, float sizeX, float sizeY, World world,Player player){
+    private ObjectAnimation walkAnimation;
+
+    public Enemy_Alien_Zombie(MainWindow game, float x, float y, float sizeX, float sizeY, World world, Player player){
         super(game);
         init(x,y,sizeX,sizeY,world);
         this.player = player;
@@ -30,43 +40,25 @@ public class Enemy extends LivingObject {
     }
 
     public void init(float x,float y,float sizeX,float sizeY,World world){
-
+        super.init(x,y,sizeX,sizeY,world);
+        body.createFixture(fixtureDef);
         reactionDistance = 15;
         speed = new Vector2(12f,12f);
         maxSpeed = new Vector2(2,2);
         removeFlag = false;
         sound_reload = 0;
-        sprite = new Sprite();
+
+        stateTime = 0.0f;
 
         lives = 2;
 
-        bullet = new Bullet(game,-100,-100,0.8f,0.2f,world,Textures.bullet,"Bullet_Enemy");
-        this.bullet.setSpeedX(10);
 
-        sprite.setPosition(x, y);
-        sprite.setSize(sizeX, sizeY);
+        body.setUserData("Enemy_Alien_Zombie");
 
-        currentFrame = new TextureRegion(Textures.point);
+        currentFrame = new TextureRegion();
 
-        //PHYSIK KÖRPER DEFINITION
-        bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(sprite.getX(), sprite.getY());
-
-        //PHYSIK KÖRPER HÜLLE
-        shape = new PolygonShape();
-        shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
-
-        fixtureDef = new FixtureDef();
-        fixtureDef.density = 0;
-        fixtureDef.shape = shape;
-
-
-        body = world.createBody(bodyDef);
-        body.createFixture(fixtureDef);
-        body.setUserData("Enemy");
-
-        createAnimation(Textures.alien_move,3,1);
+        walkAnimation = new ObjectAnimation(game.getAssets().getAlien_move(),3,1,0,2);
+        walkAnimation.setIsActive(true);
 
         shape.dispose();
     }
@@ -76,6 +68,10 @@ public class Enemy extends LivingObject {
                 player.getBody().getPosition().x - this.getBody().getPosition().x < reactionDistance&&
                 player.getBody().getPosition().y - this.getBody().getPosition().y > -5 &&
                 player.getBody().getPosition().y - this.getBody().getPosition().y < 5 ){
+            randomInt = rand.nextInt(300)+1;
+            if (randomInt == 48){
+                game.getAssets().getSound_alien_zombie().play(0.2f);
+            }
 
             this.stateTime += deltaTime;
             //LEFT OR RIGHT
@@ -86,26 +82,25 @@ public class Enemy extends LivingObject {
             if (player.getBody().getPosition().x - this.getBody().getPosition().x > 0){
                 this.move(true,deltaTime);
             }
-            //this.bullet.shootBullet(this);
         }
     }
-
 
     public void update(float deltaTime){
-        if (removeFlag != true){
-            bullet.update();
-            bullet.getBody().setLinearVelocity(bullet.getBody().getLinearVelocity().x, -0.1f);
-            logic(deltaTime);
-        }
+        logic(deltaTime);
     }
 
+
+
     public void render(SpriteBatch batch){
+        if (removeFlag == true && isDestroyed == false) {
+
+        }
         super.render();
         if (removeFlag != true){
-            batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
-            batch.draw(bullet.region, bullet.body.getPosition().x - bullet.sprite.getWidth() / 2,
-                    bullet.body.getPosition().y - bullet.sprite.getHeight() / 2, bullet.sprite.getWidth(), bullet.sprite.getHeight());
-
+            if (walkAnimation.isActive() == true){
+                currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
+            }
+            batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth() ,sprite.getHeight());
         }
     }
 

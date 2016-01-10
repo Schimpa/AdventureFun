@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" nextobjectid="194">
- <tileset firstgid="1" name="textures" tilewidth="32" tileheight="32" tilecount="16">
-  <image source="textures.png" width="256" height="64"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" nextobjectid="195">
+ <tileset firstgid="1" name="textures" tilewidth="32" tileheight="32" tilecount="32">
+  <image source="textures.png" width="256" height="128"/>
   <tile id="4">
    <objectgroup draworder="index">
     <object id="0" x="0" y="32">
@@ -30,6 +30,10 @@
    eJztwTEBAAAAwqD1T20MH6AAAAAAAAAAAAAAAOBvLuAAAQ==
   </data>
  </layer>
+ <objectgroup name="Spawn">
+  <object id="194" x="224" y="224" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="End"/>
  <objectgroup name="Ground">
   <object id="27" x="0" y="96" width="544" height="64"/>
   <object id="28" x="0" y="832" width="1024" height="64"/>

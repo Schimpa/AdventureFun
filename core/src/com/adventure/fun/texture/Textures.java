@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * Created by Dennis on 27.10.2015.
  */
 public class Textures {
+    /*
     private static TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("texture_data/images.pack.atlas"));
 
     //PLAYER
@@ -23,4 +24,5 @@ public class Textures {
 
     //BACKGROUND
     public static Texture background = new Texture(Gdx.files.internal("background/asdf.png"));
+    */
 }

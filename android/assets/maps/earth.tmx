@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="400" height="100" tilewidth="32" tileheight="32" nextobjectid="16">
+ <tileset firstgid="1" name="texture" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="texture.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="257" name="shadow" tilewidth="32" tileheight="32" tilecount="30">
+  <image source="shadow.png" width="160" height="192"/>
+ </tileset>
+ <layer name="Background" width="400" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwYEAAAAAw6D5U1/hAFUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwGcR4AAQ==
+  </data>
+ </layer>
+ <layer name="Ground" width="400" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1cEJgzAUgOE4QK85O4qjdBRH6SgdpaP4oOciNehL8PvgRzAk5BCSUgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM5RS3nW7/cVvaNPtERztO6Mt8zNXLvnvf0a+/f/kbWOzlkvPbQAAAzrMUlt1exDDKTIvns0ft4PuKfsu0fj5/2Ae8q+ezR+3g8AAAAAAHqzAWkibR0=
+  </data>
+ </layer>
+ <layer name="Overlay" width="400" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztw0EJAAAIBDDBDvaPaonz5QarAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAuNEaCPwzGggAAAAAAAAAAAAAANxZCVYOQw==
+  </data>
+ </layer>
+ <layer name="Shadow" width="400" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1MEJACAQBDH9+bH/di1C5OQ2gWlhxgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHhjTek+IM+e0n1AnurvqEdAnurvqEdAnurvqEdAnurvqEcAAAAAAPCTA5P/LQ8=
+  </data>
+ </layer>
+ <objectgroup name="Spawn">
+  <object id="2" x="32" y="2784" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="End"/>
+ <objectgroup name="Ground">
+  <object id="1" x="0" y="2912" width="4672" height="32"/>
+ </objectgroup>
+ <objectgroup name="Item"/>
+ <objectgroup name="Enemy_Alien_Zombie">
+  <object id="3" x="1248" y="2816" width="32" height="32"/>
+  <object id="4" x="1408" y="2816" width="32" height="32"/>
+  <object id="5" x="1472" y="2816" width="32" height="32"/>
+  <object id="6" x="1536" y="2816" width="32" height="32"/>
+  <object id="7" x="1600" y="2816" width="32" height="32"/>
+  <object id="8" x="1664" y="2816" width="32" height="32"/>
+  <object id="9" x="1728" y="2816" width="32" height="32"/>
+  <object id="10" x="1792" y="2816" width="32" height="32"/>
+  <object id="11" x="1856" y="2816" width="32" height="32"/>
+  <object id="12" x="1920" y="2816" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Enemy_Alien_Soldier">
+  <object id="13" x="544" y="2784" width="32" height="32"/>
+  <object id="14" x="736" y="2784" width="32" height="32"/>
+  <object id="15" x="896" y="2784" width="32" height="32"/>
+ </objectgroup>
+</map>

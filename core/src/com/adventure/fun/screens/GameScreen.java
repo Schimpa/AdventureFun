@@ -10,6 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
@@ -22,8 +23,12 @@ public class GameScreen implements Screen {
 
 	private Cameras camera;
 
-	public GameScreen(MainWindow game){
+	private String levelName;
+
+	public GameScreen(MainWindow game,String levelName){
 		this.game = game;
+
+		this.levelName = levelName;
 
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
@@ -35,7 +40,6 @@ public class GameScreen implements Screen {
 
 		InputMultiplexer multiplexer = new InputMultiplexer();
 
-
 		multiplexer.addProcessor(camera.getHudStage());
 		multiplexer.addProcessor(worldLoader.getControls());
 
@@ -45,6 +49,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
+
 	}
 
 	@Override
@@ -63,7 +68,7 @@ public class GameScreen implements Screen {
 		//Rendert alle Objeckte innerhalb des batchs
 		game.getBatch().begin();
 		game.getBatch().setProjectionMatrix(camera.getBackgroundCamera().combined);
-		game.getBatch().draw(Textures.background, -20, -20, 50, 50);
+		game.getBatch().draw(game.getAssets().getBackgroundMars(), -20, -20, 50, 50);
 		game.getBatch().end();
 
 		//Rendert tmx map
@@ -71,7 +76,7 @@ public class GameScreen implements Screen {
 		worldLoader.renderMap(game.getBatch());
 
 		//Rendert Physik-Debug Texturen
-		debugRenderer.render(worldLoader.getWorld(),camera.getPlayerCamera().combined);
+		//debugRenderer.render(worldLoader.getWorld(), camera.getPlayerCamera().combined);
 
 		//Renderd HUD
 		camera.getHudStage().draw();
@@ -114,9 +119,13 @@ public class GameScreen implements Screen {
 
 
 
+	public String getLevelName() {
+		return levelName;
+	}
 
-
-
+	public void setLevelName(String levelName) {
+		this.levelName = levelName;
+	}
 
 	public WorldLoader getWorldLoader() {
 		return worldLoader;

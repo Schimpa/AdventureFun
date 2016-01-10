@@ -1,17 +1,13 @@
 package com.adventure.fun._main;
 
-import com.adventure.fun.audio.AudioController;
 import com.adventure.fun.controls.Controls;
 import com.adventure.fun.effects.Particles;
 import com.adventure.fun.items.ScoreItem_100;
-import com.adventure.fun.objects.Enemy;
+import com.adventure.fun.objects.Enemy_Alien_Soldier;
+import com.adventure.fun.objects.Enemy_Alien_Zombie;
 import com.adventure.fun.objects.Player;
 import com.adventure.fun.screens.GameScreen;
-import com.adventure.fun.texture.Textures;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -28,6 +24,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
+
 
 /**
  * Created by Dennis on 29.10.2015.
@@ -36,7 +35,8 @@ public class WorldLoader {
 
     //Spieler
     private Player player;
-    private Array<Enemy> enemies;
+    private Array<Enemy_Alien_Zombie> enemies_alien_zombie;
+    private Array<Enemy_Alien_Soldier> enemies_alien_soldier;
 
     private MainWindow game;
     private GameScreen gameScreen;
@@ -59,12 +59,17 @@ public class WorldLoader {
     //Partikel
     private Particles particles;
 
+    private RayHandler rayHandler;
+
     public void dispose(){
         world.dispose();
-        for(Enemy enemy: enemies){
-            enemy.destroy();
+        for(Enemy_Alien_Zombie enemyAlienZombie : enemies_alien_zombie){
+            enemyAlienZombie.dispose();
         }
-        player.destroy();
+        for(Enemy_Alien_Soldier enemyAlienSoldier : enemies_alien_soldier){
+            enemyAlienSoldier.dispose();
+        }
+        player.dispose();
         map.dispose();
         renderer.dispose();
         particles.dispose();
@@ -75,19 +80,40 @@ public class WorldLoader {
         this.game = game;
         this.gameScreen = gameScreen;
         scoreItem_100 = new ScoreItem_100(this);
-        enemies = new Array<Enemy>();
+        enemies_alien_zombie = new Array<Enemy_Alien_Zombie>();
+        enemies_alien_soldier = new Array<Enemy_Alien_Soldier>();
         controls = new Controls(this);
 
-        world = new World(new Vector2(0,-9.81f), true);
-        player = new Player(game,17,38,1.6f,3.4f,world);
+        world = new World(new Vector2(0,-15f), true);
+
 
         particles = new Particles();
 
         createMap();
-        game.getAssets().getMusic_ambient().play();
-        game.getAssets().getMusic_ambient().setVolume(0.2f);
+
+        createLights();
+
+        //game.getAssets().getMusic_ambient().play();
+        //game.getAssets().getMusic_ambient().setVolume(0.2f);
         world.setContactListener(new com.adventure.fun.physics.CollisionListener(this.gameScreen));
 
+    }
+        public void createLights(){
+
+        //Umgebungslicht
+        RayHandler.setGammaCorrection(true);
+        RayHandler.useDiffuseLight(true);
+
+        rayHandler = new RayHandler(world);
+
+        rayHandler.setAmbientLight(0.0f, 0.0f, 0.0f, 0.5f);
+        rayHandler.setBlurNum(1);
+
+        //Spielerlicht
+        PointLight light = new PointLight(rayHandler, 100, null, 20, 0f, 0f);
+
+        light.attachToBody(this.getPlayer().getBody());
+        light.setColor(1, 1, 1, 0.5f);
     }
 
 
@@ -95,16 +121,23 @@ public class WorldLoader {
         renderer.render();
         batch.begin();
 
-        for(Enemy enemy: enemies){
-            enemy.render(batch);
+        for (Enemy_Alien_Zombie enemyAlienZombie : enemies_alien_zombie){
+            enemyAlienZombie.render(batch);
+        }
+        for (Enemy_Alien_Soldier enemyAlienSoldier : enemies_alien_soldier){
+            enemyAlienSoldier.render(batch);
         }
 
         scoreItem_100.render(batch);
-
+        particles.render(batch, Gdx.graphics.getDeltaTime());
 
         player.render(batch);
-        particles.render(batch, Gdx.graphics.getDeltaTime());
+
         batch.end();
+
+
+        //rayHandler.setCombinedMatrix(gameScreen.getCamera().getPlayerCamera());
+        //rayHandler.render();
 
     }
 
@@ -112,12 +145,16 @@ public class WorldLoader {
         controls.update();
         player.update(deltaTime);
 
-        for(Enemy enemy: enemies){
-            enemy.update(deltaTime);
+        for(Enemy_Alien_Zombie enemyAlienZombie : enemies_alien_zombie){
+            enemyAlienZombie.update(deltaTime);
+        }
+
+        for(Enemy_Alien_Soldier enemyAlienSoldier : enemies_alien_soldier){
+            enemyAlienSoldier.update(deltaTime);
         }
 
         scoreItem_100.checkDestruction();
-
+        rayHandler.update();
         world.step(deltaTime, 60, 20);
     }
 
@@ -125,12 +162,20 @@ public class WorldLoader {
 
     //Lädt die Karte aus Tiled und erstellt Physik mit Box2d
     public void createMap(){
-        map = new TmxMapLoader().load("maps/map01.tmx");
+        map = new TmxMapLoader().load(this.getGameScreen().getLevelName());
         renderer = new OrthogonalTiledMapRenderer(map, 1/32f);
 
-        //GROUND
+        //PLAYER SPAWN
         int i = 0;
         for(MapObject object: map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            player = new Player(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world);
+            i++;
+        }
+
+        //GROUND
+        i = 0;
+        for(MapObject object: map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             BodyDef bdef = new BodyDef();
             bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
@@ -174,7 +219,7 @@ public class WorldLoader {
 
         //ITEM - POINTS
         i = 0;
-        for(MapObject object: map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object: map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             BodyDef bdef = new BodyDef();
@@ -187,6 +232,8 @@ public class WorldLoader {
             FixtureDef fdef = new FixtureDef();
             fdef.shape = shape;
             fdef.isSensor = true;
+            fdef.restitution = 0;
+
 
             Body body = world.createBody(bdef);
             body.setUserData("Item_Point_"+i);
@@ -197,71 +244,55 @@ public class WorldLoader {
 
             i++;
         }
+
+        //ENEMY-ALIEN-ZOMBIE
         i = 0;
-        for(MapObject object: map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object: map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            Enemy newEnemy = new Enemy(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world,this.player);
-            newEnemy.getBody().setUserData("Enemy_"+i);
-            newEnemy.getBullet().getBody().setUserData("Bullet_Enemy_"+i);
-            enemies.add(newEnemy);
+            Enemy_Alien_Zombie newEnemyAlienZombie = new Enemy_Alien_Zombie(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world,this.player);
+            newEnemyAlienZombie.getBody().setUserData("Enemy_"+i);
+            enemies_alien_zombie.add(newEnemyAlienZombie);
             i++;
+        }
+
+        //ENEMY-ALIEN-SOLDIER
+        int j = 0;
+        for(MapObject object: map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            Enemy_Alien_Soldier newEnemyAlienSoldier = new Enemy_Alien_Soldier(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world,this.player);
+            newEnemyAlienSoldier.getBody().setUserData("Enemy_"+i);
+            newEnemyAlienSoldier.getBullet().getBody().setUserData("Bullet_Enemy_Soldier_"+j);
+            enemies_alien_soldier.add(newEnemyAlienSoldier);
+            i++;
+            j++;
         }
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public Array<Enemy> getEnemies() {
-        return enemies;
+    public Array<Enemy_Alien_Soldier> getEnemies_alien_soldier() {
+        return enemies_alien_soldier;
     }
 
-    public void setEnemies(Array<Enemy> enemies) {
-        this.enemies = enemies;
+    public void setEnemies_alien_soldier(Array<Enemy_Alien_Soldier> enemies_alien_soldier) {
+        this.enemies_alien_soldier = enemies_alien_soldier;
+    }
+
+    public RayHandler getRayHandler() {
+        return rayHandler;
+    }
+
+    public void setRayHandler(RayHandler rayHandler) {
+        this.rayHandler = rayHandler;
+    }
+
+    public Array<Enemy_Alien_Zombie> getEnemies_alien_zombie() {
+        return enemies_alien_zombie;
+    }
+
+    public void setEnemies_alien_zombie(Array<Enemy_Alien_Zombie> enemies_alien_zombie) {
+        this.enemies_alien_zombie = enemies_alien_zombie;
     }
 
     public Player getPlayer() {
@@ -315,5 +346,25 @@ public class WorldLoader {
 
     public void setScoreItem_100(ScoreItem_100 scoreItem_100) {
         this.scoreItem_100 = scoreItem_100;
+    }
+
+    public MainWindow getGame() {
+        return game;
+    }
+
+    public void setGame(MainWindow game) {
+        this.game = game;
+    }
+
+    public GameScreen getGameScreen() {
+        return gameScreen;
+    }
+
+    public void setGameScreen(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
+    }
+
+    public void setControls(Controls controls) {
+        this.controls = controls;
     }
 }
