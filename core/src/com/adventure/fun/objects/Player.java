@@ -56,7 +56,8 @@ public class Player extends LivingObject {
         isMovingLeft = false;
 
         //GESCHOSS
-        bullet = new Bullet(game,-100,-100,0.4f,0.4f,world,game.getAssets().getBullet(),"Bullet_Player");
+        bullet = new Bullet(game,-100,-100,0.4f,0.4f,world,game.getAssets().getBullet());
+        bullet.getBody().setUserData("Bullet_Player");
         bullet.setSpeedX(30);
 
         //JETZTIGE ANIMATION
@@ -150,7 +151,7 @@ public class Player extends LivingObject {
 
     public void checkIfLoose() {
         if (body.getPosition().y < 0) {
-            game.getAssets().getSound_die().play();
+            //game.getAssets().getSound_die().play();
             body.setLinearVelocity(0, 0);
             body.setTransform(respawnPoint.x, respawnPoint.y, 0);
             lives -= 1;

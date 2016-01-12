@@ -25,10 +25,14 @@ public class GameScreen implements Screen {
 
 	private String levelName;
 
-	public GameScreen(MainWindow game,String levelName){
+	private boolean activateLights;
+
+	public GameScreen(MainWindow game,String levelName,boolean activateLights){
 		this.game = game;
 
 		this.levelName = levelName;
+
+		this.activateLights = activateLights;
 
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
@@ -157,5 +161,13 @@ public class GameScreen implements Screen {
 
 	public void setCamera(Cameras camera) {
 		this.camera = camera;
+	}
+
+	public boolean isActivateLights() {
+		return activateLights;
+	}
+
+	public void setActivateLights(boolean activateLights) {
+		this.activateLights = activateLights;
 	}
 }

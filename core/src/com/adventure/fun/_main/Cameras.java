@@ -3,15 +3,11 @@ package com.adventure.fun._main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -37,11 +33,11 @@ public class Cameras {
     private Label score;
     private Label lives;
 
-    private Button buttonJump;
-    private Button buttonMoveRight;
-    private Button buttonnachlinks;
-    private Button nothingButton;
-    private Button buttonShoot;
+    private TextButton buttonJump;
+    private TextButton buttonMoveRight;
+    private TextButton buttonMoveLeft;
+    private TextButton nothingButton;
+    private TextButton buttonShoot;
 
     public void dispose(){
         worldLoader.dispose();
@@ -121,7 +117,7 @@ public class Cameras {
             }
         });
 
-        buttonnachlinks.addListener(new ClickListener() {
+        buttonMoveLeft.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("TouchDown:  " + event);
@@ -141,23 +137,26 @@ public class Cameras {
     public void createHUD(){
         hudStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),batch);
 
-
         buttonJump = new TextButton("<>",game.getSkin(),"default");
+        buttonJump.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.08f,  (Gdx.graphics.getHeight() / 100) * 0.08f);
         buttonJump.setColor(0.7f, 1, 0.4f, 0.5f);
         buttonJump.setSize(Gdx.graphics.getWidth() / 100 * 10, Gdx.graphics.getHeight() / 100 * 14);
         buttonJump.setPosition(Gdx.graphics.getWidth() / 100 * 2, Gdx.graphics.getHeight() / 100 * 4);
 
         buttonShoot = new TextButton("-D",game.getSkin(),"default");
+        buttonShoot.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.1f,  (Gdx.graphics.getHeight() / 100) * 0.1f);
         buttonShoot.setColor(0.7f, 1, 0.4f, 0.5f);
         buttonShoot.setSize(Gdx.graphics.getWidth() / 100 * 10, Gdx.graphics.getHeight() / 100 * 14);
         buttonShoot.setPosition(Gdx.graphics.getWidth() / 100 * 2, Gdx.graphics.getHeight() / 100 * 20);
 
-        buttonnachlinks = new TextButton("<",game.getSkin(),"default");
-        buttonnachlinks.setColor(0.7f, 1, 0.4f, 0.5f);
-        buttonnachlinks.setSize(Gdx.graphics.getWidth() / 100 * 10, Gdx.graphics.getHeight() / 100 * 14);
-        buttonnachlinks.setPosition(Gdx.graphics.getWidth() / 100 * 70, Gdx.graphics.getHeight() / 100 * 4);
+        buttonMoveLeft = new TextButton("<",game.getSkin(),"default");
+        buttonMoveLeft.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.1f,  (Gdx.graphics.getHeight() / 100) * 0.1f);
+        buttonMoveLeft.setColor(0.7f, 1, 0.4f, 0.5f);
+        buttonMoveLeft.setSize(Gdx.graphics.getWidth() / 100 * 10, Gdx.graphics.getHeight() / 100 * 14);
+        buttonMoveLeft.setPosition(Gdx.graphics.getWidth() / 100 * 70, Gdx.graphics.getHeight() / 100 * 4);
 
         buttonMoveRight = new TextButton(">",game.getSkin(),"default");
+        buttonMoveRight.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.1f,  (Gdx.graphics.getHeight() / 100) * 0.1f);
         buttonMoveRight.setColor(0.7f, 1, 0.4f, 0.5f);
         buttonMoveRight.setSize(Gdx.graphics.getWidth() / 100 * 10, Gdx.graphics.getHeight() / 100 * 14);
         buttonMoveRight.setPosition(Gdx.graphics.getWidth() / 100 * 86, Gdx.graphics.getHeight() / 100 * 4);
@@ -168,11 +167,11 @@ public class Cameras {
         nothingButton.setPosition(-50,-50);
 
         score = new Label(Integer.toString(this.worldLoader.getPlayer().getScore()), new Label.LabelStyle(game.getFont(), Color.GREEN));
-        score.setPosition(Gdx.graphics.getWidth() / 100 * 5, Gdx.graphics.getHeight() / 100 * 90);
+        score.setPosition(Gdx.graphics.getWidth() / 100 * 5, Gdx.graphics.getHeight() / 100 * 82);
         score.setFontScale(Gdx.graphics.getWidth() / 100 * 0.1f, Gdx.graphics.getHeight() / 100 * 0.1f);
 
         lives = new Label(Integer.toString(this.worldLoader.getPlayer().getLives()), new Label.LabelStyle(game.getFont(), Color.GREEN));
-        lives.setPosition(Gdx.graphics.getWidth() / 100 * 5, Gdx.graphics.getHeight() / 100 * 85);
+        lives.setPosition(Gdx.graphics.getWidth() / 100 * 5, Gdx.graphics.getHeight() / 100 * 72);
         lives.setFontScale(Gdx.graphics.getWidth() / 100 * 0.1f, Gdx.graphics.getHeight() / 100 * 0.1f);
 
         game.getFont().setColor(Color.WHITE);
@@ -181,7 +180,7 @@ public class Cameras {
         hudStage.addActor(buttonJump);
         hudStage.addActor(buttonShoot);
         hudStage.addActor(buttonMoveRight);
-        hudStage.addActor(buttonnachlinks);
+        hudStage.addActor(buttonMoveLeft);
         hudStage.addActor(nothingButton);
         hudStage.addActor(score);
         hudStage.addActor(lives);
@@ -233,11 +232,11 @@ public class Cameras {
         this.backgroundCamera = backgroundCamera;
     }
 
-    public Button getButtonJump() {
+    public TextButton getButtonJump() {
         return buttonJump;
     }
 
-    public void setButtonJump(Button buttonJump) {
+    public void setButtonJump(TextButton buttonJump) {
         this.buttonJump = buttonJump;
     }
 

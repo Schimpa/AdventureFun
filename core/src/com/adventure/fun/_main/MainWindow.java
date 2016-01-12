@@ -127,7 +127,6 @@ public class MainWindow extends Game{
         this.batch = batch;
     }
 
-
     public Assets getAssets() {
         return assets;
     }

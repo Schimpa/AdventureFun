@@ -61,6 +61,7 @@ public class WorldLoader {
 
     private RayHandler rayHandler;
 
+
     public void dispose(){
         world.dispose();
         for(Enemy_Alien_Zombie enemyAlienZombie : enemies_alien_zombie){
@@ -135,9 +136,10 @@ public class WorldLoader {
 
         batch.end();
 
-
-        //rayHandler.setCombinedMatrix(gameScreen.getCamera().getPlayerCamera());
-        //rayHandler.render();
+        if (gameScreen.isActivateLights() == true){
+            rayHandler.setCombinedMatrix(gameScreen.getCamera().getPlayerCamera());
+            rayHandler.render();
+        }
 
     }
 
@@ -264,6 +266,7 @@ public class WorldLoader {
             Enemy_Alien_Soldier newEnemyAlienSoldier = new Enemy_Alien_Soldier(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world,this.player);
             newEnemyAlienSoldier.getBody().setUserData("Enemy_"+i);
             newEnemyAlienSoldier.getBullet().getBody().setUserData("Bullet_Enemy_Soldier_"+j);
+            newEnemyAlienSoldier.getBullet().getBody().setTransform(1000*i,1000*i,0);
             enemies_alien_soldier.add(newEnemyAlienSoldier);
             i++;
             j++;

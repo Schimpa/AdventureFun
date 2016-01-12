@@ -48,7 +48,7 @@ public class Enemy_Alien_Soldier extends LivingObject {
 
         body.setUserData("Enemy_Alien_Soldier");
 
-        bullet = new Bullet(game,-100,-100,0.2f,0.2f,world,game.getAssets().getBullet(),"Bullet_Enemy_Soldier");
+        bullet = new Bullet(game,-100,-100,0.2f,0.2f,world,game.getAssets().getBullet());
         bullet.setSpeedX(10);
         bullet.setReloadTime(0.01f);
 

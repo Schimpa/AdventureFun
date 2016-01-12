@@ -30,6 +30,9 @@ public class Assets {
     private Sound sound_alien_soldier_hit_02;
     private Sound sound_alien_soldier_dead;
 
+    private Sound sound_player_hit_01;
+    private Sound sound_player_hit_02;
+    private Sound sound_player_hit_03;
 
     private TextureAtlas atlas;
 
@@ -48,8 +51,6 @@ public class Assets {
     private Texture background;
     private Texture backgroundMenu;
     private Texture backgroundMars;
-
-
 
     private Music music_ambient;
 
@@ -85,6 +86,9 @@ public class Assets {
         assetManager.load("audio/alien_soldier_hit_01.ogg",Sound.class);
         assetManager.load("audio/alien_soldier_hit_02.ogg",Sound.class);
         assetManager.load("audio/alien_soldier_dead.ogg",Sound.class);
+        assetManager.load("audio/player_hit_01.ogg",Sound.class);
+        assetManager.load("audio/player_hit_02.ogg",Sound.class);
+        assetManager.load("audio/player_hit_03.ogg",Sound.class);
 
 
     }
@@ -118,6 +122,10 @@ public class Assets {
         sound_alien_soldier_hit_01 = assetManager.get("audio/alien_soldier_hit_01.ogg", Sound.class);
         sound_alien_soldier_hit_02 = assetManager.get("audio/alien_soldier_hit_02.ogg", Sound.class);
         sound_alien_soldier_dead = assetManager.get("audio/alien_soldier_dead.ogg", Sound.class);
+
+        sound_player_hit_01 = assetManager.get("audio/player_hit_01.ogg", Sound.class);
+        sound_player_hit_02 = assetManager.get("audio/player_hit_02.ogg", Sound.class);
+        sound_player_hit_03 = assetManager.get("audio/player_hit_02.ogg", Sound.class);
 
         atlas = assetManager.get("texture_data/images.pack.atlas",TextureAtlas.class);
 
@@ -329,5 +337,29 @@ public class Assets {
 
     public void setBackgroundMars(Texture backgroundMars) {
         this.backgroundMars = backgroundMars;
+    }
+
+    public Sound getSound_player_hit_01() {
+        return sound_player_hit_01;
+    }
+
+    public void setSound_player_hit_01(Sound sound_player_hit_01) {
+        this.sound_player_hit_01 = sound_player_hit_01;
+    }
+
+    public Sound getSound_player_hit_02() {
+        return sound_player_hit_02;
+    }
+
+    public void setSound_player_hit_02(Sound sound_player_hit_02) {
+        this.sound_player_hit_02 = sound_player_hit_02;
+    }
+
+    public Sound getSound_player_hit_03() {
+        return sound_player_hit_03;
+    }
+
+    public void setSound_player_hit_03(Sound sound_player_hit_03) {
+        this.sound_player_hit_03 = sound_player_hit_03;
     }
 }

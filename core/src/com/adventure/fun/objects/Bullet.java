@@ -23,12 +23,12 @@ public class Bullet extends LivingObject {
     private float reloadTime;
 
 
-    public Bullet(MainWindow game,float x,float y,float sizeX,float sizeY,World world,TextureRegion region,String name){
+    public Bullet(MainWindow game,float x,float y,float sizeX,float sizeY,World world,TextureRegion region){
         super(game);
-        init(x, y, sizeX, sizeY, world, region, name);
+        init(x, y, sizeX, sizeY, world, region);
     }
 
-    public void init(float x,float y,float sizeX,float sizeY,World world,TextureRegion region,String name){
+    public void init(float x,float y,float sizeX,float sizeY,World world,TextureRegion region){
         super.init(x,y,sizeX,sizeY,world);
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef);
@@ -40,8 +40,6 @@ public class Bullet extends LivingObject {
         shootBullets = new Array<Bullet>();
 
         bulletShoot = false;
-
-        body.setUserData(name);
 
         MassData massData = new MassData();
         massData.mass = 0;

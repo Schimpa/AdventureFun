@@ -50,7 +50,7 @@ public class LevelChooseScreen implements Screen {
         return buttonCreate;
     }
 
-    public void createButtonListener(TextButton button,final String levelName){
+    public void createButtonListener(TextButton button,final String levelName,final boolean activateLights){
         button.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -60,7 +60,7 @@ public class LevelChooseScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                game.getMenuScreen().setGameScreen(new GameScreen(game,levelName));
+                game.getMenuScreen().setGameScreen(new GameScreen(game,levelName,activateLights));
                 game.setScreen(game.getMenuScreen().getGameScreen());
             }
         });
@@ -83,7 +83,8 @@ public class LevelChooseScreen implements Screen {
         buttonLevel08 = createButton("1-8",0.1f,0.1f,37.5f,15,25,20);
         buttonLevel09 = createButton("1-9",0.1f,0.1f,70,15,25,20);
 
-        createButtonListener(buttonLevel01,"maps/earth.tmx");
+        createButtonListener(buttonLevel01,"maps/earth.tmx",false);
+        createButtonListener(buttonLevel02,"maps/mars.tmx",true);
 
         stage.addActor(buttonLevel01);
         stage.addActor(buttonLevel02);
