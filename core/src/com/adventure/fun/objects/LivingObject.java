@@ -11,6 +11,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import java.util.Random;
+
 
 /**
  * Created by Dennis on 27.10.2015.
@@ -36,6 +38,10 @@ public abstract class LivingObject {
     protected PolygonShape shape;
     protected FixtureDef fixtureDef;
 
+    //Für zufällige Ereignisse
+    protected Random rand = new Random();
+    protected int randomInt;
+
     protected boolean removeFlag;
     protected boolean isDestroyed;
 
@@ -56,6 +62,8 @@ public abstract class LivingObject {
         sprite = new Sprite();
         sprite.setPosition(x, y);
         sprite.setSize(sizeX, sizeY);
+
+        stateTime = 0.0f;
 
         //PHYSIK KÖRPER DEFINITION
         bodyDef = new BodyDef();

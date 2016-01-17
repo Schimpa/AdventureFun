@@ -252,7 +252,7 @@ public class WorldLoader {
         for(MapObject object: map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            Enemy_Alien_Zombie newEnemyAlienZombie = new Enemy_Alien_Zombie(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world,this.player);
+            Enemy_Alien_Zombie newEnemyAlienZombie = new Enemy_Alien_Zombie(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,2f,3.4f,world,this.player);
             newEnemyAlienZombie.getBody().setUserData("Enemy_"+i);
             enemies_alien_zombie.add(newEnemyAlienZombie);
             i++;

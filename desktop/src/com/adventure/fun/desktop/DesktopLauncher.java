@@ -8,13 +8,14 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 
-		//createTextureAtlas();
+		createTextureAtlas();
 
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-		config.width = 800;
-		config.height = 600;
+		config.width = 1280;
+		config.height = 720;
+		config.fullscreen = true;
 		// fullscreen
 		config.fullscreen = false;
 		// vSync
@@ -27,8 +28,8 @@ public class DesktopLauncher {
 
 	public static void createTextureAtlas(){
 		TexturePacker.Settings settings = new TexturePacker.Settings();
-		settings.maxWidth = 1024;
-		settings.maxHeight = 1024;
+		settings.maxWidth = 2048;
+		settings.maxHeight = 2048;
 		settings.duplicatePadding = false;
 		settings.debug = false;
 		TexturePacker.processIfModified(settings,"texture_data","texture_data","images.pack");

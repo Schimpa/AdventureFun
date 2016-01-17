@@ -6,6 +6,7 @@ import com.adventure.fun.effects.ObjectAnimation;
 import com.adventure.fun.screens.GameScreen;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -46,7 +47,7 @@ public class Player extends LivingObject {
         damageCoolDownTime = 0;
         score = 500;
         lives = 3;
-        maxSpeed = new Vector2(5,5);
+        maxSpeed = new Vector2(8,8);
         sound_reload = 0.25f;
 
         respawnPoint = new Vector2(x,y);
@@ -56,17 +57,17 @@ public class Player extends LivingObject {
         isMovingLeft = false;
 
         //GESCHOSS
-        bullet = new Bullet(game,-100,-100,0.4f,0.4f,world,game.getAssets().getBullet());
+        bullet = new Bullet(game,-100,-100,0.4f,0.4f,world,game.getAssets().getBullet_Laser());
         bullet.getBody().setUserData("Bullet_Player");
         bullet.setSpeedX(30);
 
         //JETZTIGE ANIMATION
         currentFrame = new TextureRegion();
 
-        walkAnimation = new ObjectAnimation(game.getAssets().getPlayer_move(),6,1,0,3);
+        walkAnimation = new ObjectAnimation(game.getAssets().getPlayer_move(),6,1,0,3,0.15f);
         walkAnimation.setIsActive(true);
 
-        jumpAnimation = new ObjectAnimation(game.getAssets().getPlayer_move(),6,1,4,5);
+        jumpAnimation = new ObjectAnimation(game.getAssets().getPlayer_move(),6,1,4,5,0.15f);
 
 
         body.setUserData("Player");
@@ -79,30 +80,25 @@ public class Player extends LivingObject {
 
     public void render(SpriteBatch batch) {
         super.render();
-
         if (walkAnimation.isActive() == true){
             currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
         }
         else if (jumpAnimation.isActive() == true){
             currentFrame = jumpAnimation.getAnimation().getKeyFrame(stateTime, true);
         }
-
         try{
             batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
         }catch (NullPointerException e) {
             System.out.println("error: " + e);
         }
-
-
-
         //BULLET
-        batch.draw(bullet.region, bullet.body.getPosition().x - bullet.sprite.getWidth() / 2,
-                bullet.body.getPosition().y - bullet.sprite.getHeight() / 2, bullet.sprite.getWidth(), bullet.sprite.getHeight());
+        bullet.render(batch);
     }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+
         checkIfLoose();
         this.damageCoolDownTime += deltaTime;
         if (isMovingRight == true){
@@ -111,19 +107,39 @@ public class Player extends LivingObject {
         if (isMovingLeft == true){
             this.move(false, deltaTime);
         }
+
         bullet.shootBullet(this);
+
         bullet.update(deltaTime);
         checkIfLoose();
         jump();
     }
 
+    public void looseLife(int amount){
+
+        this.lives = this.lives - amount;
+        randomInt = rand.nextInt(3)+1;
+
+        switch(randomInt){
+            case 1:
+                this.game.getAssets().getSound_player_hit_01().play();
+                break;
+            case 2:
+                this.game.getAssets().getSound_player_hit_02().play();
+                break;
+            case 3:
+                this.game.getAssets().getSound_player_hit_03().play();
+                break;
+        }
+    }
+
     public void move(boolean direction,float deltaTime){
         super.move(direction, deltaTime);
         //LEFT == FALSE | RIGHT == TRUE
-        if (currentFrame.getRegionX() == 32 && sound_reload >= 0.25f){
+        if (walkAnimation.getFrames()[0].equals(currentFrame) && sound_reload >= 0.25f){
             game.getAssets().getSound_step_02().play(0.2f);
             sound_reload = 0;
-        }else if(currentFrame.getRegionX() == 96 && sound_reload >= 0.25f){
+        }else if(walkAnimation.getFrames()[2].equals(currentFrame)&& sound_reload >= 0.25f){
             game.getAssets().getSound_step_01().play(0.2f);
             sound_reload = 0;
         }
@@ -151,7 +167,7 @@ public class Player extends LivingObject {
 
     public void checkIfLoose() {
         if (body.getPosition().y < 0) {
-            //game.getAssets().getSound_die().play();
+            game.getAssets().getSound_die().play();
             body.setLinearVelocity(0, 0);
             body.setTransform(respawnPoint.x, respawnPoint.y, 0);
             lives -= 1;

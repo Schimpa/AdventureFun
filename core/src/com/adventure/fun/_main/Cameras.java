@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -33,11 +35,17 @@ public class Cameras {
     private Label score;
     private Label lives;
 
+    //HUD
     private TextButton buttonJump;
     private TextButton buttonMoveRight;
     private TextButton buttonMoveLeft;
     private TextButton nothingButton;
     private TextButton buttonShoot;
+
+    //GAMEOVERSCREEN
+    private Image gameOverOverlay;
+
+    private Vector2 screenRatio;
 
     public void dispose(){
         worldLoader.dispose();
@@ -49,9 +57,20 @@ public class Cameras {
         this.game = game;
         this.worldLoader = worldLoader;
         this.batch = batch;
+        screenRatio = new Vector2();
+        screenRatio.set(Gdx.graphics.getWidth() / ((ggt(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()))),Gdx.graphics.getHeight() / ((ggt(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()))));
 
+        System.out.println(screenRatio.x);
+        System.out.println(screenRatio.y);
+
+        System.out.println(ggt(1280,720));
         playerCamera = new OrthographicCamera();
-        playerCamera.setToOrtho(false, 1.6f*21 , 0.9f*21 );
+        if (screenRatio.x == 16 && screenRatio.y == 9){
+            playerCamera.setToOrtho(false, screenRatio.x * 1.5f , screenRatio.y * 1.5f );
+        } else if (screenRatio.x == 4 && screenRatio.y == 3){
+            playerCamera.setToOrtho(false, screenRatio.x * 5.5f , screenRatio.y * 5.5f );
+        }
+
 
         backgroundCamera = new OrthographicCamera();
         backgroundCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 5, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY()) * 5);
@@ -60,7 +79,21 @@ public class Cameras {
 
 
     }
+    private static float ggt(float zahl1, float zahl2) {
+        while (zahl2 != 0) {
+            if (zahl1 > zahl2) {
+                zahl1 = zahl1 - zahl2;
+            } else {
+                zahl2 = zahl2 - zahl1;
+            }
+        }
+        return zahl1;
+    }
 
+    public static Vector2 updateScreenRatio(){
+        Vector2 screenRatio = new Vector2(Gdx.graphics.getWidth() / (ggt(Gdx.graphics.getWidth(),Gdx.graphics.getHeight())*10),Gdx.graphics.getHeight() / (ggt(Gdx.graphics.getWidth(),Gdx.graphics.getHeight())*10));
+        return (screenRatio);
+    }
 
     public void createInputListener(){
         buttonJump.addListener(new ClickListener() {
@@ -189,6 +222,10 @@ public class Cameras {
         createInputListener();
     }
 
+    public void createGameOverScreen(){
+        gameOverOverlay = new Image();
+    }
+
     public void update(float deltaTime){
 
         score.setText(Integer.toString(worldLoader.getPlayer().getScore()));
@@ -240,5 +277,12 @@ public class Cameras {
         this.buttonJump = buttonJump;
     }
 
+    public Vector2 getScreenRatio() {
+        return screenRatio;
+    }
+
+    public void setScreenRatio(Vector2 screenRatio) {
+        this.screenRatio = screenRatio;
+    }
 
 }

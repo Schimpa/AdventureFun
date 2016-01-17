@@ -12,8 +12,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Assets {
 
     private AssetManager assetManager;
-    private Sound sound_shoot_01;
-    private Sound sound_shoot_02;
+    private Sound sound_shoot_laser_01;
+    private Sound sound_shoot_laser_02;
+    private Sound sound_shoot_laser_03;
+    private Sound sound_shoot_laserbeam_01;
     private Sound sound_step_01;
     private Sound sound_step_02;
     private Sound sound_jump;
@@ -37,15 +39,19 @@ public class Assets {
     private TextureAtlas atlas;
 
     //PLAYER
-    private Texture player_move;
-    private Texture alien_move;
-    private Texture alien_soldier;
+    private TextureRegion player_move;
 
-    //BULLET
-    private TextureRegion bullet;
+    //ENEMIES
+    private TextureRegion alien_zombie;
+    private TextureRegion alien_soldier;
 
-    //PICKUPS
+    //BULLETS
+    private TextureRegion bullet_blitzkugel;
+    private TextureRegion bullet_laser;
+
+    //ETC
     private TextureRegion point;
+    private TextureRegion whiteColor;
 
     //BACKGROUND
     private Texture background;
@@ -61,19 +67,21 @@ public class Assets {
     }
 
     public void load() {
-        assetManager.load("texture_data/images.pack.atlas",TextureAtlas.class);
-        assetManager.load("texture_data/player_move.png",Texture.class);
-        assetManager.load("texture_data/alien_move.png",Texture.class);
-        assetManager.load("texture_data/alien_soldier.png",Texture.class);
 
         assetManager.load("background/galaxy.png",Texture.class);
         assetManager.load("background/mars.jpg",Texture.class);
         assetManager.load("background/mars_02.jpg",Texture.class);
 
-        assetManager.load("audio/shoot_01.ogg",Sound.class);
-        assetManager.load("audio/shoot_02.ogg",Sound.class);
+        assetManager.load("texture_data/images.pack.atlas",TextureAtlas.class);
+
+        assetManager.load("audio/shoot_laser_01.ogg",Sound.class);
+        assetManager.load("audio/shoot_laser_02.ogg",Sound.class);
+        assetManager.load("audio/shoot_laser_03.ogg",Sound.class);
+        assetManager.load("audio/shoot_laserbeam_01.ogg",Sound.class);
+
         assetManager.load("audio/step_stone_01.ogg",Sound.class);
         assetManager.load("audio/step_stone_02.ogg",Sound.class);
+
         assetManager.load("audio/jump.ogg", Sound.class);
         assetManager.load("audio/papierstau.ogg",Sound.class);
         assetManager.load("audio/Ambient2.mp3", Music.class);
@@ -94,25 +102,17 @@ public class Assets {
     }
 
     public void done() {
-        sound_shoot_01 = assetManager.get("audio/shoot_01.ogg", Sound.class);
-        if (assetManager.isLoaded("audio/shoot_02.ogg")){
-            sound_shoot_02 = assetManager.get("audio/shoot_02.ogg", Sound.class);
-        }
-        if (assetManager.isLoaded("audio/step_stone_01.ogg")){
-            sound_step_01 = assetManager.get("audio/step_stone_01.ogg", Sound.class);
-        }
-        if (assetManager.isLoaded("audio/step_stone_02.ogg")){
-            sound_step_02 = assetManager.get("audio/step_stone_02.ogg", Sound.class);
-        }
-        if (assetManager.isLoaded("audio/jump.ogg")){
-            sound_jump = assetManager.get("audio/jump.ogg", Sound.class);
-        }
-        if (assetManager.isLoaded("audio/papierstau.ogg")){
-            sound_die = assetManager.get("audio/papierstau.ogg", Sound.class);
-        }
-        if (assetManager.isLoaded("audio/Ambient2.mp3")){
-            music_ambient = assetManager.get("audio/Ambient2.mp3",Music.class);
-        }
+        sound_shoot_laser_01 = assetManager.get("audio/shoot_laser_01.ogg", Sound.class);
+        sound_shoot_laser_02 = assetManager.get("audio/shoot_laser_02.ogg", Sound.class);
+        sound_shoot_laser_03 = assetManager.get("audio/shoot_laser_03.ogg", Sound.class);
+        sound_shoot_laserbeam_01 = assetManager.get("audio/shoot_laserbeam_01.ogg", Sound.class);
+
+        sound_step_01 = assetManager.get("audio/step_stone_01.ogg", Sound.class);
+        sound_step_02 = assetManager.get("audio/step_stone_02.ogg", Sound.class);
+
+        sound_jump = assetManager.get("audio/jump.ogg", Sound.class);
+        sound_die = assetManager.get("audio/papierstau.ogg", Sound.class);
+        music_ambient = assetManager.get("audio/Ambient2.mp3",Music.class);
 
         sound_alien_zombie = assetManager.get("audio/alien_zombie.ogg", Sound.class);
         sound_alien_zombie_dead = assetManager.get("audio/alien_zombie_dead.ogg", Sound.class);
@@ -129,18 +129,20 @@ public class Assets {
 
         atlas = assetManager.get("texture_data/images.pack.atlas",TextureAtlas.class);
 
-        //PLAYER
-        player_move = assetManager.get("texture_data/player_move.png",Texture.class);
-        alien_move = assetManager.get("texture_data/alien_move.png",Texture.class);
-        alien_soldier = assetManager.get("texture_data/alien_soldier.png",Texture.class);
-
         //BACKGROUND
         background = assetManager.get("background/galaxy.png",Texture.class);
         backgroundMenu = assetManager.get("background/mars.jpg",Texture.class);
         backgroundMars = assetManager.get("background/mars_02.jpg",Texture.class);
 
-        bullet = atlas.findRegion("bullet");
         point = atlas.findRegion("point");
+        whiteColor = atlas.findRegion("whiteColor");
+
+        player_move = atlas.findRegion("player_move");
+        bullet_laser = atlas.findRegion("bullet_laser");
+        alien_zombie = atlas.findRegion("alien_zombie");
+        alien_soldier = atlas.findRegion("alien_soldier");
+        bullet_blitzkugel = atlas.findRegion("bullet_blitzkugel");
+
     }
 
     public void dispose() {
@@ -171,20 +173,36 @@ public class Assets {
         this.assetManager = assetManager;
     }
 
-    public Sound getSound_shoot_01() {
-        return sound_shoot_01;
+    public Sound getSound_shoot_laser_01() {
+        return sound_shoot_laser_01;
     }
 
-    public void setSound_shoot_01(Sound sound_shoot_01) {
-        this.sound_shoot_01 = sound_shoot_01;
+    public void setSound_shoot_laser_01(Sound sound_shoot_laser_01) {
+        this.sound_shoot_laser_01 = sound_shoot_laser_01;
     }
 
-    public Sound getSound_shoot_02() {
-        return sound_shoot_02;
+    public Sound getSound_shoot_laser_02() {
+        return sound_shoot_laser_02;
     }
 
-    public void setSound_shoot_02(Sound sound_shoot_02) {
-        this.sound_shoot_02 = sound_shoot_02;
+    public void setSound_shoot_laser_02(Sound sound_shoot_laser_02) {
+        this.sound_shoot_laser_02 = sound_shoot_laser_02;
+    }
+
+    public Sound getSound_shoot_laser_03() {
+        return sound_shoot_laser_03;
+    }
+
+    public void setSound_shoot_laser_03(Sound sound_shoot_laser_03) {
+        this.sound_shoot_laser_03 = sound_shoot_laser_03;
+    }
+
+    public Sound getSound_shoot_laserbeam_01() {
+        return sound_shoot_laserbeam_01;
+    }
+
+    public void setSound_shoot_laserbeam_01(Sound sound_shoot_laserbeam_01) {
+        this.sound_shoot_laserbeam_01 = sound_shoot_laserbeam_01;
     }
 
     public Sound getSound_step_01() {
@@ -235,28 +253,28 @@ public class Assets {
         this.atlas = atlas;
     }
 
-    public Texture getPlayer_move() {
+    public TextureRegion getPlayer_move() {
         return player_move;
     }
 
-    public void setPlayer_move(Texture player_move) {
+    public void setPlayer_move(TextureRegion player_move) {
         this.player_move = player_move;
     }
 
-    public Texture getAlien_move() {
-        return alien_move;
+    public TextureRegion getAlien_zombie() {
+        return alien_zombie;
     }
 
-    public void setAlien_move(Texture alien_move) {
-        this.alien_move = alien_move;
+    public void setAlien_move(TextureRegion alien_move) {
+        this.alien_zombie = alien_zombie;
     }
 
-    public TextureRegion getBullet() {
-        return bullet;
+    public TextureRegion getBullet_Laser() {
+        return bullet_laser;
     }
 
-    public void setBullet(TextureRegion bullet) {
-        this.bullet = bullet;
+    public void setBullet_Laser(TextureRegion bullet) {
+        this.bullet_laser = bullet;
     }
 
     public TextureRegion getPoint() {
@@ -283,11 +301,11 @@ public class Assets {
         this.backgroundMenu = backgroundMenu;
     }
 
-    public Texture getAlien_soldier() {
+    public TextureRegion getAlien_soldier() {
         return alien_soldier;
     }
 
-    public void setAlien_soldier(Texture alien_soldier) {
+    public void setAlien_soldier(TextureRegion alien_soldier) {
         this.alien_soldier = alien_soldier;
     }
 
@@ -361,5 +379,25 @@ public class Assets {
 
     public void setSound_player_hit_03(Sound sound_player_hit_03) {
         this.sound_player_hit_03 = sound_player_hit_03;
+    }
+
+    public TextureRegion getBullet_blitzkugel() {
+        return bullet_blitzkugel;
+    }
+
+    public void setBullet_blitzkugel(TextureRegion bullet_blitzkugel) {
+        this.bullet_blitzkugel = bullet_blitzkugel;
+    }
+
+    public void setAlien_zombie(TextureRegion alien_zombie) {
+        this.alien_zombie = alien_zombie;
+    }
+
+    public TextureRegion getWhiteColor() {
+        return whiteColor;
+    }
+
+    public void setWhiteColor(TextureRegion whiteColor) {
+        this.whiteColor = whiteColor;
     }
 }

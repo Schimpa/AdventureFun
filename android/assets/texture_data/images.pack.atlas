@@ -1,27 +1,55 @@
 
 images.pack.png
-size: 256,128
+size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-bullet
+alien_soldier
   rotate: false
-  xy: 2, 2
+  xy: 390, 39
+  size: 160, 64
+  orig: 160, 64
+  offset: 0, 0
+  index: -1
+alien_zombie
+  rotate: false
+  xy: 2, 39
+  size: 192, 64
+  orig: 192, 64
+  offset: 0, 0
+  index: -1
+bullet_blitzkugel
+  rotate: false
+  xy: 2, 5
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+bullet_laser
+  rotate: false
+  xy: 552, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_move
   rotate: false
-  xy: 2, 36
-  size: 128, 64
-  orig: 128, 64
+  xy: 196, 39
+  size: 192, 64
+  orig: 192, 64
   offset: 0, 0
   index: -1
 point
   rotate: false
-  xy: 132, 68
+  xy: 132, 5
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+whiteColor
+  rotate: false
+  xy: 2, 2
+  size: 1, 1
+  orig: 1, 1
   offset: 0, 0
   index: -1

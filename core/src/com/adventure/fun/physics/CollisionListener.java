@@ -40,7 +40,7 @@ public class CollisionListener implements ContactListener {
         if (contactBody01.getUserData().toString().equals("Bullet_Enemy_Soldier_0") && contactBody02.getUserData().toString().equals("Player") ||
                 contactBody02.getUserData().toString().equals("Bullet_Enemy_Soldier_0") && contactBody01.getUserData().toString().equals("Player")) {
             System.out.println("AWPSOIDJOPW)NO)UAHOIRWAZ)(N§WQFJI$§");
-            gameScreen.getWorldLoader().getPlayer().setLives(gameScreen.getWorldLoader().getPlayer().getLives()-1);
+            gameScreen.getWorldLoader().getPlayer().looseLife(1);
             gameScreen.getWorldLoader().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y, gameScreen.getWorldLoader().getParticles().getExplosion01());
             gameScreen.getWorldLoader().getEnemies_alien_soldier().get(0).getBullet().setRemoveFlag(true);
         }
@@ -48,7 +48,7 @@ public class CollisionListener implements ContactListener {
         if (contactBody01.getUserData().toString().equals("Bullet_Enemy_Soldier_1") && contactBody02.getUserData().toString().equals("Player") ||
                 contactBody02.getUserData().toString().equals("Bullet_Enemy_Soldier_1") && contactBody01.getUserData().toString().equals("Player")) {
             System.out.println("AWPSOIDJOPW)NO)UAHOIRWAZ)(N§WQFJI$§");
-            gameScreen.getWorldLoader().getPlayer().setLives(gameScreen.getWorldLoader().getPlayer().getLives()-1);
+            gameScreen.getWorldLoader().getPlayer().looseLife(1);
             gameScreen.getWorldLoader().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y, gameScreen.getWorldLoader().getParticles().getExplosion01());
             gameScreen.getWorldLoader().getEnemies_alien_soldier().get(1).getBullet().setRemoveFlag(true);
         }
@@ -56,7 +56,7 @@ public class CollisionListener implements ContactListener {
         if (contactBody01.getUserData().toString().equals("Bullet_Enemy_Soldier_2") && contactBody02.getUserData().toString().equals("Player") ||
                 contactBody02.getUserData().toString().equals("Bullet_Enemy_Soldier_2") && contactBody01.getUserData().toString().equals("Player")) {
             System.out.println("AWPSOIDJOPW)NO)UAHOIRWAZ)(N§WQFJI$§");
-            gameScreen.getWorldLoader().getPlayer().setLives(gameScreen.getWorldLoader().getPlayer().getLives()-1);
+            gameScreen.getWorldLoader().getPlayer().looseLife(1);
             gameScreen.getWorldLoader().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y, gameScreen.getWorldLoader().getParticles().getExplosion01());
             gameScreen.getWorldLoader().getEnemies_alien_soldier().get(2).getBullet().setRemoveFlag(true);
         }
@@ -69,7 +69,7 @@ public class CollisionListener implements ContactListener {
             if (contactBody01.getUserData().toString().equals("Player") && contactBody02.getUserData().toString().equals("Enemy_"+i) ||
                     contactBody02.getUserData().toString().equals("Player") && contactBody01.getUserData().toString().equals("Enemy_"+i)){
                 if (gameScreen.getWorldLoader().getPlayer().getDamageCoolDownTime() >= 1){
-                    gameScreen.getWorldLoader().getPlayer().setLives(gameScreen.getWorldLoader().getPlayer().getLives() -1);
+                    gameScreen.getWorldLoader().getPlayer().looseLife(1);
 
                     if (contactBody01.getUserData().toString().equals("Player")){
 

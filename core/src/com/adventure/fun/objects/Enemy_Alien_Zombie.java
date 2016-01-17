@@ -42,22 +42,20 @@ public class Enemy_Alien_Zombie extends LivingObject {
     public void init(float x,float y,float sizeX,float sizeY,World world){
         super.init(x,y,sizeX,sizeY,world);
         body.createFixture(fixtureDef);
-        reactionDistance = 15;
+        reactionDistance = 10;
         speed = new Vector2(12f,12f);
-        maxSpeed = new Vector2(2,2);
+        maxSpeed = new Vector2(5,5);
         removeFlag = false;
         sound_reload = 0;
 
         stateTime = 0.0f;
 
         lives = 2;
-
-
         body.setUserData("Enemy_Alien_Zombie");
 
         currentFrame = new TextureRegion();
 
-        walkAnimation = new ObjectAnimation(game.getAssets().getAlien_move(),3,1,0,2);
+        walkAnimation = new ObjectAnimation(game.getAssets().getAlien_zombie(),3,1,0,2,0.15f);
         walkAnimation.setIsActive(true);
 
         shape.dispose();

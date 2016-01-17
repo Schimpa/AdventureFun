@@ -1,7 +1,11 @@
 package com.adventure.fun.objects;
 
 import com.adventure.fun._main.MainWindow;
+import com.adventure.fun.effects.ObjectAnimation;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
@@ -20,16 +24,18 @@ public class Bullet extends LivingObject {
 
     private Array<Bullet> shootBullets;
 
+    private ObjectAnimation shootAnimation;
+
     private float reloadTime;
 
 
-    public Bullet(MainWindow game,float x,float y,float sizeX,float sizeY,World world,TextureRegion region){
+    public Bullet(MainWindow game,float x,float y,float sizeX,float sizeY,World world,TextureRegion region,boolean isAnimation){
         super(game);
-        init(x, y, sizeX, sizeY, world, region);
+        init(x, y, sizeX, sizeY, world, region,isAnimation);
     }
 
-    public void init(float x,float y,float sizeX,float sizeY,World world,TextureRegion region){
-        super.init(x,y,sizeX,sizeY,world);
+    public void init(float x,float y,float sizeX,float sizeY,World world,TextureRegion region,boolean isAnimation) {
+        super.init(x, y, sizeX, sizeY, world);
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef);
         speedX = 100;
@@ -45,12 +51,17 @@ public class Bullet extends LivingObject {
         massData.mass = 0;
         body.setMassData(massData);
 
-        this.region = region;
+        currentFrame = new TextureRegion();
 
-        shape.dispose();
+        if (region == null) {
+            shootAnimation = new ObjectAnimation(region, 4, 1, 0, 3, 0.05f);
+            shootAnimation.setIsActive(true);
+
+            shape.dispose();
+        }
     }
 
-    public void shootBullet(LivingObject object){
+    public boolean shootBullet(LivingObject object){
         if (timeFromShoot >= reloadTime && bulletShoot == true){
             bulletShoot = false;
             PointLight light = new PointLight(
@@ -67,7 +78,7 @@ public class Bullet extends LivingObject {
             }
 
             if (this.getBody().getLinearVelocity().x == 0){
-                game.getAssets().getSound_shoot_02().play(0.5f);
+                game.getAssets().getSound_shoot_laser_03().play(0.2f);
                 if (object.getCurrentFrame().isFlipX() == false){
                     this.getBody().setTransform(object.getBody().getPosition().x + object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
                     this.getBody().setLinearVelocity(this.getSpeedX(), 0);
@@ -77,12 +88,29 @@ public class Bullet extends LivingObject {
                 }
             }
         }
+        return true;
     }
 
     public void update(float deltaTime) {
+        stateTime += deltaTime;
         checkBulletCollision();
         this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x, -0.1f);
         timeFromShoot += deltaTime;
+
+    }
+
+    public void render(SpriteBatch batch){
+        if (shootAnimation.isActive() == true){
+            currentFrame = shootAnimation.getAnimation().getKeyFrame(stateTime, true);
+        }
+        if (region != null){
+            batch.draw(currentFrame,body.getPosition().x - sprite.getWidth() / 2,
+                    body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
+        }else if (shootAnimation != null){
+            batch.draw(currentFrame,body.getPosition().x - sprite.getWidth() / 2,
+                    body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
+        }
+
     }
 
     public void checkBulletCollision(){
@@ -91,7 +119,6 @@ public class Bullet extends LivingObject {
             this.removeFlag = false;
         }
     }
-
 
     public int getSpeedX() {
         return speedX;
@@ -140,4 +167,14 @@ public class Bullet extends LivingObject {
     public void setReloadTime(float reloadTime) {
         this.reloadTime = reloadTime;
     }
+
+    public ObjectAnimation getShootAnimation() {
+        return shootAnimation;
+    }
+
+    public void setShootAnimation(ObjectAnimation shootAnimation) {
+        this.shootAnimation = shootAnimation;
+    }
+
+
 }

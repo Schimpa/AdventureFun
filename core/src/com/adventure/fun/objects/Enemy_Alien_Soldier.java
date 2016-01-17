@@ -18,10 +18,6 @@ public class Enemy_Alien_Soldier extends LivingObject {
     private Player player;
     private Bullet bullet;
 
-    //Für zufällige Ereignisse
-    Random rand = new Random();
-    private int randomInt;
-
     private int reactionDistance;    //Der Abstand, bei den Gegner den Spieler anfangen zu bemerken
 
     private ObjectAnimation walkAnimation;
@@ -36,7 +32,7 @@ public class Enemy_Alien_Soldier extends LivingObject {
     public void init(float x,float y,float sizeX,float sizeY,World world){
         super.init(x,y,sizeX,sizeY,world);
         body.createFixture(fixtureDef);
-        reactionDistance = 15;
+        reactionDistance = 10;
         speed = new Vector2(12f,12f);
         maxSpeed = new Vector2(2,2);
         removeFlag = false;
@@ -48,45 +44,52 @@ public class Enemy_Alien_Soldier extends LivingObject {
 
         body.setUserData("Enemy_Alien_Soldier");
 
-        bullet = new Bullet(game,-100,-100,0.2f,0.2f,world,game.getAssets().getBullet());
-        bullet.setSpeedX(10);
+        bullet = new Bullet(game,-100,-100,0.8f,0.8f,world,game.getAssets().getBullet_blitzkugel());
+        bullet.setSpeedX(3);
         bullet.setReloadTime(0.01f);
 
 
         currentFrame = new TextureRegion();
 
-        walkAnimation = new ObjectAnimation(game.getAssets().getAlien_soldier(),5,1,0,4);
+        walkAnimation = new ObjectAnimation(game.getAssets().getAlien_soldier(),5,1,0,4,0.15f);
         walkAnimation.setIsActive(true);
 
         shape.dispose();
     }
 
     public void logic(float deltaTime){
-        if (player.getBody().getPosition().x - this.getBody().getPosition().x > -reactionDistance &&
-                player.getBody().getPosition().x - this.getBody().getPosition().x < reactionDistance&&
+        if (    player.getBody().getPosition().x - this.getBody().getPosition().x > -reactionDistance &&
+                player.getBody().getPosition().x - this.getBody().getPosition().x < reactionDistance &&
                 player.getBody().getPosition().y - this.getBody().getPosition().y > -5 &&
-                player.getBody().getPosition().y - this.getBody().getPosition().y < 5 ){
+                player.getBody().getPosition().y - this.getBody().getPosition().y < 5  ){
+
+            if (player.getBody().getPosition().x - this.getBody().getPosition().x < 7 &&
+                    player.getBody().getPosition().x - this.getBody().getPosition().x > -7 ){
+            }else{
+                this.stateTime += deltaTime;
+                //LEFT OR RIGHT
+                if (player.getBody().getPosition().x - this.getBody().getPosition().x < 0){
+                    this.move(false,deltaTime);
+                }
+
+                if (player.getBody().getPosition().x - this.getBody().getPosition().x > 0){
+                    this.move(true,deltaTime);
+                }
+            }
             randomInt = rand.nextInt(300)+1;
-            if (randomInt == 48){
+            if (randomInt == 50){
                 game.getAssets().getSound_alien_soldier_01().play(0.7f);
             }else if (randomInt == 74){
                 game.getAssets().getSound_alien_soldier_02().play(0.7f);
-            }
-
-            this.stateTime += deltaTime;
-            //LEFT OR RIGHT
-            if (player.getBody().getPosition().x - this.getBody().getPosition().x < 0){
-                this.move(false,deltaTime);
-            }
-
-            if (player.getBody().getPosition().x - this.getBody().getPosition().x > 0){
-                this.move(true,deltaTime);
             }
             bullet.setBulletShoot(true);
         }
     }
 
     public void update(float deltaTime){
+        if (walkAnimation.isActive() == true){
+            currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
+        }
         bullet.update(deltaTime);
         bullet.shootBullet(this);
         logic(deltaTime);
@@ -121,14 +124,9 @@ public class Enemy_Alien_Soldier extends LivingObject {
     public void render(SpriteBatch batch){
         super.render();
         if (removeFlag != true){
-            if (walkAnimation.isActive() == true){
-                currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
-            }
-            batch.draw(bullet.region, bullet.body.getPosition().x - bullet.sprite.getWidth() / 2,
-                    bullet.body.getPosition().y - bullet.sprite.getHeight() / 2, bullet.sprite.getWidth(), bullet.sprite.getHeight());
-
             batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth() ,sprite.getHeight());
         }
+        bullet.render(batch);
     }
 
     public Bullet getBullet(){

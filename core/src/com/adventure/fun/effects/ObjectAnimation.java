@@ -14,7 +14,8 @@ public class ObjectAnimation {
 
     private boolean isActive;
 
-    public ObjectAnimation(Texture texture,int lengthX,int lengthY,int startNum,int endNum){
+    // TEXTURE - LÄNGE DES BILDES (AB 1) - HÖHE DES BILDES (AB 1) - STARTNUMMER ( AB 0) - ENDNUMMER (AB 0)
+    public ObjectAnimation(Texture texture,int lengthX,int lengthY,int startNum,int endNum,float animationSpeed){
         TextureRegion[][] tmp = TextureRegion.split(texture,
                 texture.getWidth()/lengthX, texture.getHeight()/lengthY);
 
@@ -31,7 +32,29 @@ public class ObjectAnimation {
             }
         }
 
-        animation = new Animation(0.15f, frames);
+        animation = new Animation(animationSpeed, frames);
+        isActive = false;
+    }
+
+    public ObjectAnimation(TextureRegion region,int lengthX,int lengthY,int startNum,int endNum,float animationSpeed) {
+        TextureRegion[][] tmp = region.split(
+                region.getRegionWidth() / lengthX, region.getRegionHeight() / lengthY);
+
+
+        int tempNum = 0;
+
+        this.frames = new TextureRegion[(endNum - startNum) + 1];
+        int index = 0;
+        for (int i = 0; i < lengthY; i++) {
+            for (int j = 0; j < lengthX; j++) {
+                if (tempNum >= startNum && tempNum <= endNum) {
+                    this.frames[index++] = tmp[i][j];
+                }
+                tempNum++;
+            }
+        }
+
+        animation = new Animation(animationSpeed, frames);
         isActive = false;
     }
 
@@ -58,5 +81,9 @@ public class ObjectAnimation {
 
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
