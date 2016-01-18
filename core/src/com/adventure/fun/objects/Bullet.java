@@ -22,6 +22,8 @@ public class Bullet extends LivingObject {
     private float timeFromShoot;
     private boolean bulletShoot;
 
+    private boolean isAnimation;
+
     private Array<Bullet> shootBullets;
 
     private ObjectAnimation shootAnimation;
@@ -41,6 +43,9 @@ public class Bullet extends LivingObject {
         speedX = 100;
         reloadTime = 0.6f;
 
+        this.region = region;
+        this.isAnimation = isAnimation;
+
         timeFromShoot = 0;
 
         shootBullets = new Array<Bullet>();
@@ -53,12 +58,13 @@ public class Bullet extends LivingObject {
 
         currentFrame = new TextureRegion();
 
-        if (region == null) {
+        if (isAnimation == true){
             shootAnimation = new ObjectAnimation(region, 4, 1, 0, 3, 0.05f);
             shootAnimation.setIsActive(true);
-
-            shape.dispose();
         }
+
+
+        shape.dispose();
     }
 
     public boolean shootBullet(LivingObject object){
@@ -100,14 +106,14 @@ public class Bullet extends LivingObject {
     }
 
     public void render(SpriteBatch batch){
-        if (shootAnimation.isActive() == true){
-            currentFrame = shootAnimation.getAnimation().getKeyFrame(stateTime, true);
-        }
-        if (region != null){
+        if (this.isAnimation == true){
+            if (shootAnimation.isActive() == true){
+                currentFrame = shootAnimation.getAnimation().getKeyFrame(stateTime, true);
+            }
             batch.draw(currentFrame,body.getPosition().x - sprite.getWidth() / 2,
                     body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
-        }else if (shootAnimation != null){
-            batch.draw(currentFrame,body.getPosition().x - sprite.getWidth() / 2,
+        }else{
+            batch.draw(region,body.getPosition().x - sprite.getWidth() / 2,
                     body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
         }
 
@@ -119,6 +125,11 @@ public class Bullet extends LivingObject {
             this.removeFlag = false;
         }
     }
+
+
+
+
+
 
     public int getSpeedX() {
         return speedX;

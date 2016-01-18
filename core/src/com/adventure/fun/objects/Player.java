@@ -29,6 +29,9 @@ public class Player extends LivingObject {
     private ObjectAnimation walkAnimation;
     private ObjectAnimation jumpAnimation;
 
+
+
+
     private Vector2 respawnPoint;
 
     private float damageCoolDownTime;
@@ -50,6 +53,8 @@ public class Player extends LivingObject {
         maxSpeed = new Vector2(8,8);
         sound_reload = 0.25f;
 
+
+
         respawnPoint = new Vector2(x,y);
         stateTime = 0.0f;
 
@@ -57,7 +62,7 @@ public class Player extends LivingObject {
         isMovingLeft = false;
 
         //GESCHOSS
-        bullet = new Bullet(game,-100,-100,0.4f,0.4f,world,game.getAssets().getBullet_Laser());
+        bullet = new Bullet(game,-100,-100,0.4f,0.4f,world,game.getAssets().getBullet_Laser(),false);
         bullet.getBody().setUserData("Bullet_Player");
         bullet.setSpeedX(30);
 
@@ -68,7 +73,6 @@ public class Player extends LivingObject {
         walkAnimation.setIsActive(true);
 
         jumpAnimation = new ObjectAnimation(game.getAssets().getPlayer_move(),6,1,4,5,0.15f);
-
 
         body.setUserData("Player");
 
@@ -173,7 +177,8 @@ public class Player extends LivingObject {
             lives -= 1;
             score -= 100;
         }else if (lives <= 0){
-            Gdx.app.exit();
+            //Gdx.app.exit();
+            this.game.getMenuScreen().getGameScreen().setShowGameOverScreen(true);
         }
     }
 

@@ -44,10 +44,9 @@ public class Enemy_Alien_Soldier extends LivingObject {
 
         body.setUserData("Enemy_Alien_Soldier");
 
-        bullet = new Bullet(game,-100,-100,0.8f,0.8f,world,game.getAssets().getBullet_blitzkugel());
+        bullet = new Bullet(game,-100,-100,0.8f,0.8f,world,game.getAssets().getBullet_blitzkugel(),true);
         bullet.setSpeedX(3);
         bullet.setReloadTime(0.01f);
-
 
         currentFrame = new TextureRegion();
 
@@ -119,7 +118,6 @@ public class Enemy_Alien_Soldier extends LivingObject {
         game.getAssets().getSound_alien_soldier_dead().play(1);
         super.dispose();
     }
-
 
     public void render(SpriteBatch batch){
         super.render();

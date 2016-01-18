@@ -21,6 +21,9 @@ public class GameScreen implements Screen {
 
 	private Box2DDebugRenderer debugRenderer;
 
+	private boolean showGameOverScreen;
+
+
 	private Cameras camera;
 
 	private String levelName;
@@ -31,6 +34,8 @@ public class GameScreen implements Screen {
 		this.game = game;
 
 		this.levelName = levelName;
+
+		showGameOverScreen = false;
 
 		this.activateLights = activateLights;
 
@@ -68,6 +73,11 @@ public class GameScreen implements Screen {
 		worldLoader.getRenderer().setView(camera.getPlayerCamera());
 		worldLoader.updateWorld(delta);
 
+		if (showGameOverScreen == true){
+			camera.createGameOverScreen();
+			showGameOverScreen = false;
+		}
+
 
 		//Rendert alle Objeckte innerhalb des batchs
 		game.getBatch().begin();
@@ -84,13 +94,16 @@ public class GameScreen implements Screen {
 
 		//Renderd HUD
 		camera.getHudStage().draw();
+		camera.getGameOverStage().draw();
 	}
 
 	@Override
 	public void resize(int width,int height){
 		//camera.getPlayerCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 2, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 2 );
-		camera.getBackgroundCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 2, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 2 );
-		camera.getHudStage().getViewport().update(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		camera.getBackgroundCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 2, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY())* 2 );
+		camera.getHudStage().getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera.getGameOverStage().getViewport().update(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+
 }
 
 
@@ -169,5 +182,13 @@ public class GameScreen implements Screen {
 
 	public void setActivateLights(boolean activateLights) {
 		this.activateLights = activateLights;
+	}
+
+	public boolean isShowGameOverScreen() {
+		return showGameOverScreen;
+	}
+
+	public void setShowGameOverScreen(boolean showGameOverScreen) {
+		this.showGameOverScreen = showGameOverScreen;
 	}
 }

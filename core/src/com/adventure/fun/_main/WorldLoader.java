@@ -61,7 +61,6 @@ public class WorldLoader {
 
     private RayHandler rayHandler;
 
-
     public void dispose(){
         world.dispose();
         for(Enemy_Alien_Zombie enemyAlienZombie : enemies_alien_zombie){
@@ -99,7 +98,8 @@ public class WorldLoader {
         world.setContactListener(new com.adventure.fun.physics.CollisionListener(this.gameScreen));
 
     }
-        public void createLights(){
+
+    public void createLights(){
 
         //Umgebungslicht
         RayHandler.setGammaCorrection(true);
@@ -140,7 +140,6 @@ public class WorldLoader {
             rayHandler.setCombinedMatrix(gameScreen.getCamera().getPlayerCamera());
             rayHandler.render();
         }
-
     }
 
     public void updateWorld(float deltaTime){

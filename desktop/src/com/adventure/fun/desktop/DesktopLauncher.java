@@ -8,18 +8,17 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 
-		createTextureAtlas();
+		//createTextureAtlas();
 
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.width = 1280;
 		config.height = 720;
-		config.fullscreen = true;
 		// fullscreen
 		config.fullscreen = false;
 		// vSync
-		config.vSyncEnabled = false;
+		config.vSyncEnabled = true;
 		//System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 		new LwjglApplication(new MainWindow(), config);
 	}
