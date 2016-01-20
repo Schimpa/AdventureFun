@@ -29,7 +29,7 @@ public class Player extends LivingObject {
     private ObjectAnimation walkAnimation;
     private ObjectAnimation jumpAnimation;
 
-
+    private boolean gameOverActivated;
 
 
     private Vector2 respawnPoint;
@@ -49,9 +49,10 @@ public class Player extends LivingObject {
         speed = new Vector2(25f,25f);
         damageCoolDownTime = 0;
         score = 500;
-        lives = 3;
+        lives = 1;
         maxSpeed = new Vector2(8,8);
         sound_reload = 0.25f;
+        gameOverActivated = false;
 
 
 
@@ -176,8 +177,9 @@ public class Player extends LivingObject {
             body.setTransform(respawnPoint.x, respawnPoint.y, 0);
             lives -= 1;
             score -= 100;
-        }else if (lives <= 0){
+        }else if (lives <= 0 && gameOverActivated == false){
             //Gdx.app.exit();
+            this.gameOverActivated = true;
             this.game.getMenuScreen().getGameScreen().setShowGameOverScreen(true);
         }
     }

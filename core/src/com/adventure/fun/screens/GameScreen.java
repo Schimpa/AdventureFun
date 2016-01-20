@@ -75,6 +75,8 @@ public class GameScreen implements Screen {
 
 		if (showGameOverScreen == true){
 			camera.createGameOverScreen();
+			camera.getHudStage().dispose();
+			Gdx.input.setInputProcessor(camera.getGameOverStage());
 			showGameOverScreen = false;
 		}
 

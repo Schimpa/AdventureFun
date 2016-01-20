@@ -42,7 +42,7 @@ public class MenuScreen implements Screen {
 
     private GameScreen gameScreen;
 
-    float x,y;
+    private float x,y;
 
     boolean xFlag;
     boolean yFlag;
@@ -55,6 +55,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
+
         isActivated = false;
         x = 0;
         y = 0;
@@ -96,7 +97,6 @@ public class MenuScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                //game.setScreen(gameScreen = new GameScreen(game,"maps/earth.tmx"));
                 game.setScreen(new LevelChooseScreen(game));
             }
         });
@@ -126,7 +126,7 @@ public class MenuScreen implements Screen {
 
     }
 
-    private void moveBackground(){
+    public void moveBackground(){
         if (x <= -stage.getWidth()){
             xFlag = true;
         }else if (x >= 0){
@@ -203,4 +203,47 @@ public class MenuScreen implements Screen {
     public void setGameScreen(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
     }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public boolean isxFlag() {
+        return xFlag;
+    }
+
+    public void setxFlag(boolean xFlag) {
+        this.xFlag = xFlag;
+    }
+
+    public boolean isyFlag() {
+        return yFlag;
+    }
+
+    public void setyFlag(boolean yFlag) {
+        this.yFlag = yFlag;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public Texture getBackgroundImage() {
+        return backgroundImage;
+    }
+
+    public void setBackgroundImage(Texture backgroundImage) {
+        this.backgroundImage = backgroundImage;
+    }
+
+
 }
+

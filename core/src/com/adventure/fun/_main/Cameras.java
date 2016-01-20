@@ -1,5 +1,7 @@
 package com.adventure.fun._main;
 
+import com.adventure.fun.screens.GameScreen;
+import com.adventure.fun.screens.LevelChooseScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -7,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -56,6 +59,7 @@ public class Cameras {
         worldLoader.dispose();
         batch.dispose();
         hudStage.dispose();
+        gameOverStage.dispose();
     }
 
     public Cameras(MainWindow game,WorldLoader worldLoader,SpriteBatch batch){
@@ -64,9 +68,6 @@ public class Cameras {
         this.batch = batch;
         screenRatio = new Vector2();
         screenRatio.set(Gdx.graphics.getWidth() / ((ggt(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()))), Gdx.graphics.getHeight() / ((ggt(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()))));
-
-        System.out.println(screenRatio.x);
-        System.out.println(screenRatio.y);
 
 
         backgroundCamera = new OrthographicCamera();
@@ -81,13 +82,8 @@ public class Cameras {
             playerCamera.setToOrtho(false, screenRatio.x * 5.5f , screenRatio.y * 5.5f );
             createHUD_4_3();
         }
-
-
-
-
-
-
     }
+
     private static float ggt(float zahl1, float zahl2) {
         while (zahl2 != 0) {
             if (zahl1 > zahl2) {
@@ -97,11 +93,6 @@ public class Cameras {
             }
         }
         return zahl1;
-    }
-
-    public static Vector2 updateScreenRatio(){
-        Vector2 screenRatio = new Vector2(Gdx.graphics.getWidth() / (ggt(Gdx.graphics.getWidth(),Gdx.graphics.getHeight())*10),Gdx.graphics.getHeight() / (ggt(Gdx.graphics.getWidth(),Gdx.graphics.getHeight())*10));
-        return (screenRatio);
     }
 
     public void createInputListener(){
@@ -172,6 +163,40 @@ public class Cameras {
                 super.touchUp(event, x, y, pointer, button);
                 worldLoader.getPlayer().setIsMovingLeft(false);
                 System.out.println("TouchUp:  " + event);
+            }
+        });
+    }
+
+    public void createGameOverInputListener(){
+        buttonRetry.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("TouchDown:  " + event);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                game.getMenuScreen().setGameScreen(new GameScreen(game, game.getMenuScreen().getGameScreen().getLevelName(),
+                        game.getMenuScreen().getGameScreen().isActivateLights()));
+                game.setScreen(game.getMenuScreen().getGameScreen());
+                System.out.println("TouchUp:  " + event);
+            }
+        });
+
+        buttonBack.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("TouchDown:  " + event);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                game.setScreen(new LevelChooseScreen(game));
+                System.out.println("TouchUpTROLOLOL:  " + event);
             }
         });
     }
@@ -295,31 +320,30 @@ public class Cameras {
     }
 
     public void createGameOverScreen(){
-        gameOverOverlay = new Image();
-        gameOverOverlay.setScale(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        gameOverOverlay.setColor(0.1f, 0.1f, 0.1f, 0.8f);
-        gameOverOverlay.invalidate();
-
-        buttonBack = new TextButton("Back",game.getSkin(),"default");
-        buttonBack.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.5f,  (Gdx.graphics.getHeight() / 100) * 0.5f);
-        buttonBack.setColor(0.7f, 1, 0.4f, 0.5f);
-        buttonBack.setSize(Gdx.graphics.getWidth() / 100 * 40, Gdx.graphics.getHeight() / 100 * 30);
-        buttonBack.setPosition(Gdx.graphics.getWidth() / 100 * 35, Gdx.graphics.getHeight() / 100 * 15);
-
-        buttonRetry = new TextButton("Back",game.getSkin(),"default");
-        buttonRetry.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.5f, (Gdx.graphics.getHeight() / 100) * 0.5f);
+        buttonRetry = new TextButton("Retry",game.getSkin(),"default");
+        buttonRetry.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.12f, (Gdx.graphics.getHeight() / 100) * 0.12f);
         buttonRetry.setColor(0.7f, 1, 0.4f, 0.5f);
         buttonRetry.setSize(Gdx.graphics.getWidth() / 100 * 40, Gdx.graphics.getHeight() / 100 * 30);
-        buttonRetry.setPosition(Gdx.graphics.getWidth() / 100 * 35, Gdx.graphics.getHeight() / 100 * 15);
+        buttonRetry.setPosition(Gdx.graphics.getWidth() / 100 * 30, Gdx.graphics.getHeight() / 100 * 50);
 
+        buttonBack = new TextButton("Back",game.getSkin(),"default");
+        buttonBack.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.15f, (Gdx.graphics.getHeight() / 100) * 0.15f);
+        buttonBack.setColor(0.7f, 1, 0.4f, 0.5f);
+        buttonBack.setSize(Gdx.graphics.getWidth() / 100 * 40, Gdx.graphics.getHeight() / 100 * 30);
+        buttonBack.setPosition(Gdx.graphics.getWidth() / 100 * 30, Gdx.graphics.getHeight() / 100 * 10);
 
+        gameOverOverlay = new Image();
+        gameOverOverlay.setScale(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        gameOverOverlay.setColor(0.9f, 0.2f, 0.2f, 1);
 
-        gameOverStage.addActor(gameOverOverlay);
         gameOverStage.addActor(buttonBack);
+        gameOverStage.addActor(buttonRetry);
+        gameOverStage.addActor(gameOverOverlay);
+
+        createGameOverInputListener();
     }
 
     public void update(float deltaTime){
-
         score.setText(Integer.toString(worldLoader.getPlayer().getScore()));
         lives.setText(Integer.toString(worldLoader.getPlayer().getLives()));
 
@@ -328,14 +352,12 @@ public class Cameras {
         playerCamera.position.y = worldLoader.getPlayer().getBody().getPosition().y + 2;
 
         //Setzt position des Hintergrundes
-        backgroundCamera.position.x = worldLoader.getPlayer().getBody().getPosition().x / 10 ;
+        backgroundCamera.position.x = worldLoader.getPlayer().getBody().getPosition().x / 10;
         backgroundCamera.position.y = worldLoader.getPlayer().getBody().getPosition().y / 10;
 
         //Aktualisiert Kameras
         playerCamera.update();
         backgroundCamera.update();
-
-
     }
 
     public Stage getHudStage() {

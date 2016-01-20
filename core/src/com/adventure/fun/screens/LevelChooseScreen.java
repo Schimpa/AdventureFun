@@ -33,7 +33,7 @@ public class LevelChooseScreen implements Screen {
     private MainWindow game;
     private Stage stage;
 
-    private TextButton buttonLevel01,buttonLevel02,buttonLevel03,buttonLevel04,buttonLevel05,buttonLevel06,buttonLevel07,buttonLevel08,buttonLevel09;
+    private TextButton buttonLevel01,buttonLevel02,buttonLevel03,buttonLevel04,buttonLevel05,buttonLevel06,buttonLevel07,buttonLevel08,buttonLevel09, buttonBack;
 
     public LevelChooseScreen(MainWindow game){
         this.game = game;
@@ -69,7 +69,6 @@ public class LevelChooseScreen implements Screen {
 
     @Override
     public void show() {
-
         this.stage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),game.getBatch());
         Gdx.input.setInputProcessor(this.stage);
 
@@ -83,6 +82,21 @@ public class LevelChooseScreen implements Screen {
         buttonLevel08 = createButton("1-8",0.1f,0.1f,37.5f,15,25,20);
         buttonLevel09 = createButton("1-9",0.1f,0.1f,70,15,25,20);
 
+        buttonBack = createButton("BACK",0.05f,0.05f,2,2,15,10);
+
+        buttonBack.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                game.setScreen(game.getMenuScreen());
+            }
+        });
+
         createButtonListener(buttonLevel01,"maps/earth.tmx",false);
         createButtonListener(buttonLevel02,"maps/mars.tmx",true);
 
@@ -95,7 +109,7 @@ public class LevelChooseScreen implements Screen {
         stage.addActor(buttonLevel07);
         stage.addActor(buttonLevel08);
         stage.addActor(buttonLevel09);
-
+        stage.addActor(buttonBack);
     }
 
 
@@ -104,7 +118,10 @@ public class LevelChooseScreen implements Screen {
         Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        game.getMenuScreen().moveBackground();
+
         game.getBatch().begin();
+        game.getBatch().draw(game.getMenuScreen().getBackgroundImage(), game.getMenuScreen().getX(), game.getMenuScreen().getY(), stage.getWidth() * 2,stage.getHeight() * 2);
         game.getBatch().end();
         stage.draw();
     }

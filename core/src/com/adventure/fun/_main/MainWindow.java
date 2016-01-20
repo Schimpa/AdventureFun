@@ -29,6 +29,7 @@ public class MainWindow extends Game{
 
     @Override
     public void create() {
+        Gdx.graphics.setTitle("Planet Escape");
         initFont();
         initSkin();
         batch = new SpriteBatch();

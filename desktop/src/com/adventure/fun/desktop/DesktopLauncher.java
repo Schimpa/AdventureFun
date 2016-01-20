@@ -1,6 +1,7 @@
 package com.adventure.fun.desktop;
 
 import com.adventure.fun._main.MainWindow;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
@@ -13,6 +14,7 @@ public class DesktopLauncher {
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
+		config.resizable = false;
 		config.width = 1280;
 		config.height = 720;
 		// fullscreen
