@@ -1,8 +1,10 @@
 package com.adventure.fun.objects;
 
 import com.adventure.fun._main.MainWindow;
+import com.adventure.fun.effects.Particles;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -53,6 +55,8 @@ public abstract class LivingObject {
     protected TextureRegion currentFrame;
     protected float stateTime;
 
+    Particles particles;
+
     public LivingObject(MainWindow game){
         this.game = game;
     }
@@ -62,6 +66,8 @@ public abstract class LivingObject {
         sprite = new Sprite();
         sprite.setPosition(x, y);
         sprite.setSize(sizeX, sizeY);
+
+        particles = new Particles();
 
         stateTime = 0.0f;
 
@@ -86,15 +92,23 @@ public abstract class LivingObject {
 
     }
 
-    public void render(){
+    public void looseLife(int amount){
+        this.lives = this.lives - amount;
+        if (this.lives <= 0){
+            this.removeFlag = true;
+        }
+
+    }
+
+    public void render(SpriteBatch batch){
         //ANIMATION LAUFEN
         if (removeFlag == true && isDestroyed == false) {
-            this.body.setTransform(-1000,-1000,0);
             this.dispose();
         }
     }
 
     public void dispose(){
+        this.body.setTransform(-1000,-1000f,0);
         this.body.getWorld().destroyBody(this.body);
         isDestroyed = true;
     }
@@ -104,8 +118,6 @@ public abstract class LivingObject {
         jumpTimer += deltaTime;
         sound_reload += deltaTime;
     }
-
-
 
 
     public void move(boolean direction,float deltaTime){
@@ -130,6 +142,21 @@ public abstract class LivingObject {
             setIsJumping(false);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public boolean getIsJumping() {
         return isJumping;
@@ -244,5 +271,11 @@ public abstract class LivingObject {
         this.removeFlag = removeFlag;
     }
 
+    public Particles getParticles() {
+        return particles;
+    }
 
+    public void setParticles(Particles particles) {
+        this.particles = particles;
+    }
 }

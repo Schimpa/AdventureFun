@@ -6,6 +6,7 @@ import com.adventure.fun.items.ScoreItem_100;
 import com.adventure.fun.objects.Enemy_Alien_Soldier;
 import com.adventure.fun.objects.Enemy_Alien_Zombie;
 import com.adventure.fun.objects.Player;
+import com.adventure.fun.physics.CollisionListener;
 import com.adventure.fun.screens.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -87,7 +88,7 @@ public class WorldLoader {
         world = new World(new Vector2(0,-15f), true);
 
 
-        particles = new Particles();
+        //particles = new Particles();
 
         createMap();
 
@@ -95,7 +96,7 @@ public class WorldLoader {
 
         //game.getAssets().getMusic_ambient().play();
         //game.getAssets().getMusic_ambient().setVolume(0.2f);
-        world.setContactListener(new com.adventure.fun.physics.CollisionListener(this.gameScreen));
+        world.setContactListener(new CollisionListener(this.gameScreen));
 
     }
 
@@ -130,16 +131,29 @@ public class WorldLoader {
         }
 
         scoreItem_100.render(batch);
-        particles.render(batch, Gdx.graphics.getDeltaTime());
+        //particles.render(batch, Gdx.graphics.getDeltaTime());
 
         player.render(batch);
 
+        renderParticles(batch,Gdx.graphics.getDeltaTime());
         batch.end();
 
         if (gameScreen.isActivateLights() == true){
             rayHandler.setCombinedMatrix(gameScreen.getCamera().getPlayerCamera());
             rayHandler.render();
         }
+
+
+    }
+
+    public void renderParticles(SpriteBatch batch,float deltaTime){
+        for (Enemy_Alien_Zombie enemyAlienZombie : enemies_alien_zombie){
+            enemyAlienZombie.getParticles().render(batch,deltaTime);
+        }
+        for (Enemy_Alien_Soldier enemyAlienSoldier : enemies_alien_soldier){
+            enemyAlienSoldier.getParticles().render(batch,deltaTime);
+        }
+        player.getParticles().render(batch,deltaTime);
     }
 
     public void updateWorld(float deltaTime){

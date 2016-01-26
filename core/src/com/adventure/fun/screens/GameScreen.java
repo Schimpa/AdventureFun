@@ -23,7 +23,6 @@ public class GameScreen implements Screen {
 
 	private boolean showGameOverScreen;
 
-
 	private Cameras camera;
 
 	private String levelName;

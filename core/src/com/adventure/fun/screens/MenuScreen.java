@@ -47,9 +47,23 @@ public class MenuScreen implements Screen {
     boolean xFlag;
     boolean yFlag;
 
+    public TextButton createButton(String name,float fontScaleX,float fontScaleY,float positionX,float positionY,float scaleX, float scaleY){
+        TextButton buttonCreate;
+
+        buttonCreate = new TextButton(name,game.getSkin(),"default");
+        //buttonCreate.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * fontScaleX,(Gdx.graphics.getHeight() / 100) * fontScaleY);
+        buttonCreate.setPosition((Gdx.graphics.getWidth() / 100) * positionX , (Gdx.graphics.getHeight() / 100) * positionY );
+        buttonCreate.setSize((Gdx.graphics.getWidth() / 100 )* scaleX, (Gdx.graphics.getHeight() / 100) * scaleY);
+
+        return buttonCreate;
+    }
+
     public MenuScreen(MainWindow game){
+        this.x = 0;
+        this.y = 0;
         this.game = game;
     }
+
 
 
 
@@ -57,8 +71,6 @@ public class MenuScreen implements Screen {
     public void show() {
 
         isActivated = false;
-        x = 0;
-        y = 0;
 
         xFlag = false;
         yFlag = false;
@@ -69,20 +81,37 @@ public class MenuScreen implements Screen {
 
         this.stage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),game.getBatch());
 
-        buttonPlay = new TextButton("Play",game.getSkin(),"default");
-        buttonPlay.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.1f,(Gdx.graphics.getHeight() / 100) * 0.1f);
+        buttonPlay = new TextButton("PLAY",game.getSkin(),"default");
+        //buttonPlay.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.1f,(Gdx.graphics.getHeight() / 100) * 0.1f);
         buttonPlay.setPosition((Gdx.graphics.getWidth() / 100) * 30, (Gdx.graphics.getHeight() / 100) * 75);
         buttonPlay.setSize((Gdx.graphics.getWidth() / 100 )* 40, (Gdx.graphics.getHeight() / 100) * 20);
 
-        buttonSettings = new TextButton("Opt",game.getSkin(),"default");
-        buttonSettings.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.1f,  (Gdx.graphics.getHeight() / 100) * 0.1f);
+        buttonSettings = new TextButton("OPTIONS",game.getSkin(),"default");
+        //buttonSettings.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.1f,  (Gdx.graphics.getHeight() / 100) * 0.1f);
         buttonSettings.setPosition((Gdx.graphics.getWidth() / 100) * 30, (Gdx.graphics.getHeight() / 100) * 45);
         buttonSettings.setSize((Gdx.graphics.getWidth() / 100) * 40, (Gdx.graphics.getHeight() / 100) * 20);
 
-        buttonEnd = new TextButton("End",game.getSkin(),"default");
-        buttonEnd.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.1f, (Gdx.graphics.getHeight() / 100) * 0.1f);
+        buttonEnd = new TextButton("END",game.getSkin(),"default");
+        //buttonEnd.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.1f, (Gdx.graphics.getHeight() / 100) * 0.1f);
         buttonEnd.setPosition((Gdx.graphics.getWidth() / 100) * 30, (Gdx.graphics.getHeight() / 100) * 15);
         buttonEnd.setSize((Gdx.graphics.getWidth() / 100) * 40, (Gdx.graphics.getHeight() / 100) * 20);
+
+        buttonSettings.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("lolö");
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                game.setScreen(new OptionScreen(game));
+            }
+        });
 
         buttonPlay.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

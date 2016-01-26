@@ -62,8 +62,6 @@ public class Bullet extends LivingObject {
             shootAnimation = new ObjectAnimation(region, 4, 1, 0, 3, 0.05f);
             shootAnimation.setIsActive(true);
         }
-
-
         shape.dispose();
     }
 
@@ -100,7 +98,7 @@ public class Bullet extends LivingObject {
     public void update(float deltaTime) {
         stateTime += deltaTime;
         checkBulletCollision();
-        this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x, -0.1f);
+        this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x, 0.2f);
         timeFromShoot += deltaTime;
 
     }
@@ -125,11 +123,6 @@ public class Bullet extends LivingObject {
             this.removeFlag = false;
         }
     }
-
-
-
-
-
 
     public int getSpeedX() {
         return speedX;

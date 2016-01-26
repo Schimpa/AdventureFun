@@ -53,6 +53,9 @@ public class Enemy_Alien_Soldier extends LivingObject {
         walkAnimation = new ObjectAnimation(game.getAssets().getAlien_soldier(),5,1,0,4,0.15f);
         walkAnimation.setIsActive(true);
 
+        particles.activateParticle(particles.getExplosion_blitzkugel());
+        particles.activateParticle(particles.getExplosion_dead());
+
         shape.dispose();
     }
 
@@ -115,12 +118,12 @@ public class Enemy_Alien_Soldier extends LivingObject {
 
     @Override
     public void dispose(){
-        game.getAssets().getSound_alien_soldier_dead().play(1);
+        particles.playEffect(this.getBody().getPosition().x,this.getBody().getPosition().y,particles.getExplosion_dead());
         super.dispose();
     }
 
     public void render(SpriteBatch batch){
-        super.render();
+        super.render(batch);
         if (removeFlag != true){
             batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth() ,sprite.getHeight());
         }

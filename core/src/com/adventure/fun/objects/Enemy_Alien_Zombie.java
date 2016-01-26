@@ -90,16 +90,13 @@ public class Enemy_Alien_Zombie extends LivingObject {
 
 
     public void render(SpriteBatch batch){
-        if (removeFlag == true && isDestroyed == false) {
-
-        }
-        super.render();
         if (removeFlag != true){
             if (walkAnimation.isActive() == true){
                 currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
             }
             batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth() ,sprite.getHeight());
         }
+        super.render(batch);
     }
 
     public Bullet getBullet() {

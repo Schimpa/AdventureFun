@@ -39,16 +39,7 @@ public class LevelChooseScreen implements Screen {
         this.game = game;
     }
 
-    public TextButton createButton(String name,float fontScaleX,float fontScaleY,float positionX,float positionY,float scaleX, float scaleY){
-        TextButton buttonCreate;
 
-        buttonCreate = new TextButton(name,game.getSkin(),"default");
-        buttonCreate.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * fontScaleX,(Gdx.graphics.getHeight() / 100) * fontScaleY);
-        buttonCreate.setPosition((Gdx.graphics.getWidth() / 100) * positionX , (Gdx.graphics.getHeight() / 100) * positionY );
-        buttonCreate.setSize((Gdx.graphics.getWidth() / 100 )* scaleX, (Gdx.graphics.getHeight() / 100) * scaleY);
-
-        return buttonCreate;
-    }
 
     public void createButtonListener(TextButton button,final String levelName,final boolean activateLights){
         button.addListener(new ClickListener() {
@@ -66,23 +57,23 @@ public class LevelChooseScreen implements Screen {
         });
     }
 
-
     @Override
     public void show() {
         this.stage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),game.getBatch());
         Gdx.input.setInputProcessor(this.stage);
 
-        buttonLevel01 = createButton("1-1",0.1f,0.1f,5,75,25,20);
-        buttonLevel02 = createButton("1-2",0.1f,0.1f,37.5f,75,25,20);
-        buttonLevel03 = createButton("1-3",0.1f,0.1f,70,75,25,20);
-        buttonLevel04 = createButton("1-4",0.1f,0.1f,5,45,25,20);
-        buttonLevel05 = createButton("1-5",0.1f,0.1f,37.5f,45,25,20);
-        buttonLevel06 = createButton("1-6",0.1f,0.1f,70,45,25,20);
-        buttonLevel07 = createButton("1-7",0.1f,0.1f,5,15,25,20);
-        buttonLevel08 = createButton("1-8",0.1f,0.1f,37.5f,15,25,20);
-        buttonLevel09 = createButton("1-9",0.1f,0.1f,70,15,25,20);
+        buttonLevel01 = game.getMenuScreen().createButton("1-1",0.1f,0.1f,5,75,25,20);
+        buttonLevel02 = game.getMenuScreen().createButton("1-2",0.1f,0.1f,37.5f,75,25,20);
+        buttonLevel03 = game.getMenuScreen().createButton("1-3",0.1f,0.1f,70,75,25,20);
+        buttonLevel04 = game.getMenuScreen().createButton("1-4",0.1f,0.1f,5,45,25,20);
+        buttonLevel05 = game.getMenuScreen().createButton("1-5",0.1f,0.1f,37.5f,45,25,20);
+        buttonLevel06 = game.getMenuScreen().createButton("1-6",0.1f,0.1f,70,45,25,20);
+        buttonLevel07 = game.getMenuScreen().createButton("1-7",0.1f,0.1f,5,15,25,20);
+        buttonLevel08 = game.getMenuScreen().createButton("1-8",0.1f,0.1f,37.5f,15,25,20);
+        buttonLevel09 = game.getMenuScreen().createButton("1-9",0.1f,0.1f,70,15,25,20);
 
-        buttonBack = createButton("BACK",0.05f,0.05f,2,2,15,10);
+        buttonBack = game.getMenuScreen().createButton("BACK",0.05f,0.05f,2,2,15,10);
+        buttonBack.getLabel().setFontScale(game.getFont().getScaleX() / 2,game.getFont().getScaleY() / 2);
 
         buttonBack.addListener(new ClickListener() {
             @Override
@@ -111,7 +102,6 @@ public class LevelChooseScreen implements Screen {
         stage.addActor(buttonLevel09);
         stage.addActor(buttonBack);
     }
-
 
     @Override
     public void render(float delta) {

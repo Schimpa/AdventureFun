@@ -27,6 +27,7 @@ public class MainWindow extends Game{
     private MenuScreen menuScreen;
 
 
+
     @Override
     public void create() {
         Gdx.graphics.setTitle("Planet Escape");
@@ -55,7 +56,7 @@ public class MainWindow extends Game{
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/pricedown.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-        param.size = 128;
+        param.size = Gdx.graphics.getWidth() * 128 / 1280;
         param.color = Color.WHITE;
 
         font = generator.generateFont(param);

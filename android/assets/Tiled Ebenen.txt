@@ -1,0 +1,12 @@
+-11-Enemy_Alien_BigMama			Spawn
+-10-Enemy_Alien_Kugus			Spawn
+-9- Enemy_Alien_Soldier			Spawn
+-8- Enemy_Alien_Zombie			Spawn
+-5- Item				Spawn
+-4- Ground				Physical
+-5- End					End
+-4- Spawn				Spawn
+-3- Shadow				Texture
+-2- Overlay				Texture
+-1- Ground				Texture	
+-0- Background				Texture

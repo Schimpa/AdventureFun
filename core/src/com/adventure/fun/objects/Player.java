@@ -3,6 +3,7 @@ package com.adventure.fun.objects;
 import com.adventure.fun._main.MainWindow;
 import com.adventure.fun.controls.Controls;
 import com.adventure.fun.effects.ObjectAnimation;
+import com.adventure.fun.effects.Particles;
 import com.adventure.fun.screens.GameScreen;
 import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Gdx;
@@ -31,7 +32,6 @@ public class Player extends LivingObject {
 
     private boolean gameOverActivated;
 
-
     private Vector2 respawnPoint;
 
     private float damageCoolDownTime;
@@ -49,12 +49,10 @@ public class Player extends LivingObject {
         speed = new Vector2(25f,25f);
         damageCoolDownTime = 0;
         score = 500;
-        lives = 1;
+        lives = 3;
         maxSpeed = new Vector2(8,8);
         sound_reload = 0.25f;
         gameOverActivated = false;
-
-
 
         respawnPoint = new Vector2(x,y);
         stateTime = 0.0f;
@@ -77,6 +75,9 @@ public class Player extends LivingObject {
 
         body.setUserData("Player");
 
+        particles.activateParticle(particles.getExplosion_bullet_01());
+        particles.activateParticle(particles.getExplosion_dead());
+
         shape.dispose();
     }
 
@@ -84,7 +85,7 @@ public class Player extends LivingObject {
 
 
     public void render(SpriteBatch batch) {
-        super.render();
+        super.render(batch);
         if (walkAnimation.isActive() == true){
             currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
         }
@@ -96,8 +97,9 @@ public class Player extends LivingObject {
         }catch (NullPointerException e) {
             System.out.println("error: " + e);
         }
-        //BULLET
         bullet.render(batch);
+
+
     }
 
     @Override
@@ -121,8 +123,7 @@ public class Player extends LivingObject {
     }
 
     public void looseLife(int amount){
-
-        this.lives = this.lives - amount;
+        super.looseLife(amount);
         randomInt = rand.nextInt(3)+1;
 
         switch(randomInt){
@@ -180,7 +181,10 @@ public class Player extends LivingObject {
         }else if (lives <= 0 && gameOverActivated == false){
             //Gdx.app.exit();
             this.gameOverActivated = true;
+            particles.playEffect(this.getBody().getPosition().x,this.getBody().getPosition().y,
+                    particles.getExplosion_dead());
             this.game.getMenuScreen().getGameScreen().setShowGameOverScreen(true);
+            this.dispose();
         }
     }
 
@@ -192,6 +196,36 @@ public class Player extends LivingObject {
             walkAnimation.setIsActive(false);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public float getStateTime() {
         return stateTime;
