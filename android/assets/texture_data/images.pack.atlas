@@ -4,6 +4,13 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+alien_kugus
+  rotate: false
+  xy: 552, 39
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
 alien_soldier
   rotate: false
   xy: 390, 39
@@ -27,7 +34,7 @@ bullet_blitzkugel
   index: -1
 bullet_laser
   rotate: false
-  xy: 552, 71
+  xy: 682, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

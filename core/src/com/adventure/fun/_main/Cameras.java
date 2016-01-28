@@ -81,7 +81,11 @@ public class Cameras {
         } else if (screenRatio.x == 4f && screenRatio.y == 3f || screenRatio.x == 5f && screenRatio.y == 4f){
             playerCamera.setToOrtho(false, screenRatio.x * 5.5f , screenRatio.y * 5.5f );
             createHUD_4_3();
+        }else{
+            playerCamera.setToOrtho(false, screenRatio.x * 5.5f , screenRatio.y * 5.5f );
+            createHUD_16_9();
         }
+
 
         game.getFont().setColor(Color.WHITE);
 

@@ -3,6 +3,7 @@ package com.adventure.fun._main;
 import com.adventure.fun.controls.Controls;
 import com.adventure.fun.effects.Particles;
 import com.adventure.fun.items.ScoreItem_100;
+import com.adventure.fun.objects.Enemy_Alien_Kugus;
 import com.adventure.fun.objects.Enemy_Alien_Soldier;
 import com.adventure.fun.objects.Enemy_Alien_Zombie;
 import com.adventure.fun.objects.Player;
@@ -38,6 +39,7 @@ public class WorldLoader {
     private Player player;
     private Array<Enemy_Alien_Zombie> enemies_alien_zombie;
     private Array<Enemy_Alien_Soldier> enemies_alien_soldier;
+    private Array<Enemy_Alien_Kugus> enemies_alien_kugus;
 
     private MainWindow game;
     private GameScreen gameScreen;
@@ -70,6 +72,9 @@ public class WorldLoader {
         for(Enemy_Alien_Soldier enemyAlienSoldier : enemies_alien_soldier){
             enemyAlienSoldier.dispose();
         }
+        for(Enemy_Alien_Kugus enemyAlienKugus : enemies_alien_kugus){
+            enemyAlienKugus.dispose();
+        }
         player.dispose();
         map.dispose();
         renderer.dispose();
@@ -83,6 +88,7 @@ public class WorldLoader {
         scoreItem_100 = new ScoreItem_100(this);
         enemies_alien_zombie = new Array<Enemy_Alien_Zombie>();
         enemies_alien_soldier = new Array<Enemy_Alien_Soldier>();
+        enemies_alien_kugus = new Array<Enemy_Alien_Kugus>();
         controls = new Controls(this);
 
         world = new World(new Vector2(0,-15f), true);
@@ -129,6 +135,9 @@ public class WorldLoader {
         for (Enemy_Alien_Soldier enemyAlienSoldier : enemies_alien_soldier){
             enemyAlienSoldier.render(batch);
         }
+        for(Enemy_Alien_Kugus enemyAlienKugus : enemies_alien_kugus){
+            enemyAlienKugus.render(batch);
+        }
 
         scoreItem_100.render(batch);
         //particles.render(batch, Gdx.graphics.getDeltaTime());
@@ -153,6 +162,9 @@ public class WorldLoader {
         for (Enemy_Alien_Soldier enemyAlienSoldier : enemies_alien_soldier){
             enemyAlienSoldier.getParticles().render(batch,deltaTime);
         }
+        for(Enemy_Alien_Kugus enemyAlienKugus : enemies_alien_kugus){
+            enemyAlienKugus.getParticles().render(batch,deltaTime);
+        }
         player.getParticles().render(batch,deltaTime);
     }
 
@@ -166,6 +178,9 @@ public class WorldLoader {
 
         for(Enemy_Alien_Soldier enemyAlienSoldier : enemies_alien_soldier){
             enemyAlienSoldier.update(deltaTime);
+        }
+        for(Enemy_Alien_Kugus enemyAlienKugus : enemies_alien_kugus){
+            enemyAlienKugus.update(deltaTime);
         }
 
         scoreItem_100.checkDestruction();
@@ -279,8 +294,20 @@ public class WorldLoader {
             Enemy_Alien_Soldier newEnemyAlienSoldier = new Enemy_Alien_Soldier(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world,this.player);
             newEnemyAlienSoldier.getBody().setUserData("Enemy_"+i);
             newEnemyAlienSoldier.getBullet().getBody().setUserData("Bullet_Enemy_Soldier_"+j);
-            newEnemyAlienSoldier.getBullet().getBody().setTransform(1000*i,1000*i,0);
+            //newEnemyAlienSoldier.getBullet().getBody().setTransform(1000*i,1000*i,0);
             enemies_alien_soldier.add(newEnemyAlienSoldier);
+            i++;
+            j++;
+        }
+        j = 0;
+        for(MapObject object: map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            Enemy_Alien_Kugus newEnemyAlienKugus = new Enemy_Alien_Kugus(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,2.4f,4.4f,world,this.player);
+            newEnemyAlienKugus.getBody().setUserData("Enemy_"+i);
+            newEnemyAlienKugus.getBullet().getBody().setUserData("Bullet_Enemy_Kugus_"+j);
+            //newEnemyAlienKugus.getBullet().getBody().setTransform(1000*i,1000*i,0);
+            enemies_alien_kugus.add(newEnemyAlienKugus);
             i++;
             j++;
         }
@@ -382,5 +409,13 @@ public class WorldLoader {
 
     public void setControls(Controls controls) {
         this.controls = controls;
+    }
+
+    public Array<Enemy_Alien_Kugus> getEnemies_alien_kugus() {
+        return enemies_alien_kugus;
+    }
+
+    public void setEnemies_alien_kugus(Array<Enemy_Alien_Kugus> enemies_alien_kugus) {
+        this.enemies_alien_kugus = enemies_alien_kugus;
     }
 }

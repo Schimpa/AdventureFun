@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Assets {
 
     private AssetManager assetManager;
+
     private Sound sound_shoot_laser_01;
     private Sound sound_shoot_laser_02;
     private Sound sound_shoot_laser_03;
@@ -44,6 +45,7 @@ public class Assets {
     //ENEMIES
     private TextureRegion alien_zombie;
     private TextureRegion alien_soldier;
+    private TextureRegion alien_kugus;
 
     //BULLETS
     private TextureRegion bullet_blitzkugel;
@@ -55,6 +57,7 @@ public class Assets {
 
     //BACKGROUND
     private Texture background;
+    private Texture background_02;
     private Texture backgroundMenu;
     private Texture backgroundMars;
 
@@ -71,7 +74,7 @@ public class Assets {
         assetManager.load("background/galaxy.png",Texture.class);
         assetManager.load("background/mars.jpg",Texture.class);
         assetManager.load("background/mars_02.jpg",Texture.class);
-
+        assetManager.load("background/background_02.png",Texture.class);
         assetManager.load("texture_data/images.pack.atlas",TextureAtlas.class);
 
         assetManager.load("audio/shoot_laser_01.ogg",Sound.class);
@@ -133,6 +136,7 @@ public class Assets {
         background = assetManager.get("background/galaxy.png",Texture.class);
         backgroundMenu = assetManager.get("background/mars.jpg",Texture.class);
         backgroundMars = assetManager.get("background/mars_02.jpg",Texture.class);
+        background_02 = assetManager.get("background/background_02.png",Texture.class);
 
         point = atlas.findRegion("point");
         whiteColor = atlas.findRegion("whiteColor");
@@ -141,6 +145,7 @@ public class Assets {
         bullet_laser = atlas.findRegion("bullet_laser");
         alien_zombie = atlas.findRegion("alien_zombie");
         alien_soldier = atlas.findRegion("alien_soldier");
+        alien_kugus = atlas.findRegion("alien_kugus");
         bullet_blitzkugel = atlas.findRegion("bullet_blitzkugel");
 
     }
@@ -399,5 +404,29 @@ public class Assets {
 
     public void setWhiteColor(TextureRegion whiteColor) {
         this.whiteColor = whiteColor;
+    }
+
+    public TextureRegion getAlien_kugus() {
+        return alien_kugus;
+    }
+
+    public void setAlien_kugus(TextureRegion alien_kugus) {
+        this.alien_kugus = alien_kugus;
+    }
+
+    public TextureRegion getBullet_laser() {
+        return bullet_laser;
+    }
+
+    public void setBullet_laser(TextureRegion bullet_laser) {
+        this.bullet_laser = bullet_laser;
+    }
+
+    public Texture getBackground_02() {
+        return background_02;
+    }
+
+    public void setBackground_02(Texture background_02) {
+        this.background_02 = background_02;
     }
 }

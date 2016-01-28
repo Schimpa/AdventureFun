@@ -6,17 +6,21 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
+import javax.swing.text.View;
+
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 
-		//createTextureAtlas();
+		createTextureAtlas();
 
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
+		config.useImmersiveMode = true;
+
 		config.resizable = false;
-		config.width = 1280;
-		config.height = 720;
+		config.width = 1600;
+		config.height = 900;
 		// fullscreen
 		config.fullscreen = false;
 		// vSync

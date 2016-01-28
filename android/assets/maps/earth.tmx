@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-up" width="400" height="100" tilewidth="32" tileheight="32" nextobjectid="18">
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="400" height="100" tilewidth="32" tileheight="32" nextobjectid="94">
  <tileset firstgid="1" name="texture" tilewidth="32" tileheight="32" tilecount="256">
   <image source="texture.png" width="512" height="512"/>
  </tileset>
@@ -13,17 +13,17 @@
  </layer>
  <layer name="Ground" width="400" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt1cEJAjEQQNFYgNecvdiHpVjKlmIplmIpDngWMStOhrwHn4UNWfYQMq0BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzO/84wBYg/kBwIzMHABGmB8AAAAAAAAAAEBlvbVrfz1v0T16RJfoFG0f1vfszfz2zP/2bu3b9yPfGt2z/fXQAgBQ1vEg7atnH2IgRfbdo/qZH7Cm7LtH9TM/YE3Zd4/qZ34AAAAAADCbJwzIdX8=
+   eJzt3N1JxEAUgNGxAB/Nsy/bQQqwFEvZUizFUizFwL7pJiE3MHcmcw5cBJf9iSzzQWawFAAAAAAYz1vSANC3jHbcqlwZAFeiHwBE6AcAEfoBQIR+ABChHwDXkHH2Sj8A+ndLGgAAAABwvwiACP0AAAAAAAAAgHX21QGI0A8AAAAAAGAk9kYAiNAPAAAAAAAAANhmbx2ACP0AAAAAAAB6ZI8DgAj9AAAAAAAAemN/A4AI/QAAAACgNvekAIjQDwAAAAAAAAB4zp46ABH6AQAAAAAAXNktMACgHwAAAAAAAAAAALki57ic6QJAPwAAAAAAAAAAgNE4LwVAhH4AAAAAAAAAcBX2uOs5e8bA/wkDWmKtqePI33WvHwCM4ei6rx8ARNZ8/QAYW/R+oH4AjOvMWq8fQO/Onve5yp78XOper34AvdOPRzvmyu+pHwDbWm/OXPQDoEUt92Mu+gHAMX/boR8A7HnWDv0AYMtaO/QDgDVb7ajdDwD6sNcO/QD4byrlc3r8/Frme5mfZT6WeV/mvvP4medmvnbLn23tsaO/j7xW9Dn3ql9aAAC69fpizLmZsr/EQIrstcf0P/oBY8pee0z/ox8wpuy1x/Q/+gEAAAAAQGt+AQWrrVo=
   </data>
  </layer>
  <layer name="Overlay" width="400" height="100">
   <data encoding="base64" compression="zlib">
-   eJztw0EJAAAIBDDBDvaPaonz5QarAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAuNEaCPwzGggAAAAAAAAAAAAAANxZCVYOQw==
+   eJzt3UEKhDAQBMBA/uD/n+rZizA6MYlTBX12b41My7YGAAAAAAAAAAAAAAAAAAAA4/SPAwAAAAAA8Ia7AwAAAAAAAAAAQC67LAAAAAAAAAC457YOAAAAAAAAAACQzzYLAAAAAAAAgCrcyAEAAAAAAACowH0cAAAAAADYgZsGAAAAAAAAAABAHpssAAAAAAAAALjqDwIAAAAAAAAAAAAAzPVkB2wTDAAAAAAAAAAAAEA19rYAAAAAAAAAAEBlNlIAAAAAAAAAAAD53v6v7F82XTv/dgDm0B0A61n9nWX28wHYj+4AIEp3ABClOwCI0h0AROkOAKJ0B0Bc9jeCUjNAPYdIQgAAAAAAAAAAAAAAgHFOrygP5A==
   </data>
  </layer>
  <layer name="Shadow" width="400" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt28EJwDAMBEH7l4/7bzc9BIEc3QxsCwd6aC0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA+z27NgAynF0bAFRwswDwhZsFAAAAAAAAAAD4s+ofQWUG5Kn+EVRmQJ7u3dGMgDzdu6MZAXm6d0czAvJ0745mBAAAAAAAN3kB1Gkvqg==
+   eJzt3UFOw0AQBMCYS5AIz+BfeSpPwxekKNixPV683p0qqe8oB7eiaYfLBQAAAADyuQ51AkDbxmf595G5jd1x0x8AbDR2yH3sj3vtvwOAtugPACL0BwAR+gOACP0B0Iejd7v2VwB9uA11AgAAAAB+LwSACPcGAAAAAAAAAJhnlwVAhF0WAAAAAACQids6ABFu6wAAAAAAAADwmm0WABG2WQAAAAAAQIvcyAGIcCMHAAAAAABa4z4OQIT7OAAAAABHc9MAIMJNAwAAAAAAAACm2WQBEGGTBQAAAAAA9Ozxlr42APB4S18bAAAAAAAAAAAAyonsgG2CAYjsgG2CAQAAAAAAAACAltnbAhBhbwsAAAAAAABAL2ykjrN3o/a1MwAl2Ugd41pgo6YHAHLZ2h36A4BId+gPgNyi3aE/APLa0x36A2jd+1A2rYr8xtd//E9F/QG04nMomxaV6AL9AVDW2b+z/HbHh/4AOJUzf2d57A79AcAaz92hPwBYMtUdz/0xRX8A5DXXHfoDgDmvumNNf0Rt6Q8AzmWpO/QHwF+l3xFsMW8L3VEjtT+TLO+GAnGl3xGUnAHyqf3ckT4C5FP7uSN9BMin9nNH+giQT+3njvQRAAAAAAA4kx+A1WlV
   </data>
  </layer>
  <objectgroup name="Spawn">
@@ -34,23 +34,61 @@
   <object id="1" x="0" y="2912" width="4672" height="32"/>
   <object id="16" x="224" y="2624" width="640" height="64"/>
   <object id="17" x="992" y="2688" width="288" height="64"/>
+  <object id="21" x="2080" y="2880" width="64" height="32"/>
+  <object id="22" x="2112" y="2848" width="64" height="32"/>
+  <object id="23" x="2144" y="2816" width="64" height="32"/>
+  <object id="24" x="2176" y="2784" width="64" height="32"/>
+  <object id="25" x="2208" y="2752" width="64" height="32"/>
+  <object id="26" x="2240" y="2752" width="32"/>
+  <object id="27" x="2240" y="2720" width="64" height="32"/>
+  <object id="28" x="2272" y="2688" width="64" height="32"/>
+  <object id="29" x="2304" y="2656" width="32" height="32"/>
+  <object id="30" x="2336" y="2624" width="416" height="32"/>
+  <object id="32" x="2432" y="2752" width="32" height="160"/>
+  <object id="33" x="2464" y="2752" width="192" height="32"/>
+  <object id="34" x="2624" y="2784" width="32" height="64"/>
+  <object id="36" x="2656" y="2816" width="608" height="32"/>
+  <object id="37" x="2752" y="2592" width="64" height="32"/>
+  <object id="38" x="2784" y="2560" width="64" height="32"/>
+  <object id="39" x="2816" y="2528" width="64" height="32"/>
+  <object id="40" x="2848" y="2496" width="64" height="32"/>
+  <object id="42" x="2880" y="2464" width="64" height="32"/>
+  <object id="43" x="2912" y="2432" width="352" height="32"/>
+  <object id="44" x="3232" y="2464" width="32" height="352"/>
+  <object id="48" x="3424" y="2432" width="512" height="32"/>
+  <object id="49" x="3424" y="2464" width="32" height="384"/>
+  <object id="50" x="0" y="2432" width="192" height="64"/>
+  <object id="51" x="480" y="2240" width="448" height="64"/>
+  <object id="52" x="1056" y="2016" width="512" height="64"/>
+  <object id="73" x="576" y="1312" width="96" height="64"/>
+  <object id="74" x="832" y="1152" width="96" height="64"/>
+  <object id="75" x="1056" y="992" width="96" height="64"/>
+  <object id="76" x="832" y="800" width="96" height="64"/>
+  <object id="77" x="608" y="640" width="96" height="64"/>
+  <object id="78" x="416" y="448" width="96" height="64"/>
+  <object id="80" x="704" y="320" width="960" height="64"/>
+  <object id="81" x="704" y="96" width="960" height="64"/>
+  <object id="82" x="1600" y="160" width="64" height="160"/>
+  <object id="83" x="480" y="1792" width="416" height="64"/>
+  <object id="92" x="384" y="1632" width="96" height="64"/>
+  <object id="93" x="224" y="1440" width="96" height="64"/>
  </objectgroup>
  <objectgroup name="Item"/>
  <objectgroup name="Enemy_Alien_Zombie">
-  <object id="3" x="1248" y="2816" width="32" height="32"/>
-  <object id="4" x="1408" y="2816" width="32" height="32"/>
-  <object id="5" x="1472" y="2816" width="32" height="32"/>
-  <object id="6" x="1536" y="2816" width="32" height="32"/>
-  <object id="7" x="1600" y="2816" width="32" height="32"/>
-  <object id="8" x="1664" y="2816" width="32" height="32"/>
-  <object id="9" x="1728" y="2816" width="32" height="32"/>
-  <object id="10" x="1792" y="2816" width="32" height="32"/>
-  <object id="11" x="1856" y="2816" width="32" height="32"/>
-  <object id="12" x="1920" y="2816" width="32" height="32"/>
+  <object id="55" x="2496" y="2528" width="32" height="32"/>
+  <object id="56" x="3072" y="2336" width="32" height="32"/>
+  <object id="59" x="1408" y="1920" width="32" height="32"/>
+  <object id="60" x="608" y="1696" width="32" height="32"/>
+  <object id="61" x="640" y="544" width="32" height="32"/>
+  <object id="62" x="1408" y="224" width="32" height="32"/>
+  <object id="63" x="864" y="2784" width="32" height="32"/>
+  <object id="64" x="1696" y="2784" width="32" height="32"/>
+  <object id="66" x="1856" y="2784" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Enemy_Alien_Soldier">
-  <object id="13" x="544" y="2784" width="32" height="32"/>
-  <object id="14" x="736" y="2784" width="32" height="32"/>
-  <object id="15" x="896" y="2784" width="32" height="32"/>
+  <object id="31" x="2496" y="2784" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Enemy_Alien_Kugus">
+  <object id="57" x="1120" y="192" width="32" height="32"/>
  </objectgroup>
 </map>
