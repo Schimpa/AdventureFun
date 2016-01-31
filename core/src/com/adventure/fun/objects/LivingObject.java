@@ -44,18 +44,29 @@ public abstract class LivingObject {
     protected Random rand = new Random();
     protected int randomInt;
 
+    //OB DAS OBJEKT ENTFERNT WERDEN SOLL
     protected boolean removeFlag;
+
+    //OB DAS OBJEKT SCHON ZERSTÖRT IST
     protected boolean isDestroyed;
+
+    //WURDE DAS POSTINIT SCHON DURCHGEFÜHRT
+    protected boolean postInitFlag;
 
     protected float sound_reload;
 
     protected float jumpTimer;
 
-    //Animation
+    //JETZTIGES FRAME DER ANIMATIONEN
     protected TextureRegion currentFrame;
+
+    //ABLAUFZEIT FÜR DIE ANIMATIONEN
     protected float stateTime;
 
-    Particles particles;
+    //PARTIKEL EINES OBJEKTES
+    protected Particles particles;
+
+
 
     public LivingObject(MainWindow game){
         this.game = game;
@@ -68,6 +79,8 @@ public abstract class LivingObject {
         sprite.setSize(sizeX, sizeY);
 
         particles = new Particles();
+
+        postInitFlag = false;
 
         stateTime = 0.0f;
 
@@ -89,7 +102,11 @@ public abstract class LivingObject {
 
         body = world.createBody(bodyDef);
 
+    }
 
+    //ZWEITE INITIALISIERUNG DAMIT ALLE REFERNZEN AUCH VERFÜGBAR SIND
+    public void postInit(){
+        postInitFlag = true;
     }
 
     public void looseLife(int amount){
@@ -115,6 +132,9 @@ public abstract class LivingObject {
 
 
     public void update(float deltaTime){
+        if (postInitFlag == false){
+            postInit();
+        }
         jumpTimer += deltaTime;
         sound_reload += deltaTime;
     }
@@ -142,6 +162,7 @@ public abstract class LivingObject {
             setIsJumping(false);
         }
     }
+
 
 
 

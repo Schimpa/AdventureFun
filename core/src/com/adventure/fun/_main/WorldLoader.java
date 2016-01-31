@@ -94,11 +94,10 @@ public class WorldLoader {
         world = new World(new Vector2(0,-15f), true);
 
 
-        //particles = new Particles();
-
-        createMap();
 
         createLights();
+
+        createMap();
 
         //game.getAssets().getMusic_ambient().play();
         //game.getAssets().getMusic_ambient().setVolume(0.2f);
@@ -117,11 +116,7 @@ public class WorldLoader {
         rayHandler.setAmbientLight(0.0f, 0.0f, 0.0f, 0.5f);
         rayHandler.setBlurNum(1);
 
-        //Spielerlicht
-        PointLight light = new PointLight(rayHandler, 100, null, 20, 0f, 0f);
 
-        light.attachToBody(this.getPlayer().getBody());
-        light.setColor(1, 1, 1, 0.5f);
     }
 
 
@@ -140,7 +135,6 @@ public class WorldLoader {
         }
 
         scoreItem_100.render(batch);
-        //particles.render(batch, Gdx.graphics.getDeltaTime());
 
         player.render(batch);
 
@@ -196,15 +190,14 @@ public class WorldLoader {
         renderer = new OrthogonalTiledMapRenderer(map, 1/32f);
 
         //PLAYER SPAWN
-        int i = 0;
+
         for(MapObject object: map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             player = new Player(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world);
-            i++;
         }
 
         //GROUND
-        i = 0;
+        int i = 0;
         for(MapObject object: map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             BodyDef bdef = new BodyDef();
@@ -294,22 +287,21 @@ public class WorldLoader {
             Enemy_Alien_Soldier newEnemyAlienSoldier = new Enemy_Alien_Soldier(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world,this.player);
             newEnemyAlienSoldier.getBody().setUserData("Enemy_"+i);
             newEnemyAlienSoldier.getBullet().getBody().setUserData("Bullet_Enemy_Soldier_"+j);
-            //newEnemyAlienSoldier.getBullet().getBody().setTransform(1000*i,1000*i,0);
             enemies_alien_soldier.add(newEnemyAlienSoldier);
             i++;
             j++;
         }
-        j = 0;
+
+        i = 0;
+        //ENEMY ALIEN KUGUS
         for(MapObject object: map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             Enemy_Alien_Kugus newEnemyAlienKugus = new Enemy_Alien_Kugus(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,2.4f,4.4f,world,this.player);
-            newEnemyAlienKugus.getBody().setUserData("Enemy_"+i);
-            newEnemyAlienKugus.getBullet().getBody().setUserData("Bullet_Enemy_Kugus_"+j);
-            //newEnemyAlienKugus.getBullet().getBody().setTransform(1000*i,1000*i,0);
+            newEnemyAlienKugus.getBody().setUserData("Enemy_Alien_Kugus_"+i);
+            newEnemyAlienKugus.setBodyNumber(i);
             enemies_alien_kugus.add(newEnemyAlienKugus);
             i++;
-            j++;
         }
     }
 

@@ -46,7 +46,7 @@ public class Enemy_Alien_Soldier extends LivingObject {
 
         bullet = new Bullet(game,-100,-100,0.8f,0.8f,world,game.getAssets().getBullet_blitzkugel(),true);
         bullet.setSpeedX(3);
-        bullet.setReloadTime(0.01f);
+        bullet.setReloadTime(3.0f);
 
         currentFrame = new TextureRegion();
 
@@ -63,38 +63,48 @@ public class Enemy_Alien_Soldier extends LivingObject {
         if (    player.getBody().getPosition().x - this.getBody().getPosition().x > -reactionDistance &&
                 player.getBody().getPosition().x - this.getBody().getPosition().x < reactionDistance &&
                 player.getBody().getPosition().y - this.getBody().getPosition().y > -5 &&
-                player.getBody().getPosition().y - this.getBody().getPosition().y < 5  ){
+                player.getBody().getPosition().y - this.getBody().getPosition().y < 5  ) {
 
             if (player.getBody().getPosition().x - this.getBody().getPosition().x < 7 &&
-                    player.getBody().getPosition().x - this.getBody().getPosition().x > -7 ){
-            }else{
+                    player.getBody().getPosition().x - this.getBody().getPosition().x > -7) {
+            } else {
                 this.stateTime += deltaTime;
                 //LEFT OR RIGHT
-                if (player.getBody().getPosition().x - this.getBody().getPosition().x < 0){
-                    this.move(false,deltaTime);
+                if (player.getBody().getPosition().x - this.getBody().getPosition().x < 0) {
+                    this.move(false, deltaTime);
                 }
 
-                if (player.getBody().getPosition().x - this.getBody().getPosition().x > 0){
-                    this.move(true,deltaTime);
+                if (player.getBody().getPosition().x - this.getBody().getPosition().x > 0) {
+                    this.move(true, deltaTime);
                 }
             }
-            randomInt = rand.nextInt(300)+1;
-            if (randomInt == 50){
+            randomInt = rand.nextInt(300) + 1;
+            if (randomInt == 50) {
                 game.getAssets().getSound_alien_soldier_01().play(0.7f);
-            }else if (randomInt == 74){
+            } else if (randomInt == 74) {
                 game.getAssets().getSound_alien_soldier_02().play(0.7f);
             }
             bullet.setBulletShoot(true);
+
+        }else if (removeFlag == true){
+                bullet.setBulletShoot(true);
+            }
+
         }
-    }
+
+
 
     public void update(float deltaTime){
-        if (walkAnimation.isActive() == true){
-            currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
+        if (isDestroyed == false){
+            if (walkAnimation.isActive() == true){
+                currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
+            }
+            logic(deltaTime);
+            bullet.shootBullet(this);
         }
         bullet.update(deltaTime);
-        bullet.shootBullet(this);
-        logic(deltaTime);
+
+
     }
 
     @Override

@@ -47,9 +47,6 @@ public class Particles {
     }
 
     public void playEffect(float x,float y,ParticleEffect effect){
-        if (effect.isComplete()){
-            effect.reset();
-        }
         effect.reset();
         effect.setPosition(x,y);
         effect.start();

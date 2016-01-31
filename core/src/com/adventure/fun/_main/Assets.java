@@ -37,6 +37,9 @@ public class Assets {
     private Sound sound_player_hit_02;
     private Sound sound_player_hit_03;
 
+    private Sound sound_click_in;
+    private Sound sound_click_out;
+
     private TextureAtlas atlas;
 
     //PLAYER
@@ -61,7 +64,6 @@ public class Assets {
     private Texture backgroundMenu;
     private Texture backgroundMars;
 
-    private Music music_ambient;
 
 
     public Assets(){
@@ -85,9 +87,11 @@ public class Assets {
         assetManager.load("audio/step_stone_01.ogg",Sound.class);
         assetManager.load("audio/step_stone_02.ogg",Sound.class);
 
+        assetManager.load("audio/click_in.ogg",Sound.class);
+        assetManager.load("audio/click_out.ogg",Sound.class);
+
         assetManager.load("audio/jump.ogg", Sound.class);
         assetManager.load("audio/papierstau.ogg",Sound.class);
-        assetManager.load("audio/Ambient2.mp3", Music.class);
 
         assetManager.load("audio/alien_zombie.ogg",Sound.class);
         assetManager.load("audio/alien_zombie_dead.ogg", Sound.class);
@@ -113,9 +117,11 @@ public class Assets {
         sound_step_01 = assetManager.get("audio/step_stone_01.ogg", Sound.class);
         sound_step_02 = assetManager.get("audio/step_stone_02.ogg", Sound.class);
 
+        sound_click_in = assetManager.get("audio/click_in.ogg",Sound.class);
+        sound_click_out = assetManager.get("audio/click_out.ogg",Sound.class);
+
         sound_jump = assetManager.get("audio/jump.ogg", Sound.class);
         sound_die = assetManager.get("audio/papierstau.ogg", Sound.class);
-        music_ambient = assetManager.get("audio/Ambient2.mp3",Music.class);
 
         sound_alien_zombie = assetManager.get("audio/alien_zombie.ogg", Sound.class);
         sound_alien_zombie_dead = assetManager.get("audio/alien_zombie_dead.ogg", Sound.class);
@@ -242,14 +248,6 @@ public class Assets {
         this.sound_die = sound_die;
     }
 
-    public Music getMusic_ambient() {
-        return music_ambient;
-    }
-
-    public void setMusic_ambient(Music music_ambient) {
-        this.music_ambient = music_ambient;
-    }
-
     public TextureAtlas getAtlas() {
         return atlas;
     }
@@ -328,6 +326,22 @@ public class Assets {
 
     public void setSound_alien_soldier_02(Sound sound_alien_soldier_02) {
         this.sound_alien_soldier_02 = sound_alien_soldier_02;
+    }
+
+    public Sound getSound_click_in() {
+        return sound_click_in;
+    }
+
+    public void setSound_click_in(Sound sound_click_in) {
+        this.sound_click_in = sound_click_in;
+    }
+
+    public Sound getSound_click_out() {
+        return sound_click_out;
+    }
+
+    public void setSound_click_out(Sound sound_click_out) {
+        this.sound_click_out = sound_click_out;
     }
 
     public Sound getSound_alien_soldier_hit_01() {
@@ -429,4 +443,6 @@ public class Assets {
     public void setBackground_02(Texture background_02) {
         this.background_02 = background_02;
     }
+
+
 }

@@ -109,6 +109,7 @@ public class MenuScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
+                game.getAssets().getSound_click_in().play(0.5f);
                 game.setScreen(new OptionScreen(game));
             }
         });
@@ -126,6 +127,7 @@ public class MenuScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
+                game.getAssets().getSound_click_in().play(0.5f);
                 game.setScreen(new LevelChooseScreen(game));
             }
         });
@@ -143,6 +145,7 @@ public class MenuScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
+                game.getAssets().getSound_click_out().play(0.5f);
                 Gdx.app.exit();
             }
         });

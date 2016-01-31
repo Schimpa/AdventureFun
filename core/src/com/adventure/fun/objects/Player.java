@@ -19,6 +19,8 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.ArrayList;
 
+import box2dLight.PointLight;
+
 public class Player extends LivingObject {
     private Controls controls;
 
@@ -35,6 +37,8 @@ public class Player extends LivingObject {
     private Vector2 respawnPoint;
 
     private float damageCoolDownTime;
+
+    public PointLight playerLight;
 
     public Player(MainWindow game,float x,float y,float sizeX,float sizeY,World world) {
         super(game);
@@ -53,6 +57,9 @@ public class Player extends LivingObject {
         maxSpeed = new Vector2(8,8);
         sound_reload = 0.25f;
         gameOverActivated = false;
+
+        //Spielerlicht
+
 
         respawnPoint = new Vector2(x,y);
         stateTime = 0.0f;
@@ -81,10 +88,22 @@ public class Player extends LivingObject {
         shape.dispose();
     }
 
+    @Override
+    public void postInit(){
+        super.postInit();
+        playerLight = new PointLight(game.getMenuScreen().getGameScreen().getWorldLoader().getRayHandler(), 100, null, 20, 0f, 0f);
+
+        playerLight.attachToBody(this.getBody());
+        playerLight.setColor(1, 1, 1, 0.5f);
+    }
+
 
 
 
     public void render(SpriteBatch batch) {
+        if (postInitFlag != true){
+            postInit();
+        }
         super.render(batch);
         if (walkAnimation.isActive() == true){
             currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
@@ -173,7 +192,6 @@ public class Player extends LivingObject {
 
     public void checkIfLoose() {
         if (body.getPosition().y < 0) {
-            game.getAssets().getSound_die().play();
             body.setLinearVelocity(0, 0);
             body.setTransform(respawnPoint.x, respawnPoint.y, 0);
             lives -= 1;

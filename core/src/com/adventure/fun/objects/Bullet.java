@@ -3,10 +3,12 @@ package com.adventure.fun.objects;
 import com.adventure.fun._main.MainWindow;
 import com.adventure.fun.effects.ObjectAnimation;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -18,17 +20,29 @@ import box2dLight.PointLight;
  */
 public class Bullet extends LivingObject {
 
-    private int speedX;
+    public float speedX;
+
+    //ZEIT, DIE NACH DEM SCHUSS VERGANGEN IST
     private float timeFromShoot;
+
+    //OB DAS GESCHOSS GESCHOSSEN WIRD
     private boolean bulletShoot;
 
+    //IST DIE TEXTUR EINE ANIMATION ?
     private boolean isAnimation;
 
-    private Array<Bullet> shootBullets;
+    //SOUND DES GESCHOSSESE
+    private Sound bulletSound;
 
+    //SCHIEßANIMATION
     private ObjectAnimation shootAnimation;
 
+    //ZEIT NACHDEM EIN NEUES GESCHOSS GESCHOSSEN WERDEN KANN
     private float reloadTime;
+
+    //DAS LICHT DES GESCHOSSESE
+    private PointLight bulletLight;
+
 
 
     public Bullet(MainWindow game,float x,float y,float sizeX,float sizeY,World world,TextureRegion region,boolean isAnimation){
@@ -40,15 +54,15 @@ public class Bullet extends LivingObject {
         super.init(x, y, sizeX, sizeY, world);
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef);
-        speedX = 100;
-        reloadTime = 0.6f;
+
+        reloadTime = 0f;
+        speedX = 0f;
+        timeFromShoot = 0f;
 
         this.region = region;
         this.isAnimation = isAnimation;
 
-        timeFromShoot = 0;
-
-        shootBullets = new Array<Bullet>();
+        this.bulletSound = game.getAssets().getSound_shoot_laser_03();
 
         bulletShoot = false;
 
@@ -63,6 +77,14 @@ public class Bullet extends LivingObject {
             shootAnimation.setIsActive(true);
         }
         shape.dispose();
+    }
+
+    @Override
+    public void postInit(){
+        super.postInit();
+        bulletLight = new PointLight(game.getMenuScreen().getGameScreen().getWorldLoader().getRayHandler(), 5, null, 2, 0f, 0f);
+        bulletLight.attachToBody(this.getBody());
+        bulletLight.setColor(1f, 0, 0, 0.5f);
     }
 
     public boolean shootBullet(LivingObject object){
@@ -82,7 +104,7 @@ public class Bullet extends LivingObject {
             }
 
             if (this.getBody().getLinearVelocity().x == 0){
-                game.getAssets().getSound_shoot_laser_03().play(0.2f);
+                bulletSound.play(0.5f);
                 if (object.getCurrentFrame().isFlipX() == false){
                     this.getBody().setTransform(object.getBody().getPosition().x + object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
                     this.getBody().setLinearVelocity(this.getSpeedX(), 0);
@@ -95,7 +117,30 @@ public class Bullet extends LivingObject {
         return true;
     }
 
+    public void shootStaticBullet(LivingObject object){
+        if (bulletShoot == true) {
+            if (timeFromShoot > reloadTime){
+                bulletSound.play(0.5f);
+                timeFromShoot = 0;
+            }
+            if ((this.getBody().getPosition().x - object.getBody().getPosition().x) >= 10
+                    || (this.getBody().getPosition().x - object.getBody().getPosition().x) <= -10) {
+                this.getBody().setTransform(-1000, -1000, 0);
+                this.getBody().setLinearVelocity(0, 0);
+                timeFromShoot = 0;
+            }
+            if (object.getCurrentFrame().isFlipX() == false) {
+                this.getBody().setTransform(object.getBody().getPosition().x + object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
+                this.getBody().setLinearVelocity(this.getSpeedX(), 0);
+            } else if (object.getCurrentFrame().isFlipX() == true) {
+                this.getBody().setTransform(object.getBody().getPosition().x - object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
+                this.getBody().setLinearVelocity(-this.getSpeedX(), 0);
+            }
+        }
+    }
+
     public void update(float deltaTime) {
+        super.update(deltaTime);
         stateTime += deltaTime;
         checkBulletCollision();
         this.getBody().setLinearVelocity(this.getBody().getLinearVelocity().x, 0.2f);
@@ -124,11 +169,18 @@ public class Bullet extends LivingObject {
         }
     }
 
-    public int getSpeedX() {
+
+
+
+
+
+
+
+    public float getSpeedX() {
         return speedX;
     }
 
-    public void setSpeedX(int speedX) {
+    public void setSpeedX(float speedX) {
         this.speedX = speedX;
     }
 
@@ -156,14 +208,6 @@ public class Bullet extends LivingObject {
         this.bulletShoot = bulletShoot;
     }
 
-    public Array<Bullet> getShootBullets() {
-        return shootBullets;
-    }
-
-    public void setShootBullets(Array<Bullet> shootBullets) {
-        this.shootBullets = shootBullets;
-    }
-
     public float getReloadTime() {
         return reloadTime;
     }
@@ -180,5 +224,11 @@ public class Bullet extends LivingObject {
         this.shootAnimation = shootAnimation;
     }
 
+    public boolean isAnimation() {
+        return isAnimation;
+    }
 
+    public void setAnimation(boolean animation) {
+        isAnimation = animation;
+    }
 }

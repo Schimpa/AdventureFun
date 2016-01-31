@@ -11,12 +11,10 @@ import javax.swing.text.View;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 
-		createTextureAtlas();
+		//createTextureAtlas();
 
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-
-		config.useImmersiveMode = true;
 
 		config.resizable = false;
 		config.width = 1600;
@@ -24,7 +22,7 @@ public class DesktopLauncher {
 		// fullscreen
 		config.fullscreen = false;
 		// vSync
-		config.vSyncEnabled = true;
+		config.vSyncEnabled = false;
 		//System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 		new LwjglApplication(new MainWindow(), config);
 	}

@@ -52,6 +52,7 @@ public class LevelChooseScreen implements Screen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
                 game.getMenuScreen().setGameScreen(new GameScreen(game,levelName,activateLights));
+                game.getAssets().getSound_click_in().play(0.5f);
                 game.setScreen(game.getMenuScreen().getGameScreen());
             }
         });
@@ -84,6 +85,7 @@ public class LevelChooseScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
+                game.getAssets().getSound_click_out().play(0.5f);
                 game.setScreen(game.getMenuScreen());
             }
         });
