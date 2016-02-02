@@ -52,7 +52,7 @@ public class LevelChooseScreen implements Screen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
                 game.getMenuScreen().setGameScreen(new GameScreen(game,levelName,activateLights));
-                game.getAssets().getSound_click_in().play(0.5f);
+                game.getAssets().getSound_click_in().play(1f);
                 game.setScreen(game.getMenuScreen().getGameScreen());
             }
         });
@@ -85,13 +85,14 @@ public class LevelChooseScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                game.getAssets().getSound_click_out().play(0.5f);
+                game.getAssets().getSound_click_out().play(1f);
                 game.setScreen(game.getMenuScreen());
             }
         });
 
         createButtonListener(buttonLevel01,"maps/earth.tmx",false);
         createButtonListener(buttonLevel02,"maps/mars.tmx",true);
+        createButtonListener(buttonLevel03,"maps/wueste.tmx",false);
 
         stage.addActor(buttonLevel01);
         stage.addActor(buttonLevel02);

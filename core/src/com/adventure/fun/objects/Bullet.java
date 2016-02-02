@@ -104,7 +104,7 @@ public class Bullet extends LivingObject {
             }
 
             if (this.getBody().getLinearVelocity().x == 0){
-                bulletSound.play(0.5f);
+                bulletSound.play(1f);
                 if (object.getCurrentFrame().isFlipX() == false){
                     this.getBody().setTransform(object.getBody().getPosition().x + object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
                     this.getBody().setLinearVelocity(this.getSpeedX(), 0);
@@ -115,28 +115,6 @@ public class Bullet extends LivingObject {
             }
         }
         return true;
-    }
-
-    public void shootStaticBullet(LivingObject object){
-        if (bulletShoot == true) {
-            if (timeFromShoot > reloadTime){
-                bulletSound.play(0.5f);
-                timeFromShoot = 0;
-            }
-            if ((this.getBody().getPosition().x - object.getBody().getPosition().x) >= 10
-                    || (this.getBody().getPosition().x - object.getBody().getPosition().x) <= -10) {
-                this.getBody().setTransform(-1000, -1000, 0);
-                this.getBody().setLinearVelocity(0, 0);
-                timeFromShoot = 0;
-            }
-            if (object.getCurrentFrame().isFlipX() == false) {
-                this.getBody().setTransform(object.getBody().getPosition().x + object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
-                this.getBody().setLinearVelocity(this.getSpeedX(), 0);
-            } else if (object.getCurrentFrame().isFlipX() == true) {
-                this.getBody().setTransform(object.getBody().getPosition().x - object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
-                this.getBody().setLinearVelocity(-this.getSpeedX(), 0);
-            }
-        }
     }
 
     public void update(float deltaTime) {

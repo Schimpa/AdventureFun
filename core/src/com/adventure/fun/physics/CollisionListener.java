@@ -34,10 +34,12 @@ public class CollisionListener implements ContactListener {
         //Gdx.app.debug("Collision", "Collision between " + contactBody01.getUserData().toString() + " and " + contactBody02.getUserData().toString());
 
         //PLAYER SOLL AUFHÖREN ZU SPRINGEN, WENN ER ETWAS BERÜHRT
+
         if (contactBody01.getUserData().toString().equals("Player") || contactBody02.getUserData().toString().equals("Player")){
             this.gameScreen.getWorldLoader().getPlayer().getJumpAnimation().setIsActive(false);
             this.gameScreen.getWorldLoader().getPlayer().getWalkAnimation().setIsActive(true);
         }
+
 
 
         //ANZAHL DER GESCHOSSE VON ALIEN SOLDIER
@@ -101,16 +103,48 @@ public class CollisionListener implements ContactListener {
 
 
         //COLLISION PLAYER --- ITEM SCORE 100
-        for(int i = 0;i < gameScreen.getWorldLoader().getScoreItem_100().getItems().size;i++){
-            if (contactBody01.getUserData().toString().equals("Item_Point_"+i) || contactBody02.getUserData().toString().equals("Item_Point_"+i) &&
+        for(int i = 0;i < gameScreen.getWorldLoader().getItems_Score_100().getItems().size;i++){
+            if (contactBody01.getUserData().toString().equals("Item_Score_100_"+i) || contactBody02.getUserData().toString().equals("Item_Score_100_"+i) &&
                     contactBody01.getUserData().toString().equals("Player") || contactBody02.getUserData().toString().equals("Player") ) {
-                    Body body = gameScreen.getWorldLoader().getScoreItem_100().getItems().get(i);
+                    Body body = gameScreen.getWorldLoader().getItems_Score_100().getItems().get(i);
                     Gdx.app.debug("Item:", body.getUserData().toString());
-                    if (body.getUserData().toString().equals("Item_Point_"+i)){
-                        body.setUserData("Item_Point_" + i + "_Destroy");
+                    if (body.getUserData().toString().equals("Item_Score_100_"+i)){
+                        body.setUserData("Item_Score_100_" + i + "_Destroy");
                     }
             }
         }
+        for(int i = 0;i < gameScreen.getWorldLoader().getItems_Score_200().getItems().size;i++){
+            if (contactBody01.getUserData().toString().equals("Item_Score_200_"+i) || contactBody02.getUserData().toString().equals("Item_Score_200_"+i) &&
+                    contactBody01.getUserData().toString().equals("Player") || contactBody02.getUserData().toString().equals("Player") ) {
+                Body body = gameScreen.getWorldLoader().getItems_Score_200().getItems().get(i);
+                Gdx.app.debug("Item:", body.getUserData().toString());
+                if (body.getUserData().toString().equals("Item_Score_200_"+i)){
+                    body.setUserData("Item_Score_200_" + i + "_Destroy");
+                }
+            }
+        }
+        for(int i = 0;i < gameScreen.getWorldLoader().getItems_Score_500().getItems().size;i++){
+            if (contactBody01.getUserData().toString().equals("Item_Score_500_"+i) || contactBody02.getUserData().toString().equals("Item_Score_500_"+i) &&
+                    contactBody01.getUserData().toString().equals("Player") || contactBody02.getUserData().toString().equals("Player") ) {
+                Body body = gameScreen.getWorldLoader().getItems_Score_500().getItems().get(i);
+                Gdx.app.debug("Item:", body.getUserData().toString());
+                if (body.getUserData().toString().equals("Item_Score_500_"+i)){
+                    body.setUserData("Item_Score_500_" + i + "_Destroy");
+                }
+            }
+        }
+        for(int i = 0;i < gameScreen.getWorldLoader().getItems_Score_1000().getItems().size;i++){
+            if (contactBody01.getUserData().toString().equals("Item_Score_1000_"+i) || contactBody02.getUserData().toString().equals("Item_Score_1000_"+i) &&
+                    contactBody01.getUserData().toString().equals("Player") || contactBody02.getUserData().toString().equals("Player") ) {
+                Body body = gameScreen.getWorldLoader().getItems_Score_1000().getItems().get(i);
+                Gdx.app.debug("Item:", body.getUserData().toString());
+                if (body.getUserData().toString().equals("Item_Score_1000_"+i)){
+                    body.setUserData("Item_Score_1000_" + i + "_Destroy");
+                }
+            }
+        }
+
+
 
         //COLLISION ENEMY_ALIEN_KUGUS --- PLAYER
         for(int i = 0;i < gameScreen.getWorldLoader().getEnemies_alien_kugus().size;i++) {
@@ -144,7 +178,7 @@ public class CollisionListener implements ContactListener {
             }
         }
 
-        //COLLISION ENEMY_ZOMBIE --- PLAYER BULLET
+        //COLLISION ENEMY_ALIEN_FINGUS--- PLAYER BULLET
         for(int i = 0; i < gameScreen.getWorldLoader().getEnemies_alien_zombie().size; i++){
             if (contactBody01.getUserData().toString().equals("Enemy_"+i) && contactBody02.getUserData().toString().equals("Bullet_Player") ||
                     contactBody02.getUserData().toString().equals("Enemy_"+i) && contactBody01.getUserData().toString().equals("Bullet_Player"))

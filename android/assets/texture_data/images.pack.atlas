@@ -4,58 +4,100 @@ size: 1024,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-alien_kugus
+alien_bigmama
   rotate: false
-  xy: 552, 39
-  size: 128, 64
-  orig: 128, 64
+  xy: 2, 4
+  size: 192, 96
+  orig: 192, 96
   offset: 0, 0
   index: -1
-alien_soldier
+alien_fingus
   rotate: false
-  xy: 390, 39
-  size: 160, 64
-  orig: 160, 64
-  offset: 0, 0
-  index: -1
-alien_zombie
-  rotate: false
-  xy: 2, 39
+  xy: 196, 36
   size: 192, 64
   orig: 192, 64
   offset: 0, 0
   index: -1
+alien_kugus
+  rotate: false
+  xy: 746, 36
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
+alien_takel
+  rotate: false
+  xy: 584, 36
+  size: 160, 64
+  orig: 160, 64
+  offset: 0, 0
+  index: -1
+battery
+  rotate: false
+  xy: 876, 68
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
 bullet_blitzkugel
   rotate: false
-  xy: 2, 5
+  xy: 196, 2
   size: 128, 32
   orig: 128, 32
   offset: 0, 0
   index: -1
 bullet_laser
   rotate: false
-  xy: 682, 71
+  xy: 326, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+icon_Health
+  rotate: false
+  xy: 360, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_move
   rotate: false
-  xy: 196, 39
+  xy: 390, 36
   size: 192, 64
   orig: 192, 64
   offset: 0, 0
   index: -1
-point
+score_four
   rotate: false
-  xy: 132, 5
+  xy: 394, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+score_one
+  rotate: false
+  xy: 428, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+score_three
+  rotate: false
+  xy: 462, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+score_two
+  rotate: false
+  xy: 496, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 whiteColor
   rotate: false
-  xy: 2, 2
+  xy: 876, 65
   size: 1, 1
   orig: 1, 1
   offset: 0, 0

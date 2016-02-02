@@ -79,8 +79,8 @@ public class Enemy_Alien_Kugus extends LivingObject {
 
 
         reactionDistance = 10;
-        speed = new Vector2(12f,12f);
-        maxSpeed = new Vector2(6,6);
+        speed = new Vector2(10f,10f);
+        maxSpeed = new Vector2(20,20);
         removeFlag = false;
         sound_reload = 0;
 
@@ -128,7 +128,7 @@ public class Enemy_Alien_Kugus extends LivingObject {
             }
             randomInt = rand.nextInt(300)+1;
             if (randomInt == 50){
-                game.getAssets().getSound_alien_soldier_01().play(0.7f);
+                game.getAssets().getSound_alien_soldier_01().play(1f);
             }else if (randomInt == 74){
                 game.getAssets().getSound_alien_soldier_02().play(0.7f);
             }

@@ -1,17 +1,10 @@
 package com.adventure.fun.objects;
 
-import com.adventure.fun._main.Assets;
 import com.adventure.fun._main.MainWindow;
 import com.adventure.fun.effects.ObjectAnimation;
-import com.adventure.fun.texture.Textures;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.Random;
@@ -19,7 +12,7 @@ import java.util.Random;
 /**
  * Created by Dennis on 28.10.2015.
  */
-public class Enemy_Alien_Zombie extends LivingObject {
+public class Enemy_Alien_Fingus extends LivingObject {
 
     private Player player;
     private Bullet bullet;
@@ -32,7 +25,7 @@ public class Enemy_Alien_Zombie extends LivingObject {
 
     private ObjectAnimation walkAnimation;
 
-    public Enemy_Alien_Zombie(MainWindow game, float x, float y, float sizeX, float sizeY, World world, Player player){
+    public Enemy_Alien_Fingus(MainWindow game, float x, float y, float sizeX, float sizeY, World world, Player player){
         super(game);
         init(x,y,sizeX,sizeY,world);
         this.player = player;
@@ -51,11 +44,11 @@ public class Enemy_Alien_Zombie extends LivingObject {
         stateTime = 0.0f;
 
         lives = 2;
-        body.setUserData("Enemy_Alien_Zombie");
+        body.setUserData("Enemy_Alien_Fingus");
 
         currentFrame = new TextureRegion();
 
-        walkAnimation = new ObjectAnimation(game.getAssets().getAlien_zombie(),3,1,0,2,0.15f);
+        walkAnimation = new ObjectAnimation(game.getAssets().getAlien_fingus(),3,1,0,2,0.15f);
         walkAnimation.setIsActive(true);
 
         shape.dispose();

@@ -102,6 +102,7 @@ public abstract class LivingObject {
 
         body = world.createBody(bodyDef);
 
+
     }
 
     //ZWEITE INITIALISIERUNG DAMIT ALLE REFERNZEN AUCH VERFÜGBAR SIND

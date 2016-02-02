@@ -37,7 +37,7 @@ public class Controls implements InputProcessor {
     }
 
     public void bulletShot(){
-        if (Gdx.input.isKeyPressed(Input.Keys.A)){
+        if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.BUTTON_R2)){
             this.worldLoader.getPlayer().getBullet().setBulletShoot(true);
         }
     }
@@ -49,8 +49,7 @@ public class Controls implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)  && worldLoader.getPlayer().getBody().getLinearVelocity().y <= 0.1f &&
+        if ((Gdx.input.isKeyPressed(Input.Keys.SPACE))  && worldLoader.getPlayer().getBody().getLinearVelocity().y <= 0.1f &&
                 worldLoader.getPlayer().getBody().getLinearVelocity().y >= -0.1f) {
             worldLoader.getPlayer().setIsJumping(true);
             worldLoader.getPlayer().setJumpTimer(0);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-up" width="400" height="100" tilewidth="32" tileheight="32" nextobjectid="123">
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="400" height="100" tilewidth="32" tileheight="32" nextobjectid="137">
  <tileset firstgid="1" name="texture" tilewidth="32" tileheight="32" tilecount="256">
   <image source="texture.png" width="512" height="512"/>
  </tileset>
@@ -30,7 +30,7 @@
   <object id="116" x="64" y="2624" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="End"/>
- <objectgroup name="Ground">
+ <objectgroup name="Collision">
   <object id="16" x="224" y="2624" width="640" height="64"/>
   <object id="17" x="992" y="2688" width="288" height="64"/>
   <object id="21" x="2080" y="2880" width="64" height="32"/>
@@ -78,8 +78,20 @@
   <object id="112" x="3072" y="2752" width="160" height="32"/>
   <object id="113" x="3040" y="2752" width="32" height="160"/>
  </objectgroup>
- <objectgroup name="Item"/>
- <objectgroup name="Enemy_Alien_Zombie">
+ <objectgroup name="Item_Point_100">
+  <object id="131" x="512" y="2816" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Item_Point_200">
+  <object id="130" x="384" y="2816" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Item_Point_500">
+  <object id="129" x="256" y="2816" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Item_Point_1000">
+  <object id="128" x="128" y="2816" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Item_Health"/>
+ <objectgroup name="Enemy_Alien_Fingus">
   <object id="56" x="3072" y="2336" width="32" height="32"/>
   <object id="59" x="1408" y="1920" width="32" height="32"/>
   <object id="60" x="608" y="1696" width="32" height="32"/>
@@ -91,11 +103,11 @@
   <object id="118" x="3648" y="2304" width="32" height="32"/>
   <object id="119" x="3744" y="2304" width="32" height="32"/>
   <object id="120" x="3840" y="2304" width="32" height="32"/>
-  <object id="121" x="1600" y="2752" width="32" height="32"/>
-  <object id="122" x="1792" y="2752" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Enemy_Alien_Kugus">
   <object id="57" x="1120" y="192" width="32" height="32"/>
-  <object id="115" x="800" y="2720" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Enemy_Alien_BigMama">
+  <object id="135" x="1696" y="2432" width="32" height="32"/>
  </objectgroup>
 </map>

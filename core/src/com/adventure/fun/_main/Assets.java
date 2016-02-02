@@ -2,7 +2,6 @@ package com.adventure.fun._main;
 
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -46,16 +45,27 @@ public class Assets {
     private TextureRegion player_move;
 
     //ENEMIES
-    private TextureRegion alien_zombie;
-    private TextureRegion alien_soldier;
+    private TextureRegion alien_fingus;
+    private TextureRegion alien_takel;
     private TextureRegion alien_kugus;
+    private TextureRegion alien_bigmama;
 
     //BULLETS
     private TextureRegion bullet_blitzkugel;
     private TextureRegion bullet_laser;
 
-    //ETC
-    private TextureRegion point;
+    //ITEMS
+    private TextureRegion item_Score_100;
+    private TextureRegion item_Score_200;
+    private TextureRegion item_Score_500;
+    private TextureRegion item_Score_1000;
+    private TextureRegion item_Health;
+
+    //ICONS
+    private TextureRegion icon_Health;
+
+
+    //ETC...
     private TextureRegion whiteColor;
 
     //BACKGROUND
@@ -63,8 +73,6 @@ public class Assets {
     private Texture background_02;
     private Texture backgroundMenu;
     private Texture backgroundMars;
-
-
 
     public Assets(){
         assetManager = new AssetManager();
@@ -93,14 +101,14 @@ public class Assets {
         assetManager.load("audio/jump.ogg", Sound.class);
         assetManager.load("audio/papierstau.ogg",Sound.class);
 
-        assetManager.load("audio/alien_zombie.ogg",Sound.class);
-        assetManager.load("audio/alien_zombie_dead.ogg", Sound.class);
+        assetManager.load("audio/alien_fingus.ogg",Sound.class);
+        assetManager.load("audio/alien_fingus_dead.ogg", Sound.class);
 
-        assetManager.load("audio/alien_soldier_01.ogg",Sound.class);
-        assetManager.load("audio/alien_soldier_02.ogg",Sound.class);
-        assetManager.load("audio/alien_soldier_hit_01.ogg",Sound.class);
-        assetManager.load("audio/alien_soldier_hit_02.ogg",Sound.class);
-        assetManager.load("audio/alien_soldier_dead.ogg",Sound.class);
+        assetManager.load("audio/alien_takel_01.ogg",Sound.class);
+        assetManager.load("audio/alien_takel_02.ogg",Sound.class);
+        assetManager.load("audio/alien_takel_hit_01.ogg",Sound.class);
+        assetManager.load("audio/alien_takel_hit_02.ogg",Sound.class);
+        assetManager.load("audio/alien_takel_dead.ogg",Sound.class);
         assetManager.load("audio/player_hit_01.ogg",Sound.class);
         assetManager.load("audio/player_hit_02.ogg",Sound.class);
         assetManager.load("audio/player_hit_03.ogg",Sound.class);
@@ -123,14 +131,14 @@ public class Assets {
         sound_jump = assetManager.get("audio/jump.ogg", Sound.class);
         sound_die = assetManager.get("audio/papierstau.ogg", Sound.class);
 
-        sound_alien_zombie = assetManager.get("audio/alien_zombie.ogg", Sound.class);
-        sound_alien_zombie_dead = assetManager.get("audio/alien_zombie_dead.ogg", Sound.class);
+        sound_alien_zombie = assetManager.get("audio/alien_fingus.ogg", Sound.class);
+        sound_alien_zombie_dead = assetManager.get("audio/alien_fingus_dead.ogg", Sound.class);
 
-        sound_alien_soldier_01 = assetManager.get("audio/alien_soldier_01.ogg", Sound.class);
-        sound_alien_soldier_02 = assetManager.get("audio/alien_soldier_02.ogg", Sound.class);
-        sound_alien_soldier_hit_01 = assetManager.get("audio/alien_soldier_hit_01.ogg", Sound.class);
-        sound_alien_soldier_hit_02 = assetManager.get("audio/alien_soldier_hit_02.ogg", Sound.class);
-        sound_alien_soldier_dead = assetManager.get("audio/alien_soldier_dead.ogg", Sound.class);
+        sound_alien_soldier_01 = assetManager.get("audio/alien_takel_01.ogg", Sound.class);
+        sound_alien_soldier_02 = assetManager.get("audio/alien_takel_02.ogg", Sound.class);
+        sound_alien_soldier_hit_01 = assetManager.get("audio/alien_takel_hit_01.ogg", Sound.class);
+        sound_alien_soldier_hit_02 = assetManager.get("audio/alien_takel_hit_02.ogg", Sound.class);
+        sound_alien_soldier_dead = assetManager.get("audio/alien_takel_dead.ogg", Sound.class);
 
         sound_player_hit_01 = assetManager.get("audio/player_hit_01.ogg", Sound.class);
         sound_player_hit_02 = assetManager.get("audio/player_hit_02.ogg", Sound.class);
@@ -141,23 +149,43 @@ public class Assets {
         //BACKGROUND
         background = assetManager.get("background/galaxy.png",Texture.class);
         backgroundMenu = assetManager.get("background/mars.jpg",Texture.class);
-        backgroundMars = assetManager.get("background/mars_02.jpg",Texture.class);
-        background_02 = assetManager.get("background/background_02.png",Texture.class);
+        backgroundMars = assetManager.get("background/mars_02.jpg", Texture.class);
+        background_02 = assetManager.get("background/background_02.png", Texture.class);
 
-        point = atlas.findRegion("point");
+        //ITEMS
+        item_Score_100 = atlas.findRegion("score_one");
+        item_Score_200 = atlas.findRegion("score_two");
+        item_Score_500 = atlas.findRegion("score_three");
+        item_Score_1000 = atlas.findRegion("score_four");
+        item_Health = atlas.findRegion("battery");
+
+        //ICONS
+        icon_Health = atlas.findRegion("icon_Health");
+
         whiteColor = atlas.findRegion("whiteColor");
 
         player_move = atlas.findRegion("player_move");
         bullet_laser = atlas.findRegion("bullet_laser");
-        alien_zombie = atlas.findRegion("alien_zombie");
-        alien_soldier = atlas.findRegion("alien_soldier");
+        alien_fingus = atlas.findRegion("alien_fingus");
+        alien_takel = atlas.findRegion("alien_takel");
         alien_kugus = atlas.findRegion("alien_kugus");
+        alien_bigmama = atlas.findRegion("alien_bigmama");
+
         bullet_blitzkugel = atlas.findRegion("bullet_blitzkugel");
 
     }
 
     public void dispose() {
         assetManager.dispose();
+    }
+
+
+    public TextureRegion getAlien_bigmama() {
+        return alien_bigmama;
+    }
+
+    public void setAlien_bigmama(TextureRegion alien_bigmama) {
+        this.alien_bigmama = alien_bigmama;
     }
 
     public Sound getSound_alien_zombie() {
@@ -264,12 +292,12 @@ public class Assets {
         this.player_move = player_move;
     }
 
-    public TextureRegion getAlien_zombie() {
-        return alien_zombie;
+    public TextureRegion getAlien_fingus() {
+        return alien_fingus;
     }
 
     public void setAlien_move(TextureRegion alien_move) {
-        this.alien_zombie = alien_zombie;
+        this.alien_fingus = alien_fingus;
     }
 
     public TextureRegion getBullet_Laser() {
@@ -278,14 +306,6 @@ public class Assets {
 
     public void setBullet_Laser(TextureRegion bullet) {
         this.bullet_laser = bullet;
-    }
-
-    public TextureRegion getPoint() {
-        return point;
-    }
-
-    public void setPoint(TextureRegion point) {
-        this.point = point;
     }
 
     public Texture getBackground() {
@@ -304,12 +324,12 @@ public class Assets {
         this.backgroundMenu = backgroundMenu;
     }
 
-    public TextureRegion getAlien_soldier() {
-        return alien_soldier;
+    public TextureRegion getAlien_takel() {
+        return alien_takel;
     }
 
-    public void setAlien_soldier(TextureRegion alien_soldier) {
-        this.alien_soldier = alien_soldier;
+    public void setAlien_takel(TextureRegion alien_takel) {
+        this.alien_takel = alien_takel;
     }
 
     public Sound getSound_alien_soldier_01() {
@@ -408,8 +428,8 @@ public class Assets {
         this.bullet_blitzkugel = bullet_blitzkugel;
     }
 
-    public void setAlien_zombie(TextureRegion alien_zombie) {
-        this.alien_zombie = alien_zombie;
+    public void setAlien_fingus(TextureRegion alien_fingus) {
+        this.alien_fingus = alien_fingus;
     }
 
     public TextureRegion getWhiteColor() {
@@ -445,4 +465,51 @@ public class Assets {
     }
 
 
+    public TextureRegion getItem_Score_100() {
+        return item_Score_100;
+    }
+
+    public void setItem_Score_100(TextureRegion item_Score_100) {
+        this.item_Score_100 = item_Score_100;
+    }
+
+    public TextureRegion getItem_Score_200() {
+        return item_Score_200;
+    }
+
+    public void setItem_Score_200(TextureRegion item_Score_200) {
+        this.item_Score_200 = item_Score_200;
+    }
+
+    public TextureRegion getItem_Score_500() {
+        return item_Score_500;
+    }
+
+    public void setItem_Score_500(TextureRegion item_Score_500) {
+        this.item_Score_500 = item_Score_500;
+    }
+
+    public TextureRegion getItem_Score_1000() {
+        return item_Score_1000;
+    }
+
+    public void setItem_Score_1000(TextureRegion item_Score_1000) {
+        this.item_Score_1000 = item_Score_1000;
+    }
+
+    public TextureRegion getItem_Health() {
+        return item_Health;
+    }
+
+    public void setItem_Health(TextureRegion item_Health) {
+        this.item_Health = item_Health;
+    }
+
+    public TextureRegion getIcon_Health() {
+        return icon_Health;
+    }
+
+    public void setIcon_Health(TextureRegion icon_Health) {
+        this.icon_Health = icon_Health;
+    }
 }

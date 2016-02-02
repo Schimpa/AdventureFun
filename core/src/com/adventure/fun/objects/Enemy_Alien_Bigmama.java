@@ -5,21 +5,29 @@ import com.adventure.fun.effects.ObjectAnimation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+
+import java.util.Random;
 
 /**
  * Created by Dennis on 28.10.2015.
  */
-public class Enemy_Alien_Soldier extends LivingObject {
+public class Enemy_Alien_Bigmama extends LivingObject {
 
     private Player player;
     private Bullet bullet;
+
+    //Für zufällige Ereignisse
+    Random rand = new Random();
+    private int randomInt;
 
     private int reactionDistance;    //Der Abstand, bei den Gegner den Spieler anfangen zu bemerken
 
     private ObjectAnimation walkAnimation;
 
-    public Enemy_Alien_Soldier(MainWindow game, float x, float y, float sizeX, float sizeY, World world, Player player){
+    public Enemy_Alien_Bigmama(MainWindow game, float x, float y, float sizeX, float sizeY, World world, Player player){
         super(game);
         init(x,y,sizeX,sizeY,world);
         this.player = player;
@@ -27,31 +35,29 @@ public class Enemy_Alien_Soldier extends LivingObject {
     }
 
     public void init(float x,float y,float sizeX,float sizeY,World world){
-        super.init(x,y,sizeX,sizeY,world);
+        super.init(x, y, sizeX, sizeY, world);
+        shape.setAsBox((sprite.getWidth() / 2) * 0.5f, sprite.getHeight() / 2.1f);
         body.createFixture(fixtureDef);
-        reactionDistance = 10;
-        speed = new Vector2(12f,12f);
-        maxSpeed = new Vector2(2,2);
+
+        reactionDistance = 13;
+        speed = new Vector2(9,9f);
+        maxSpeed = new Vector2(4,4);
         removeFlag = false;
         sound_reload = 0;
 
         stateTime = 0.0f;
 
-        lives = 2;
+        lives = 8;
+        body.setUserData("Enemy_Alien_Fingus");
 
-        body.setUserData("Enemy_Alien_Soldier");
+        currentFrame = new TextureRegion();
 
         bullet = new Bullet(game,-100,-100,0.8f,0.8f,world,game.getAssets().getBullet_blitzkugel(),true);
         bullet.setSpeedX(3);
         bullet.setReloadTime(3.0f);
 
-        currentFrame = new TextureRegion();
-
-        walkAnimation = new ObjectAnimation(game.getAssets().getAlien_takel(),5,1,0,4,0.15f);
+        walkAnimation = new ObjectAnimation(game.getAssets().getAlien_bigmama(),3,1,0,2,0.08f);
         walkAnimation.setIsActive(true);
-
-        particles.activateParticle(particles.getExplosion_blitzkugel());
-        particles.activateParticle(particles.getExplosion_dead());
 
         shape.dispose();
     }
@@ -84,29 +90,18 @@ public class Enemy_Alien_Soldier extends LivingObject {
             bullet.setBulletShoot(true);
 
         }else if (removeFlag == true){
-                bullet.setBulletShoot(true);
-            }
-
+            bullet.setBulletShoot(true);
         }
 
-
+    }
 
     public void update(float deltaTime){
-        if (isDestroyed == false){
-            if (walkAnimation.isActive() == true){
-                currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
-            }
-            logic(deltaTime);
-            bullet.shootBullet(this);
-        }
-        bullet.update(deltaTime);
-
-
+        logic(deltaTime);
     }
 
     @Override
     public void move(boolean direction,float deltaTime){
-        super.move(direction,deltaTime);
+        super.move(direction, deltaTime);
         if (direction == false){
             if (this.getCurrentFrame().isFlipX() == false){
                 for(int i = 0; i < this.walkAnimation.getFrames().length;i++){
@@ -123,25 +118,22 @@ public class Enemy_Alien_Soldier extends LivingObject {
         }
     }
 
-    @Override
-    public void dispose(){
-        particles.playEffect(this.getBody().getPosition().x,this.getBody().getPosition().y,particles.getExplosion_dead());
-        super.dispose();
-    }
 
     public void render(SpriteBatch batch){
-        super.render(batch);
         if (removeFlag != true){
+            if (walkAnimation.isActive() == true){
+                currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
+            }
             batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth() ,sprite.getHeight());
         }
-        bullet.render(batch);
+        super.render(batch);
     }
 
-    public Bullet getBullet(){
-        return this.bullet;
+    public Bullet getBullet() {
+        return bullet;
     }
 
-    public void setBullet(Bullet bullet){
+    public void setBullet(Bullet bullet) {
         this.bullet = bullet;
     }
 }

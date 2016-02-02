@@ -9,6 +9,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -63,22 +64,12 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		//Reinigt Bildschirm
-		Gdx.gl.glClearColor(0.9f, 0.9f, 0.9f, 1);
+		Gdx.gl.glClearColor(0.9f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		camera.update(delta);
 
 		//Aktualisiert Logik
 		worldLoader.getRenderer().setView(camera.getPlayerCamera());
 		worldLoader.updateWorld(delta);
-
-		if (showGameOverScreen == true){
-			camera.createGameOverScreen();
-			camera.getHudStage().dispose();
-			Gdx.input.setInputProcessor(camera.getGameOverStage());
-			showGameOverScreen = false;
-		}
-
 
 		//Rendert alle Objeckte innerhalb des batchs
 		game.getBatch().begin();
@@ -86,16 +77,25 @@ public class GameScreen implements Screen {
 		game.getBatch().draw(game.getAssets().getBackgroundMars(), -20, -20, 50, 50);
 		game.getBatch().end();
 
+		camera.update(delta);
 		//Rendert tmx map
 		game.getBatch().setProjectionMatrix(camera.getPlayerCamera().combined);
 		worldLoader.renderMap(game.getBatch());
 
 		//Rendert Physik-Debug Texturen
-		//debugRenderer.render(worldLoader.getWorld(), camera.getPlayerCamera().combined);
+		debugRenderer.render(worldLoader.getWorld(), camera.getPlayerCamera().combined);
 
-		//Renderd HUD
-		camera.getHudStage().draw();
-		camera.getGameOverStage().draw();
+
+
+		if (showGameOverScreen == true){
+			camera.getGameOverStage().getBatch().setColor(Color.RED);
+			camera.getGameOverStage().draw();
+
+		}else{
+			camera.render(game.getBatch());
+		}
+
+
 	}
 
 	@Override

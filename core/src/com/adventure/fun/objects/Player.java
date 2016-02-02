@@ -53,13 +53,12 @@ public class Player extends LivingObject {
         speed = new Vector2(25f,25f);
         damageCoolDownTime = 0;
         score = 500;
-        lives = 3;
+        lives = 2;
         maxSpeed = new Vector2(8,8);
         sound_reload = 0.25f;
         gameOverActivated = false;
 
         //Spielerlicht
-
 
         respawnPoint = new Vector2(x,y);
         stateTime = 0.0f;
@@ -123,22 +122,22 @@ public class Player extends LivingObject {
 
     @Override
     public void update(float deltaTime) {
-        super.update(deltaTime);
 
-        checkIfLoose();
-        this.damageCoolDownTime += deltaTime;
-        if (isMovingRight == true){
-            this.move(true, deltaTime);
+        if (gameOverActivated != true){
+            super.update(deltaTime);
+            this.damageCoolDownTime += deltaTime;
+            if (isMovingRight == true){
+                this.move(true, deltaTime);
+            }
+            if (isMovingLeft == true){
+                this.move(false, deltaTime);
+            }
+
+            bullet.shootBullet(this);
+            bullet.update(deltaTime);
+            jump();
+            checkIfLoose();
         }
-        if (isMovingLeft == true){
-            this.move(false, deltaTime);
-        }
-
-        bullet.shootBullet(this);
-
-        bullet.update(deltaTime);
-        checkIfLoose();
-        jump();
     }
 
     public void looseLife(int amount){
@@ -147,13 +146,13 @@ public class Player extends LivingObject {
 
         switch(randomInt){
             case 1:
-                this.game.getAssets().getSound_player_hit_01().play();
+                this.game.getAssets().getSound_player_hit_01().play(1f);
                 break;
             case 2:
-                this.game.getAssets().getSound_player_hit_02().play();
+                this.game.getAssets().getSound_player_hit_02().play(1f);
                 break;
             case 3:
-                this.game.getAssets().getSound_player_hit_03().play();
+                this.game.getAssets().getSound_player_hit_03().play(1f);
                 break;
         }
     }
@@ -162,10 +161,10 @@ public class Player extends LivingObject {
         super.move(direction, deltaTime);
         //LEFT == FALSE | RIGHT == TRUE
         if (walkAnimation.getFrames()[0].equals(currentFrame) && sound_reload >= 0.25f){
-            game.getAssets().getSound_step_02().play(0.2f);
+            game.getAssets().getSound_step_02().play(1f);
             sound_reload = 0;
         }else if(walkAnimation.getFrames()[2].equals(currentFrame)&& sound_reload >= 0.25f){
-            game.getAssets().getSound_step_01().play(0.2f);
+            game.getAssets().getSound_step_01().play(1f);
             sound_reload = 0;
         }
         if (direction == false){
@@ -191,17 +190,21 @@ public class Player extends LivingObject {
     }
 
     public void checkIfLoose() {
-        if (body.getPosition().y < 0) {
+        if (body.getPosition().y < 0 ) {
             body.setLinearVelocity(0, 0);
-            body.setTransform(respawnPoint.x, respawnPoint.y, 0);
+            if (gameOverActivated == false){
+                body.setTransform(respawnPoint.x, respawnPoint.y, 0);
+            }
             lives -= 1;
             score -= 100;
         }else if (lives <= 0 && gameOverActivated == false){
             //Gdx.app.exit();
             this.gameOverActivated = true;
-            particles.playEffect(this.getBody().getPosition().x,this.getBody().getPosition().y,
+            particles.playEffect(this.getBody().getPosition().x, this.getBody().getPosition().y,
                     particles.getExplosion_dead());
             this.game.getMenuScreen().getGameScreen().setShowGameOverScreen(true);
+            //game.getMenuScreen().getGameScreen().getCamera().getHudStage().clear();
+            Gdx.input.setInputProcessor(game.getMenuScreen().getGameScreen().getCamera().getGameOverStage());
             this.dispose();
         }
     }
