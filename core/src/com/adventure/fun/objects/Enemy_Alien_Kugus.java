@@ -170,6 +170,7 @@ public class Enemy_Alien_Kugus extends LivingObject {
     @Override
     public void dispose(){
         particles.playEffect(this.getBody().getPosition().x,this.getBody().getPosition().y,particles.getExplosion_dead());
+        this.body.setTransform(-1000,-1000f,0);
         super.dispose();
     }
 

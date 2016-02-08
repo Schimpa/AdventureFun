@@ -1,8 +1,6 @@
 package com.adventure.fun.items;
 
 import com.adventure.fun._main.WorldLoader;
-import com.adventure.fun.texture.Textures;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -10,14 +8,14 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * Created by Dennis on 22.11.2015.
  */
-public class Item_Score extends Item {
+public class Item_Health extends Item {
 
-    private int score;
+    private int health;
 
-    public Item_Score(WorldLoader worldLoader, int score){
+    public Item_Health(WorldLoader worldLoader, int health){
         super(worldLoader);
-        this.score = score;
-        name = "Item_Score_"+score + "_";
+        this.health = health;
+        name = "Item_Health_"+ health + "_";
     }
 
 
@@ -26,9 +24,18 @@ public class Item_Score extends Item {
         super.checkDestruction();
         for(int i = 0;i < this.items.size;i++){
             if (this.items.get(i).getUserData().toString().equals(name + i + "_Destroyed") && isDestroyed.get(i) == false){
-                worldLoader.getPlayer().setScore(worldLoader.getPlayer().getScore() + this.score);
+                worldLoader.getPlayer().setLives(worldLoader.getPlayer().getLives() + this.health);
                 this.isDestroyed.set(i,true);
             }
         }
+    }
+
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }

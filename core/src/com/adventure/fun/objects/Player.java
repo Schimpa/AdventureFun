@@ -53,7 +53,7 @@ public class Player extends LivingObject {
         speed = new Vector2(25f,25f);
         damageCoolDownTime = 0;
         score = 500;
-        lives = 2;
+        lives = 3;
         maxSpeed = new Vector2(8,8);
         sound_reload = 0.25f;
         gameOverActivated = false;
@@ -103,19 +103,23 @@ public class Player extends LivingObject {
         if (postInitFlag != true){
             postInit();
         }
-        super.render(batch);
-        if (walkAnimation.isActive() == true){
-            currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
+        if (gameOverActivated != true){
+            super.render(batch);
+            if (walkAnimation.isActive() == true){
+                currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
+            }
+            else if (jumpAnimation.isActive() == true){
+                currentFrame = jumpAnimation.getAnimation().getKeyFrame(stateTime, true);
+            }
+            try{
+                batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
+            }catch (NullPointerException e) {
+                System.out.println("error: " + e);
+            }
+            bullet.render(batch);
         }
-        else if (jumpAnimation.isActive() == true){
-            currentFrame = jumpAnimation.getAnimation().getKeyFrame(stateTime, true);
-        }
-        try{
-            batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
-        }catch (NullPointerException e) {
-            System.out.println("error: " + e);
-        }
-        bullet.render(batch);
+
+
 
 
     }
@@ -190,21 +194,22 @@ public class Player extends LivingObject {
     }
 
     public void checkIfLoose() {
+
         if (body.getPosition().y < 0 ) {
             body.setLinearVelocity(0, 0);
-            if (gameOverActivated == false){
-                body.setTransform(respawnPoint.x, respawnPoint.y, 0);
-            }
             lives -= 1;
             score -= 100;
+
         }else if (lives <= 0 && gameOverActivated == false){
             //Gdx.app.exit();
             this.gameOverActivated = true;
             particles.playEffect(this.getBody().getPosition().x, this.getBody().getPosition().y,
                     particles.getExplosion_dead());
             this.game.getMenuScreen().getGameScreen().setShowGameOverScreen(true);
-            //game.getMenuScreen().getGameScreen().getCamera().getHudStage().clear();
+            game.getMenuScreen().getGameScreen().getCamera().getHudStage().clear();
             Gdx.input.setInputProcessor(game.getMenuScreen().getGameScreen().getCamera().getGameOverStage());
+            this.getSprite().setAlpha(0.0f);
+            this.getSprite().setPosition(-1000,-1000);
             this.dispose();
         }
     }

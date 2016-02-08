@@ -30,6 +30,8 @@ public class GameScreen implements Screen {
 
 	private boolean activateLights;
 
+	private Texture gameBackground;
+
 	public GameScreen(MainWindow game,String levelName,boolean activateLights){
 		this.game = game;
 
@@ -53,6 +55,14 @@ public class GameScreen implements Screen {
 		multiplexer.addProcessor(worldLoader.getControls());
 
 		Gdx.input.setInputProcessor(multiplexer);
+
+		chooseBackground();
+	}
+
+	public void chooseBackground(){
+		if (levelName.equals("maps/earth.tmx")){
+			gameBackground = game.getAssets().getBackground_02();
+		}
 	}
 
 
@@ -74,7 +84,7 @@ public class GameScreen implements Screen {
 		//Rendert alle Objeckte innerhalb des batchs
 		game.getBatch().begin();
 		game.getBatch().setProjectionMatrix(camera.getBackgroundCamera().combined);
-		game.getBatch().draw(game.getAssets().getBackgroundMars(), -20, -20, 50, 50);
+		game.getBatch().draw(gameBackground, -20, -20, 60, 60);
 		game.getBatch().end();
 
 		camera.update(delta);
@@ -83,12 +93,16 @@ public class GameScreen implements Screen {
 		worldLoader.renderMap(game.getBatch());
 
 		//Rendert Physik-Debug Texturen
-		debugRenderer.render(worldLoader.getWorld(), camera.getPlayerCamera().combined);
-
-
+		//debugRenderer.render(worldLoader.getWorld(), camera.getPlayerCamera().combined);
 
 		if (showGameOverScreen == true){
-			camera.getGameOverStage().getBatch().setColor(Color.RED);
+			//camera.getGameOverStage().getBatch().setColor(Color.RED);
+			game.getBatch().begin();
+			game.getBatch().setColor(0.9f,0.1f,0.1f,0.6f);
+			/*
+			game.getBatch().draw(game.getAssets().getWhiteColor(),0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+			*/
+			game.getBatch().end();
 			camera.getGameOverStage().draw();
 
 		}else{

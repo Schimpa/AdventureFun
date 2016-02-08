@@ -11,14 +11,14 @@ import javax.swing.text.View;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 
-		//createTextureAtlas();
+		createTextureAtlas();
 
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.resizable = false;
 		config.width = 1600;
-		config.height = 900;
+		config.height = 1000;
 		config.fullscreen = false;
 		// vSync
 		config.vSyncEnabled = false;

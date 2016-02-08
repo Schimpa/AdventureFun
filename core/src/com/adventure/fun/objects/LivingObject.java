@@ -126,7 +126,6 @@ public abstract class LivingObject {
     }
 
     public void dispose(){
-        this.body.setTransform(-1000,-1000f,0);
         this.body.getWorld().destroyBody(this.body);
         isDestroyed = true;
     }

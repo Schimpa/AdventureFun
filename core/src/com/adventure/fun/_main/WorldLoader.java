@@ -2,6 +2,7 @@ package com.adventure.fun._main;
 
 import com.adventure.fun.controls.Controls;
 import com.adventure.fun.effects.Particles;
+import com.adventure.fun.items.Item_Health;
 import com.adventure.fun.items.Item_Score;
 import com.adventure.fun.objects.Enemy_Alien_Bigmama;
 import com.adventure.fun.objects.Enemy_Alien_Kugus;
@@ -51,6 +52,8 @@ public class WorldLoader {
     private Item_Score items_Score_500;
     private Item_Score items_Score_1000;
 
+    private Item_Health items_Health_1;
+
 
     //Steuerung
     Controls controls;
@@ -68,6 +71,8 @@ public class WorldLoader {
     private Particles particles;
 
     private RayHandler rayHandler;
+
+    private int[] backgroundLayers,foregroundLayers;
 
     public void dispose(){
         world.dispose();
@@ -100,6 +105,8 @@ public class WorldLoader {
         items_Score_500 = new Item_Score(this,500);
         items_Score_1000 = new Item_Score(this,1000);
 
+        items_Health_1 = new Item_Health(this,1);
+
         enemies_alien_zombie = new Array<Enemy_Alien_Fingus>();
         enemies_alien_soldier = new Array<Enemy_Alien_Soldier>();
         enemies_alien_kugus = new Array<Enemy_Alien_Kugus>();
@@ -109,7 +116,8 @@ public class WorldLoader {
 
         world = new World(new Vector2(0,-15f), true);
 
-
+        backgroundLayers = new int[]{0,1,2};
+        foregroundLayers = new int[]{3};
 
         createLights();
 
@@ -134,7 +142,7 @@ public class WorldLoader {
     }
 
     public void renderMap(SpriteBatch batch){
-        renderer.render();
+        renderer.render(backgroundLayers);
         batch.begin();
 
         for (Enemy_Alien_Fingus enemyAlienZombie : enemies_alien_zombie){
@@ -155,10 +163,16 @@ public class WorldLoader {
         items_Score_500.render(batch);
         items_Score_1000.render(batch);
 
+        items_Health_1.render(batch);
+
         player.render(batch);
+
 
         renderParticles(batch, Gdx.graphics.getDeltaTime());
         batch.end();
+        renderer.render(foregroundLayers);
+        //renderer.render();
+
 
         if (gameScreen.isActivateLights() == true){
             rayHandler.setCombinedMatrix(gameScreen.getCamera().getPlayerCamera());
@@ -206,6 +220,8 @@ public class WorldLoader {
         items_Score_200.checkDestruction();
         items_Score_500.checkDestruction();
         items_Score_1000.checkDestruction();
+
+        items_Health_1.checkDestruction();
 
         rayHandler.update();
         world.step(deltaTime, 60, 20);
@@ -294,6 +310,8 @@ public class WorldLoader {
 
             i++;
         }
+
+        //ITEM - SCORE - 200
         i = 0;
         for(MapObject object: map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -320,6 +338,8 @@ public class WorldLoader {
 
             i++;
         }
+
+        //ITEM - SCORE - 500
         i = 0;
         for(MapObject object: map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -346,6 +366,8 @@ public class WorldLoader {
 
             i++;
         }
+
+        //ITEM - SCORE - 1000
         i = 0;
         for(MapObject object: map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -369,6 +391,34 @@ public class WorldLoader {
 
             items_Score_1000.getItems().add(body);
             items_Score_1000.getItems_texture().add(items_Score_1000.createSpriteForBody(rect, game.getAssets().getItem_Score_1000()));
+
+            i++;
+        }
+
+        // ITEM - HEALTH - 1
+        i = 0;
+        for(MapObject object: map.getLayers().get(11).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            BodyDef bdef = new BodyDef();
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(rect.getWidth()/ 2 / 32,rect.getHeight() / 2 / 32);
+
+            FixtureDef fdef = new FixtureDef();
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.restitution = 0;
+
+
+            Body body = world.createBody(bdef);
+            body.setUserData("Item_Health_1_"+i);
+            body.createFixture(fdef);
+
+            items_Health_1.getItems().add(body);
+            items_Health_1.getItems_texture().add(items_Health_1.createSpriteForBody(rect, game.getAssets().getItem_Health()));
 
             i++;
         }
@@ -549,5 +599,37 @@ public class WorldLoader {
 
     public void setItems_Score_100(Item_Score items_Score_100) {
         this.items_Score_100 = items_Score_100;
+    }
+
+    public Array<Enemy_Alien_Bigmama> getEnemies_alien_bigmama() {
+        return enemies_alien_bigmama;
+    }
+
+    public void setEnemies_alien_bigmama(Array<Enemy_Alien_Bigmama> enemies_alien_bigmama) {
+        this.enemies_alien_bigmama = enemies_alien_bigmama;
+    }
+
+    public Item_Health getItems_Health_1() {
+        return items_Health_1;
+    }
+
+    public void setItems_Health_1(Item_Health items_Health_1) {
+        this.items_Health_1 = items_Health_1;
+    }
+
+    public int[] getBackgroundLayers() {
+        return backgroundLayers;
+    }
+
+    public void setBackgroundLayers(int[] backgroundLayers) {
+        this.backgroundLayers = backgroundLayers;
+    }
+
+    public int[] getForegroundLayers() {
+        return foregroundLayers;
+    }
+
+    public void setForegroundLayers(int[] foregroundLayers) {
+        this.foregroundLayers = foregroundLayers;
     }
 }
