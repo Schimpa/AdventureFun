@@ -90,9 +90,10 @@ public class LevelChooseScreen implements Screen {
             }
         });
 
-        createButtonListener(buttonLevel01,"maps/earth.tmx",false);
-        createButtonListener(buttonLevel02,"maps/mars.tmx",true);
-        createButtonListener(buttonLevel03,"maps/wueste.tmx",false);
+        createButtonListener(buttonLevel01,"maps/level_one.tmx",false);
+        createButtonListener(buttonLevel02,"maps/level_two.tmx",true);
+        createButtonListener(buttonLevel03,"maps/level_three.tmx",false);
+        createButtonListener(buttonLevel04,"maps/level_four.tmx",true);
 
         stage.addActor(buttonLevel01);
         stage.addActor(buttonLevel02);

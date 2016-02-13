@@ -60,8 +60,10 @@ public class GameScreen implements Screen {
 	}
 
 	public void chooseBackground(){
-		if (levelName.equals("maps/earth.tmx")){
+		if (levelName.equals("maps/level_one.tmx")){
 			gameBackground = game.getAssets().getBackground_02();
+		}else{
+			gameBackground = game.getAssets().getBackground();
 		}
 	}
 
@@ -84,7 +86,8 @@ public class GameScreen implements Screen {
 		//Rendert alle Objeckte innerhalb des batchs
 		game.getBatch().begin();
 		game.getBatch().setProjectionMatrix(camera.getBackgroundCamera().combined);
-		game.getBatch().draw(gameBackground, -20, -20, 60, 60);
+		game.getBatch().draw(gameBackground, -15, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 40);
+		game.getBatch().draw(gameBackground, -15 + gameBackground.getWidth() / 40, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 40,0,0,gameBackground.getWidth(),gameBackground.getHeight(),true,false);
 		game.getBatch().end();
 
 		camera.update(delta);

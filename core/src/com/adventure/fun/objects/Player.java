@@ -90,10 +90,10 @@ public class Player extends LivingObject {
     @Override
     public void postInit(){
         super.postInit();
-        playerLight = new PointLight(game.getMenuScreen().getGameScreen().getWorldLoader().getRayHandler(), 100, null, 20, 0f, 0f);
+        playerLight = new PointLight(game.getMenuScreen().getGameScreen().getWorldLoader().getRayHandler(), 200, null, 40, 0f, 0f);
 
         playerLight.attachToBody(this.getBody());
-        playerLight.setColor(1, 1, 1, 0.5f);
+        playerLight.setColor(1, 1, 1, 0.8f);
     }
 
 

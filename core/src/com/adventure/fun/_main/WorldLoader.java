@@ -137,7 +137,7 @@ public class WorldLoader {
 
         rayHandler = new RayHandler(world);
 
-        rayHandler.setAmbientLight(0.0f, 0.0f, 0.0f, 0.5f);
+        rayHandler.setAmbientLight(0.2f, 0.2f, 0.2f, 0.5f);
         rayHandler.setBlurNum(1);
     }
 
@@ -293,7 +293,7 @@ public class WorldLoader {
             bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
 
             PolygonShape shape = new PolygonShape();
-            shape.setAsBox(rect.getWidth()/ 2 / 32,rect.getHeight() / 2 / 32);
+            shape.setAsBox(0.01f,0.01f);
 
             FixtureDef fdef = new FixtureDef();
             fdef.shape = shape;
@@ -321,7 +321,7 @@ public class WorldLoader {
             bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
 
             PolygonShape shape = new PolygonShape();
-            shape.setAsBox(rect.getWidth()/ 2 / 32,rect.getHeight() / 2 / 32);
+            shape.setAsBox(0.01f,0.01f);
 
             FixtureDef fdef = new FixtureDef();
             fdef.shape = shape;
@@ -349,7 +349,7 @@ public class WorldLoader {
             bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
 
             PolygonShape shape = new PolygonShape();
-            shape.setAsBox(rect.getWidth()/ 2 / 32,rect.getHeight() / 2 / 32);
+            shape.setAsBox(0.01f,0.01f);
 
             FixtureDef fdef = new FixtureDef();
             fdef.shape = shape;
@@ -377,7 +377,7 @@ public class WorldLoader {
             bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
 
             PolygonShape shape = new PolygonShape();
-            shape.setAsBox(rect.getWidth()/ 2 / 32,rect.getHeight() / 2 / 32);
+            shape.setAsBox(0.01f,0.01f);
 
             FixtureDef fdef = new FixtureDef();
             fdef.shape = shape;
@@ -405,7 +405,7 @@ public class WorldLoader {
             bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
 
             PolygonShape shape = new PolygonShape();
-            shape.setAsBox(rect.getWidth()/ 2 / 32,rect.getHeight() / 2 / 32);
+            shape.setAsBox(0.01f,0.01f);
 
             FixtureDef fdef = new FixtureDef();
             fdef.shape = shape;
