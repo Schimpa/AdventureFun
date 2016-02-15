@@ -206,11 +206,9 @@ public class Player extends LivingObject {
             particles.playEffect(this.getBody().getPosition().x, this.getBody().getPosition().y,
                     particles.getExplosion_dead());
             this.game.getMenuScreen().getGameScreen().setShowGameOverScreen(true);
-            game.getMenuScreen().getGameScreen().getCamera().getHudStage().clear();
             Gdx.input.setInputProcessor(game.getMenuScreen().getGameScreen().getCamera().getGameOverStage());
             this.getSprite().setAlpha(0.0f);
             this.getSprite().setPosition(-1000,-1000);
-            this.dispose();
         }
     }
 

@@ -47,8 +47,8 @@ public class Enemy_Alien_Bigmama extends LivingObject {
 
         stateTime = 0.0f;
 
-        lives = 8;
-        body.setUserData("Enemy_Alien_Fingus");
+        lives = 10;
+        body.setUserData("Enemy_Alien_Bigmama");
 
         currentFrame = new TextureRegion();
 

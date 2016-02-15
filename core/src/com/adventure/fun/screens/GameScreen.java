@@ -31,6 +31,7 @@ public class GameScreen implements Screen {
 	private boolean activateLights;
 
 	private Texture gameBackground;
+	private Texture gameMiddleground;
 
 	public GameScreen(MainWindow game,String levelName,boolean activateLights){
 		this.game = game;
@@ -62,8 +63,10 @@ public class GameScreen implements Screen {
 	public void chooseBackground(){
 		if (levelName.equals("maps/level_one.tmx")){
 			gameBackground = game.getAssets().getBackground_02();
+			gameMiddleground = game.getAssets().getMiddleground_01();
 		}else{
 			gameBackground = game.getAssets().getBackground();
+			gameMiddleground = game.getAssets().getMiddleground_01();
 		}
 	}
 
@@ -86,7 +89,8 @@ public class GameScreen implements Screen {
 		//Rendert alle Objeckte innerhalb des batchs
 		game.getBatch().begin();
 		game.getBatch().setProjectionMatrix(camera.getBackgroundCamera().combined);
-		game.getBatch().draw(gameBackground, -15, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 40);
+		game.getBatch().draw(gameBackground, -15, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 30);
+		game.getBatch().draw(gameMiddleground, -15, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 30);
 		game.getBatch().draw(gameBackground, -15 + gameBackground.getWidth() / 40, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 40,0,0,gameBackground.getWidth(),gameBackground.getHeight(),true,false);
 		game.getBatch().end();
 

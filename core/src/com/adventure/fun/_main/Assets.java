@@ -74,6 +74,9 @@ public class Assets {
     private Texture backgroundMenu;
     private Texture backgroundMars;
 
+    //MIDDLEGROUND
+    private Texture middleground_01;
+
     public Assets(){
         assetManager = new AssetManager();
         load();
@@ -85,6 +88,9 @@ public class Assets {
         assetManager.load("background/mars.jpg",Texture.class);
         assetManager.load("background/mars_02.jpg",Texture.class);
         assetManager.load("background/background_02.png",Texture.class);
+
+        assetManager.load("middleground/middleground_01.png",Texture.class);
+
         assetManager.load("texture_data/images.pack.atlas",TextureAtlas.class);
 
         assetManager.load("audio/shoot_laser_01.ogg",Sound.class);
@@ -152,6 +158,9 @@ public class Assets {
         backgroundMars = assetManager.get("background/mars_02.jpg", Texture.class);
         background_02 = assetManager.get("background/background_02.png", Texture.class);
 
+        //MIDDLEGROUND
+        middleground_01 = assetManager.get("middleground/middleground_01.png",Texture.class);
+
         //ITEMS
         item_Score_100 = atlas.findRegion("score_one");
         item_Score_200 = atlas.findRegion("score_two");
@@ -182,6 +191,15 @@ public class Assets {
 
     public TextureRegion getAlien_bigmama() {
         return alien_bigmama;
+    }
+
+
+    public Texture getMiddleground_01() {
+        return middleground_01;
+    }
+
+    public void setMiddleground_01(Texture middleground_01) {
+        this.middleground_01 = middleground_01;
     }
 
     public void setAlien_bigmama(TextureRegion alien_bigmama) {
