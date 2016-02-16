@@ -24,11 +24,9 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
  */
 public class Cameras {
 
-    //Gamecamera
     private OrthographicCamera playerCamera;
-
-    //Backgroundcamera
     private OrthographicCamera backgroundCamera;
+    private OrthographicCamera middlegroundCamera;
 
     private Stage hudStage;
     private Stage gameOverStage;
@@ -84,6 +82,9 @@ public class Cameras {
 
         backgroundCamera = new OrthographicCamera();
         backgroundCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 5f, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY()) * 5f);
+
+        middlegroundCamera = new OrthographicCamera();
+        middlegroundCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 5f, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY()) * 5f);
 
         gameOverStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),batch);
 
@@ -410,9 +411,13 @@ public class Cameras {
         backgroundCamera.position.x = worldLoader.getPlayer().getBody().getPosition().x / 10;
         backgroundCamera.position.y = worldLoader.getPlayer().getBody().getPosition().y / 10;
 
+        middlegroundCamera.position.x = worldLoader.getPlayer().getBody().getPosition().x / 5;
+        middlegroundCamera.position.y = worldLoader.getPlayer().getBody().getPosition().y / 5;
+
         //Aktualisiert Kameras
         playerCamera.update();
         backgroundCamera.update();
+        middlegroundCamera.update();
 
         gameOverStage.act(deltaTime);
     }
@@ -483,6 +488,14 @@ public class Cameras {
 
     public void setBackgroundCamera(OrthographicCamera backgroundCamera) {
         this.backgroundCamera = backgroundCamera;
+    }
+
+    public OrthographicCamera getMiddlegroundCamera() {
+        return middlegroundCamera;
+    }
+
+    public void setMiddlegroundCamera(OrthographicCamera middlegroundCamera) {
+        this.middlegroundCamera = middlegroundCamera;
     }
 
     public TextButton getButtonJump() {

@@ -34,9 +34,16 @@ alien_takel
   index: -1
 battery
   rotate: false
-  xy: 196, 2
+  xy: 294, 2
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+bullet_blitz
+  rotate: false
+  xy: 196, 2
+  size: 96, 32
+  orig: 96, 32
   offset: 0, 0
   index: -1
 bullet_blitzkugel
@@ -48,14 +55,14 @@ bullet_blitzkugel
   index: -1
 bullet_laser
   rotate: false
-  xy: 230, 2
+  xy: 328, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 icon_Health
   rotate: false
-  xy: 264, 2
+  xy: 362, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -69,28 +76,35 @@ player_move
   index: -1
 score_four
   rotate: false
-  xy: 298, 2
+  xy: 396, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 score_one
   rotate: false
-  xy: 332, 2
+  xy: 430, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 score_three
   rotate: false
-  xy: 366, 2
+  xy: 464, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 score_two
   rotate: false
-  xy: 400, 2
+  xy: 498, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+weapon_green
+  rotate: false
+  xy: 532, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

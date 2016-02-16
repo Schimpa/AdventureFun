@@ -70,6 +70,7 @@ public class Player extends LivingObject {
         bullet = new Bullet(game,-100,-100,0.4f,0.4f,world,game.getAssets().getBullet_Laser(),false);
         bullet.getBody().setUserData("Bullet_Player");
         bullet.setSpeedX(30);
+        bullet.setBulletSound(game.getAssets().getSound_shoot_laser_02());
 
         //JETZTIGE ANIMATION
         currentFrame = new TextureRegion();

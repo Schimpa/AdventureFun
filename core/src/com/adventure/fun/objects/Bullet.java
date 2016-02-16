@@ -33,6 +33,7 @@ public class Bullet extends LivingObject {
 
     //SOUND DES GESCHOSSESE
     private Sound bulletSound;
+    private float soundVolume;
 
     //SCHIEßANIMATION
     private ObjectAnimation shootAnimation;
@@ -58,6 +59,8 @@ public class Bullet extends LivingObject {
         reloadTime = 0f;
         speedX = 0f;
         timeFromShoot = 0f;
+
+        soundVolume = 1f;
 
         this.region = region;
         this.isAnimation = isAnimation;
@@ -104,7 +107,7 @@ public class Bullet extends LivingObject {
             }
 
             if (this.getBody().getLinearVelocity().x == 0){
-                bulletSound.play(1f);
+                bulletSound.play(soundVolume);
                 if (object.getCurrentFrame().isFlipX() == false){
                     this.getBody().setTransform(object.getBody().getPosition().x + object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
                     this.getBody().setLinearVelocity(this.getSpeedX(), 0);
@@ -148,11 +151,13 @@ public class Bullet extends LivingObject {
     }
 
 
+    public float getSoundVolume() {
+        return soundVolume;
+    }
 
-
-
-
-
+    public void setSoundVolume(float soundVolume) {
+        this.soundVolume = soundVolume;
+    }
 
     public float getSpeedX() {
         return speedX;
@@ -208,5 +213,21 @@ public class Bullet extends LivingObject {
 
     public void setAnimation(boolean animation) {
         isAnimation = animation;
+    }
+
+    public Sound getBulletSound() {
+        return bulletSound;
+    }
+
+    public void setBulletSound(Sound bulletSound) {
+        this.bulletSound = bulletSound;
+    }
+
+    public PointLight getBulletLight() {
+        return bulletLight;
+    }
+
+    public void setBulletLight(PointLight bulletLight) {
+        this.bulletLight = bulletLight;
     }
 }

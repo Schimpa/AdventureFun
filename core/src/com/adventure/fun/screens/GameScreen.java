@@ -62,7 +62,7 @@ public class GameScreen implements Screen {
 
 	public void chooseBackground(){
 		if (levelName.equals("maps/level_one.tmx")){
-			gameBackground = game.getAssets().getBackground_02();
+			gameBackground = game.getAssets().getBackground();
 			gameMiddleground = game.getAssets().getMiddleground_01();
 		}else{
 			gameBackground = game.getAssets().getBackground();
@@ -90,8 +90,11 @@ public class GameScreen implements Screen {
 		game.getBatch().begin();
 		game.getBatch().setProjectionMatrix(camera.getBackgroundCamera().combined);
 		game.getBatch().draw(gameBackground, -15, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 30);
+		game.getBatch().draw(gameBackground, -15 + gameBackground.getWidth() / 40, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 30,0,0,gameBackground.getWidth(),gameBackground.getHeight(),true,false);
+		game.getBatch().setProjectionMatrix(camera.getMiddlegroundCamera().combined);
 		game.getBatch().draw(gameMiddleground, -15, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 30);
-		game.getBatch().draw(gameBackground, -15 + gameBackground.getWidth() / 40, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 40,0,0,gameBackground.getWidth(),gameBackground.getHeight(),true,false);
+		game.getBatch().draw(gameMiddleground, -15 + gameBackground.getWidth() / 40, -10f, gameBackground.getWidth() / 40, gameBackground.getHeight() / 30,0,0,gameBackground.getWidth(),gameBackground.getHeight(),true,false);
+
 		game.getBatch().end();
 
 		camera.update(delta);
@@ -123,6 +126,7 @@ public class GameScreen implements Screen {
 	public void resize(int width,int height){
 		//camera.getPlayerCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 2, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 2 );
 		camera.getBackgroundCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 2, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY())* 2 );
+		camera.getMiddlegroundCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) , (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY()) );
 		camera.getHudStage().getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.getGameOverStage().getViewport().update(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 

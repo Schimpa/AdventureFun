@@ -15,11 +15,15 @@ public class Assets {
     private Sound sound_shoot_laser_01;
     private Sound sound_shoot_laser_02;
     private Sound sound_shoot_laser_03;
+    private Sound sound_shoot_laser_04;
     private Sound sound_shoot_laserbeam_01;
+
+    private Sound sound_alien_shoot_01;
+
+
     private Sound sound_step_01;
     private Sound sound_step_02;
     private Sound sound_jump;
-    private Sound sound_die;
 
     //ALIEN ZOMBIE
     private Sound sound_alien_zombie;
@@ -53,6 +57,7 @@ public class Assets {
     //BULLETS
     private TextureRegion bullet_blitzkugel;
     private TextureRegion bullet_laser;
+    private TextureRegion bullet_blitz;
 
     //ITEMS
     private TextureRegion item_Score_100;
@@ -60,6 +65,8 @@ public class Assets {
     private TextureRegion item_Score_500;
     private TextureRegion item_Score_1000;
     private TextureRegion item_Health;
+
+    private TextureRegion item_weapon_green;
 
     //ICONS
     private TextureRegion icon_Health;
@@ -84,7 +91,7 @@ public class Assets {
 
     public void load() {
 
-        assetManager.load("background/galaxy.png",Texture.class);
+        assetManager.load("background/background_01.jpg",Texture.class);
         assetManager.load("background/mars.jpg",Texture.class);
         assetManager.load("background/mars_02.jpg",Texture.class);
         assetManager.load("background/background_02.png",Texture.class);
@@ -96,6 +103,8 @@ public class Assets {
         assetManager.load("audio/shoot_laser_01.ogg",Sound.class);
         assetManager.load("audio/shoot_laser_02.ogg",Sound.class);
         assetManager.load("audio/shoot_laser_03.ogg",Sound.class);
+        assetManager.load("audio/shoot_laser_04.ogg",Sound.class);
+        assetManager.load("audio/shoot_alien_01.ogg",Sound.class);
         assetManager.load("audio/shoot_laserbeam_01.ogg",Sound.class);
 
         assetManager.load("audio/step_stone_01.ogg",Sound.class);
@@ -105,7 +114,6 @@ public class Assets {
         assetManager.load("audio/click_out.ogg",Sound.class);
 
         assetManager.load("audio/jump.ogg", Sound.class);
-        assetManager.load("audio/papierstau.ogg",Sound.class);
 
         assetManager.load("audio/alien_fingus.ogg",Sound.class);
         assetManager.load("audio/alien_fingus_dead.ogg", Sound.class);
@@ -126,6 +134,8 @@ public class Assets {
         sound_shoot_laser_01 = assetManager.get("audio/shoot_laser_01.ogg", Sound.class);
         sound_shoot_laser_02 = assetManager.get("audio/shoot_laser_02.ogg", Sound.class);
         sound_shoot_laser_03 = assetManager.get("audio/shoot_laser_03.ogg", Sound.class);
+        sound_shoot_laser_04 = assetManager.get("audio/shoot_laser_04.ogg", Sound.class);
+        sound_alien_shoot_01 = assetManager.get("audio/shoot_alien_01.ogg", Sound.class);
         sound_shoot_laserbeam_01 = assetManager.get("audio/shoot_laserbeam_01.ogg", Sound.class);
 
         sound_step_01 = assetManager.get("audio/step_stone_01.ogg", Sound.class);
@@ -135,7 +145,6 @@ public class Assets {
         sound_click_out = assetManager.get("audio/click_out.ogg",Sound.class);
 
         sound_jump = assetManager.get("audio/jump.ogg", Sound.class);
-        sound_die = assetManager.get("audio/papierstau.ogg", Sound.class);
 
         sound_alien_zombie = assetManager.get("audio/alien_fingus.ogg", Sound.class);
         sound_alien_zombie_dead = assetManager.get("audio/alien_fingus_dead.ogg", Sound.class);
@@ -153,7 +162,7 @@ public class Assets {
         atlas = assetManager.get("texture_data/images.pack.atlas",TextureAtlas.class);
 
         //BACKGROUND
-        background = assetManager.get("background/galaxy.png",Texture.class);
+        background = assetManager.get("background/background_01.jpg",Texture.class);
         backgroundMenu = assetManager.get("background/mars.jpg",Texture.class);
         backgroundMars = assetManager.get("background/mars_02.jpg", Texture.class);
         background_02 = assetManager.get("background/background_02.png", Texture.class);
@@ -168,6 +177,8 @@ public class Assets {
         item_Score_1000 = atlas.findRegion("score_four");
         item_Health = atlas.findRegion("battery");
 
+        item_weapon_green = atlas.findRegion("weapon_green");
+
         //ICONS
         icon_Health = atlas.findRegion("icon_Health");
 
@@ -181,6 +192,7 @@ public class Assets {
         alien_bigmama = atlas.findRegion("alien_bigmama");
 
         bullet_blitzkugel = atlas.findRegion("bullet_blitzkugel");
+        bullet_blitz = atlas.findRegion("bullet_blitz");
 
     }
 
@@ -220,6 +232,22 @@ public class Assets {
 
     public void setSound_alien_zombie_dead(Sound sound_alien_zombie_dead) {
         this.sound_alien_zombie_dead = sound_alien_zombie_dead;
+    }
+
+    public Sound getSound_shoot_laser_04() {
+        return sound_shoot_laser_04;
+    }
+
+    public void setSound_shoot_laser_04(Sound sound_shoot_laser_04) {
+        this.sound_shoot_laser_04 = sound_shoot_laser_04;
+    }
+
+    public Sound getSound_alien_shoot_01() {
+        return sound_alien_shoot_01;
+    }
+
+    public void setSound_alien_shoot_01(Sound sound_alien_shoot_01) {
+        this.sound_alien_shoot_01 = sound_alien_shoot_01;
     }
 
     public AssetManager getAssetManager() {
@@ -278,6 +306,22 @@ public class Assets {
         this.sound_step_02 = sound_step_02;
     }
 
+    public TextureRegion getItem_weapon_green() {
+        return item_weapon_green;
+    }
+
+    public void setItem_weapon_green(TextureRegion item_weapon_green) {
+        this.item_weapon_green = item_weapon_green;
+    }
+
+    public TextureRegion getBullet_blitz() {
+        return bullet_blitz;
+    }
+
+    public void setBullet_blitz(TextureRegion bullet_blitz) {
+        this.bullet_blitz = bullet_blitz;
+    }
+
     public Sound getSound_jump() {
         return sound_jump;
     }
@@ -286,13 +330,6 @@ public class Assets {
         this.sound_jump = sound_jump;
     }
 
-    public Sound getSound_die() {
-        return sound_die;
-    }
-
-    public void setSound_die(Sound sound_die) {
-        this.sound_die = sound_die;
-    }
 
     public TextureAtlas getAtlas() {
         return atlas;

@@ -3,6 +3,7 @@ package com.adventure.fun.objects;
 import com.adventure.fun._main.MainWindow;
 import com.adventure.fun.effects.ObjectAnimation;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -29,6 +30,8 @@ public class Enemy_Alien_Kugus extends LivingObject {
     private float x,y,sizeX,sizeY;
 
     private int bodyNumber;
+
+    private Sound weaponSound;
 
 
     public Enemy_Alien_Kugus(MainWindow game, float x, float y, float sizeX, float sizeY, World world, Player player){
@@ -82,7 +85,7 @@ public class Enemy_Alien_Kugus extends LivingObject {
         speed = new Vector2(10f,10f);
         maxSpeed = new Vector2(20,20);
         removeFlag = false;
-        sound_reload = 0;
+        sound_reload = 5;
 
         stateTime = 0.0f;
 
@@ -93,11 +96,12 @@ public class Enemy_Alien_Kugus extends LivingObject {
         currentFrame = new TextureRegion();
         currentWeaponFrame = new TextureRegion();
 
-        walkAnimation = new ObjectAnimation(game.getAssets().getAlien_kugus(),4,1,0,3,0.15f);
+        walkAnimation = new ObjectAnimation(game.getAssets().getAlien_kugus(),4,1,0,3,0.10f);
         walkAnimation.setIsActive(true);
 
-        weaponAnimation = new ObjectAnimation(game.getAssets().getBullet_blitzkugel(),4,1,0,3,0.15f);
+        weaponAnimation = new ObjectAnimation(game.getAssets().getBullet_blitz(),3,1,0,2,0.10f);
         weaponAnimation.setIsActive(false);
+        weaponSound = game.getAssets().getSound_shoot_laserbeam_01();
 
         particles.activateParticle(particles.getExplosion_blitzkugel());
         particles.activateParticle(particles.getExplosion_dead());
@@ -112,6 +116,10 @@ public class Enemy_Alien_Kugus extends LivingObject {
                 player.getBody().getPosition().y - this.getBody().getPosition().y > -5 &&
                 player.getBody().getPosition().y - this.getBody().getPosition().y < 5  ){
             weaponAnimation.setIsActive(true);
+            if (sound_reload >= 5){
+                sound_reload = 0;
+                weaponSound.play(0.5f);
+            }
 
             if (player.getBody().getPosition().x - this.getBody().getPosition().x < 2 &&
                     player.getBody().getPosition().x - this.getBody().getPosition().x > -2 ){
@@ -130,10 +138,12 @@ public class Enemy_Alien_Kugus extends LivingObject {
             if (randomInt == 50){
                 game.getAssets().getSound_alien_soldier_01().play(1f);
             }else if (randomInt == 74){
-                game.getAssets().getSound_alien_soldier_02().play(0.7f);
+                game.getAssets().getSound_alien_soldier_02().play(1f);
             }
         }else{
             weaponAnimation.setIsActive(false);
+            weaponSound.stop();
+            sound_reload = 5;
         }
     }
 
@@ -143,6 +153,7 @@ public class Enemy_Alien_Kugus extends LivingObject {
         }
         currentWeaponFrame = weaponAnimation.getAnimation().getKeyFrame(stateTime, true);
         logic(deltaTime);
+        sound_reload += deltaTime;
 
     }
 
@@ -154,6 +165,9 @@ public class Enemy_Alien_Kugus extends LivingObject {
                 for(int i = 0; i < this.walkAnimation.getFrames().length;i++){
                     this.walkAnimation.getFrames()[i].flip(true,false);
                 }
+                for(int i = 0; i < this.weaponAnimation.getFrames().length;i++){
+                    this.weaponAnimation.getFrames()[i].flip(true,false);
+                }
                 createWeapon(false);
             }
         }
@@ -161,6 +175,9 @@ public class Enemy_Alien_Kugus extends LivingObject {
             if (this.getCurrentFrame().isFlipX() == true){
                 for(int i = 0; i < this.walkAnimation.getFrames().length;i++){
                     this.walkAnimation.getFrames()[i].flip(true,false);
+                }
+                for(int i = 0; i < this.weaponAnimation.getFrames().length;i++){
+                    this.weaponAnimation.getFrames()[i].flip(true,false);
                 }
                 createWeapon(true);
             }
@@ -180,9 +197,9 @@ public class Enemy_Alien_Kugus extends LivingObject {
             batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth() ,sprite.getHeight());
             if (weaponAnimation.isActive() == true){
                 if (this.getCurrentFrame().isFlipX() == true){
-                    batch.draw(currentWeaponFrame, body.getPosition().x - sprite.getWidth() * 1.25f, body.getPosition().y -sprite.getHeight()/10,(sprite.getWidth() / 2.2f) * 1.8f,(sprite.getHeight() / 2f) * 0.4f);
+                    batch.draw(currentWeaponFrame, body.getPosition().x - sprite.getWidth() * 1.25f, body.getPosition().y -sprite.getHeight()/10,(sprite.getWidth() / 2.2f) * 2.5f,(sprite.getHeight() / 2f) * 0.4f);
                 }else if (this.getCurrentFrame().isFlipX() == false){
-                    batch.draw(currentWeaponFrame, body.getPosition().x + sprite.getWidth() * 1.25f, body.getPosition().y -sprite.getHeight()/10,(sprite.getWidth() / 2.2f) * 1.8f,(sprite.getHeight() / 2f) * 0.4f);
+                    batch.draw(currentWeaponFrame, body.getPosition().x + sprite.getWidth() * 0.1f, body.getPosition().y -sprite.getHeight()/10,(sprite.getWidth() / 2.2f) * 2.5f,(sprite.getHeight() / 2f) * 0.4f);
                 }
 
             }
