@@ -9,13 +9,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 
@@ -30,6 +27,7 @@ public class Cameras {
 
     private Stage hudStage;
     private Stage gameOverStage;
+    private Stage menuStage;
 
     private MainWindow game;
     private WorldLoader worldLoader;
@@ -38,10 +36,11 @@ public class Cameras {
     private Label score;
     private Label lives;
 
-    private Label gameOverText;
-
+    //Game Over Screen
+    private Image gameOverOverlay;
     private TextButton buttonRetry;
     private TextButton buttonBack;
+    private Label gameOverText;
 
     //HUD
     private TextButton buttonJump;
@@ -49,9 +48,12 @@ public class Cameras {
     private TextButton buttonMoveLeft;
     private TextButton nothingButton;
     private TextButton buttonShoot;
+    private TextButton buttonMenu;
 
-    //GAMEOVERSCREEN
-    private Image gameOverOverlay;
+    //Pause Screen
+    private TextButton buttonContinue;
+    private TextButton buttonExit;
+    private TextButton buttonRetryMenu;
 
     private Vector2 screenRatio;
 
@@ -62,6 +64,7 @@ public class Cameras {
         batch.dispose();
         hudStage.dispose();
         gameOverStage.dispose();
+        menuStage.dispose();
     }
 
     public Cameras(MainWindow game,WorldLoader worldLoader,SpriteBatch batch){
@@ -77,7 +80,6 @@ public class Cameras {
         }
 
         System.out.println("X:" + screenRatio.x + "|" + "Y:" +  screenRatio.y);
-
         System.out.println("X:" + screenRatio.x + "|" + "Y:" +  screenRatio.y);
 
         backgroundCamera = new OrthographicCamera();
@@ -87,8 +89,7 @@ public class Cameras {
         middlegroundCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 5f, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY()) * 5f);
 
         gameOverStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),batch);
-
-
+        menuStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),batch);
 
         playerCamera = new OrthographicCamera();
 
@@ -116,6 +117,7 @@ public class Cameras {
         }
 
         createGameOverScreen();
+        createPauseScreen();
 
 
 
@@ -125,6 +127,7 @@ public class Cameras {
         hudStage.addActor(buttonShoot);
         hudStage.addActor(buttonMoveRight);
         hudStage.addActor(buttonMoveLeft);
+        hudStage.addActor(buttonMenu);
         hudStage.addActor(nothingButton);
         hudStage.addActor(score);
 
@@ -163,6 +166,22 @@ public class Cameras {
                 super.touchUp(event, x, y, pointer, button);
                 System.out.println("TouchUp:  " + event);
                 worldLoader.getPlayer().setIsJumping(false);
+
+            }
+        });
+
+        buttonMenu.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("TouchDown:  " + event);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.getMenuScreen().getGameScreen().setShowMenuScreen(true);
+                Gdx.input.setInputProcessor(menuStage);
+                super.touchUp(event, x, y, pointer, button);
 
             }
         });
@@ -258,39 +277,42 @@ public class Cameras {
         sizeY = Gdx.graphics.getWidth() / 100f * 5f;
 
         buttonJump = new TextButton("<>",game.getSkin(),"default");
-        buttonJump.getLabel().setFontScale((Gdx.graphics.getWidth() / 100f) * 0.08f,  (Gdx.graphics.getHeight() / 100f) * 0.08f);
+        buttonJump.getLabel().setFontScale((Gdx.graphics.getWidth() / 100f) * 0.08f, (Gdx.graphics.getHeight() / 100f) * 0.08f);
         buttonJump.setColor(0.7f, 1, 0.4f, 0.3f);
         buttonJump.setSize(Gdx.graphics.getWidth() / 100f * 15f, Gdx.graphics.getHeight() / 100f * 19f);
         buttonJump.setPosition(Gdx.graphics.getWidth() / 100f * 2f, Gdx.graphics.getHeight() / 100f * 2f);
 
         buttonShoot = new TextButton("-D",game.getSkin(),"default");
-        buttonShoot.getLabel().setFontScale((Gdx.graphics.getWidth() / 100f) * 0.1f,  (Gdx.graphics.getHeight() / 100f) * 0.1f);
+        buttonShoot.getLabel().setFontScale((Gdx.graphics.getWidth() / 100f) * 0.1f, (Gdx.graphics.getHeight() / 100f) * 0.1f);
         buttonShoot.setColor(0.7f, 1, 0.4f, 0.3f);
         buttonShoot.setSize(Gdx.graphics.getWidth() / 100f * 15f, Gdx.graphics.getHeight() / 100f * 19f);
         buttonShoot.setPosition(Gdx.graphics.getWidth() / 100f * 2f, Gdx.graphics.getHeight() / 100f * 24f);
 
         buttonMoveLeft = new TextButton("<",game.getSkin(),"default");
-        buttonMoveLeft.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.1f,  (Gdx.graphics.getHeight() / 100) * 0.1f);
+        buttonMoveLeft.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.1f, (Gdx.graphics.getHeight() / 100) * 0.1f);
         buttonMoveLeft.setColor(0.7f, 1, 0.4f, 0.3f);
         buttonMoveLeft.setSize(Gdx.graphics.getWidth() / 100f * 15f, Gdx.graphics.getHeight() / 100f * 19f);
         buttonMoveLeft.setPosition(Gdx.graphics.getWidth() / 100f * 67f, Gdx.graphics.getHeight() / 100f * 4f);
 
         buttonMoveRight = new TextButton(">",game.getSkin(),"default");
-        buttonMoveRight.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.1f,  (Gdx.graphics.getHeight() / 100) * 0.1f);
+        buttonMoveRight.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.1f, (Gdx.graphics.getHeight() / 100) * 0.1f);
         buttonMoveRight.setColor(0.7f, 1, 0.4f, 0.3f);
         buttonMoveRight.setSize(Gdx.graphics.getWidth() / 100f * 15f, Gdx.graphics.getHeight() / 100f * 19f);
         buttonMoveRight.setPosition(Gdx.graphics.getWidth() / 100f * 84f, Gdx.graphics.getHeight() / 100f * 4f);
 
+        buttonMenu = new TextButton("#",game.getSkin(),"default");
+        buttonMenu.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.01f, (Gdx.graphics.getHeight() / 100) * 0.01f);
+        buttonMenu.setColor(0.4f, 1, 0.4f, 0.6f);
+        buttonMenu.setSize(Gdx.graphics.getWidth() / 100f * 4f, Gdx.graphics.getHeight() / 100f * 4f);
+        buttonMenu.setPosition(Gdx.graphics.getWidth() / 100f * 95f, Gdx.graphics.getHeight() / 100f * 95f);
+
         nothingButton = new TextButton("",game.getSkin(),"default");
-        nothingButton.setColor(1,1,1,1);
+        nothingButton.setColor(1, 1, 1, 1);
         nothingButton.setSize(0, 0);
         nothingButton.setPosition(-50, -50);
 
         score = new Label(Integer.toString(this.worldLoader.getPlayer().getScore()), new Label.LabelStyle(game.getFont(), Color.GREEN));
         score.setPosition(Gdx.graphics.getWidth() / 100f * 40f, Gdx.graphics.getHeight() / 100f * 83f);
-
-        lives = new Label(Integer.toString(this.worldLoader.getPlayer().getLives()), new Label.LabelStyle(game.getFont(), Color.RED));
-        lives.setPosition(Gdx.graphics.getWidth() / 100f * 2f, Gdx.graphics.getHeight() / 100f * 83f);
 
     }
 
@@ -396,8 +418,52 @@ public class Cameras {
         gameOverStage.addActor(buttonBack);
         gameOverStage.addActor(buttonRetry);
 
-
         createGameOverInputListener();
+    }
+
+    public void createPauseScreen(){
+        buttonContinue = new TextButton("Continue",game.getSkin(),"default");
+        buttonContinue.setColor(0.7f, 1, 0.4f, 0.5f);
+        buttonContinue.setSize(Gdx.graphics.getWidth() / 100 * 40, Gdx.graphics.getHeight() / 100 * 30);
+        buttonContinue.setPosition(Gdx.graphics.getWidth() / 100 * 30, Gdx.graphics.getHeight() / 100 * 70);
+
+        //buttonExit
+        buttonExit = new TextButton("Continue",game.getSkin(),"default");
+        buttonExit.setColor(0.7f, 1, 0.4f, 0.5f);
+        buttonExit.setSize(Gdx.graphics.getWidth() / 100 * 40, Gdx.graphics.getHeight() / 100 * 30);
+        buttonExit.setPosition(Gdx.graphics.getWidth() / 100 * 30, Gdx.graphics.getHeight() / 100 * 10);
+
+        //buttonRetryMenu
+        buttonRetryMenu = new TextButton("Continue",game.getSkin(),"default");
+        buttonRetryMenu.setColor(0.7f, 1, 0.4f, 0.5f);
+        buttonRetryMenu.setSize(Gdx.graphics.getWidth() / 100 * 40, Gdx.graphics.getHeight() / 100 * 30);
+        buttonRetryMenu.setPosition(Gdx.graphics.getWidth() / 100 * 30, Gdx.graphics.getHeight() / 100 * 40);
+
+        menuStage.addActor(buttonContinue);
+        menuStage.addActor(buttonExit);
+        menuStage.addActor(buttonRetryMenu);
+
+        createPauseScreenInputListener();
+    }
+
+    public void createPauseScreenInputListener(){
+
+        buttonContinue.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                game.getMenuScreen().getGameScreen().setShowMenuScreen(false);
+                game.getMenuScreen().getGameScreen().getMultiplexer().addProcessor(hudStage);
+                game.getMenuScreen().getGameScreen().getMultiplexer().addProcessor(worldLoader.getControls());
+                Gdx.input.setInputProcessor(game.getMenuScreen().getGameScreen().getMultiplexer());
+                System.out.println("Testes");
+            }
+        });
     }
 
     public void update(float deltaTime){
@@ -420,6 +486,7 @@ public class Cameras {
         middlegroundCamera.update();
 
         gameOverStage.act(deltaTime);
+        menuStage.act(deltaTime);
     }
 
     public void drawHealthIcons(){
@@ -496,6 +563,46 @@ public class Cameras {
 
     public void setMiddlegroundCamera(OrthographicCamera middlegroundCamera) {
         this.middlegroundCamera = middlegroundCamera;
+    }
+
+    public Stage getMenuStage() {
+        return menuStage;
+    }
+
+    public void setMenuStage(Stage menuStage) {
+        this.menuStage = menuStage;
+    }
+
+    public TextButton getButtonMenu() {
+        return buttonMenu;
+    }
+
+    public void setButtonMenu(TextButton buttonMenu) {
+        this.buttonMenu = buttonMenu;
+    }
+
+    public TextButton getButtonContinue() {
+        return buttonContinue;
+    }
+
+    public void setButtonContinue(TextButton buttonContinue) {
+        this.buttonContinue = buttonContinue;
+    }
+
+    public TextButton getButtonExit() {
+        return buttonExit;
+    }
+
+    public void setButtonExit(TextButton buttonExit) {
+        this.buttonExit = buttonExit;
+    }
+
+    public TextButton getButtonRetryMenu() {
+        return buttonRetryMenu;
+    }
+
+    public void setButtonRetryMenu(TextButton buttonRetryMenu) {
+        this.buttonRetryMenu = buttonRetryMenu;
     }
 
     public TextButton getButtonJump() {

@@ -174,16 +174,19 @@ public class Player extends LivingObject {
         }
         if (direction == false){
             if (this.getCurrentFrame().isFlipX() == false){
+                bullet.getRegion().flip(true,false);
                 for(int i = 0; i < this.walkAnimation.getFrames().length;i++){
-                    this.walkAnimation.getFrames()[i].flip(true,false);
+                    this.walkAnimation.getFrames()[i].flip(true, false);
                 }
                 for(int i = 0; i < this.jumpAnimation.getFrames().length;i++){
                     this.jumpAnimation.getFrames()[i].flip(true,false);
+
                 }
             }
         }
         else if (direction == true){
             if (this.getCurrentFrame().isFlipX() == true){
+                bullet.getRegion().flip(true,false);
                 for(int i = 0; i < this.walkAnimation.getFrames().length;i++){
                     this.walkAnimation.getFrames()[i].flip(true,false);
                 }

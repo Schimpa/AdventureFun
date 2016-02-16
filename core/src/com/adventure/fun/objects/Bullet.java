@@ -31,6 +31,8 @@ public class Bullet extends LivingObject {
     //IST DIE TEXTUR EINE ANIMATION ?
     private boolean isAnimation;
 
+    private TextureRegion region;
+
     //SOUND DES GESCHOSSESE
     private Sound bulletSound;
     private float soundVolume;
@@ -229,5 +231,19 @@ public class Bullet extends LivingObject {
 
     public void setBulletLight(PointLight bulletLight) {
         this.bulletLight = bulletLight;
+    }
+
+    public void setIsAnimation(boolean isAnimation) {
+        this.isAnimation = isAnimation;
+    }
+
+    @Override
+    public TextureRegion getRegion() {
+        return region;
+    }
+
+    @Override
+    public void setRegion(TextureRegion region) {
+        this.region = region;
     }
 }

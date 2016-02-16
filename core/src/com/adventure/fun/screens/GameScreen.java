@@ -23,6 +23,7 @@ public class GameScreen implements Screen {
 	private Box2DDebugRenderer debugRenderer;
 
 	private boolean showGameOverScreen;
+	private boolean showMenuScreen;
 
 	private Cameras camera;
 
@@ -32,6 +33,8 @@ public class GameScreen implements Screen {
 
 	private Texture gameBackground;
 	private Texture gameMiddleground;
+
+	InputMultiplexer multiplexer;
 
 	public GameScreen(MainWindow game,String levelName,boolean activateLights){
 		this.game = game;
@@ -50,7 +53,7 @@ public class GameScreen implements Screen {
 
 		camera = new Cameras(game,worldLoader,game.getBatch());
 
-		InputMultiplexer multiplexer = new InputMultiplexer();
+		multiplexer = new InputMultiplexer();
 
 		multiplexer.addProcessor(camera.getHudStage());
 		multiplexer.addProcessor(worldLoader.getControls());
@@ -115,6 +118,8 @@ public class GameScreen implements Screen {
 			game.getBatch().end();
 			camera.getGameOverStage().draw();
 
+		}else if (showMenuScreen == true){
+			camera.getMenuStage().draw();
 		}else{
 			camera.render(game.getBatch());
 		}
@@ -158,9 +163,21 @@ public class GameScreen implements Screen {
 	}
 
 
+	public Texture getGameBackground() {
+		return gameBackground;
+	}
 
+	public void setGameBackground(Texture gameBackground) {
+		this.gameBackground = gameBackground;
+	}
 
+	public Texture getGameMiddleground() {
+		return gameMiddleground;
+	}
 
+	public void setGameMiddleground(Texture gameMiddleground) {
+		this.gameMiddleground = gameMiddleground;
+	}
 
 	public String getLevelName() {
 		return levelName;
@@ -216,5 +233,21 @@ public class GameScreen implements Screen {
 
 	public void setShowGameOverScreen(boolean showGameOverScreen) {
 		this.showGameOverScreen = showGameOverScreen;
+	}
+
+	public InputMultiplexer getMultiplexer() {
+		return multiplexer;
+	}
+
+	public void setMultiplexer(InputMultiplexer multiplexer) {
+		this.multiplexer = multiplexer;
+	}
+
+	public boolean isShowMenuScreen() {
+		return showMenuScreen;
+	}
+
+	public void setShowMenuScreen(boolean showMenuScreen) {
+		this.showMenuScreen = showMenuScreen;
 	}
 }
