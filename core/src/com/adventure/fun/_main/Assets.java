@@ -58,6 +58,7 @@ public class Assets {
     private TextureRegion bullet_blitzkugel;
     private TextureRegion bullet_laser;
     private TextureRegion bullet_blitz;
+    private TextureRegion bullet_bigmama;
 
     //ITEMS
     private TextureRegion item_Score_100;
@@ -185,14 +186,15 @@ public class Assets {
         whiteColor = atlas.findRegion("whiteColor");
 
         player_move = atlas.findRegion("player_move");
-        bullet_laser = atlas.findRegion("bullet_laser");
         alien_fingus = atlas.findRegion("alien_fingus");
         alien_takel = atlas.findRegion("alien_takel");
         alien_kugus = atlas.findRegion("alien_kugus");
         alien_bigmama = atlas.findRegion("alien_bigmama");
 
+        bullet_laser = atlas.findRegion("bullet_laser");
         bullet_blitzkugel = atlas.findRegion("bullet_blitzkugel");
         bullet_blitz = atlas.findRegion("bullet_blitz");
+        bullet_bigmama = atlas.findRegion("bullet_bigmama");
 
     }
 
@@ -566,5 +568,13 @@ public class Assets {
 
     public void setIcon_Health(TextureRegion icon_Health) {
         this.icon_Health = icon_Health;
+    }
+
+    public TextureRegion getBullet_bigmama() {
+        return bullet_bigmama;
+    }
+
+    public void setBullet_bigmama(TextureRegion bullet_bigmama) {
+        this.bullet_bigmama = bullet_bigmama;
     }
 }

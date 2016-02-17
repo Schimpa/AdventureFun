@@ -68,7 +68,6 @@ public class Bullet extends LivingObject {
         this.isAnimation = isAnimation;
 
         this.bulletSound = game.getAssets().getSound_shoot_laser_03();
-
         bulletShoot = false;
 
         MassData massData = new MassData();
@@ -77,11 +76,18 @@ public class Bullet extends LivingObject {
 
         currentFrame = new TextureRegion();
 
-        if (isAnimation == true){
+        if (region.equals(game.getAssets().getBullet_bigmama()) && isAnimation == true){
+            createBulletBigmama();
+        }else if (isAnimation == true){
             shootAnimation = new ObjectAnimation(region, 4, 1, 0, 3, 0.05f);
             shootAnimation.setIsActive(true);
         }
         shape.dispose();
+    }
+
+    public void createBulletBigmama(){
+        shootAnimation = new ObjectAnimation(region, 2, 1, 0, 1, 0.05f);
+        shootAnimation.setIsActive(true);
     }
 
     @Override
@@ -120,6 +126,35 @@ public class Bullet extends LivingObject {
             }
         }
         return true;
+    }
+
+    public void shootBulletBigmama(LivingObject object){
+        if (timeFromShoot >= reloadTime && bulletShoot == true){
+            bulletShoot = false;
+            PointLight light = new PointLight(
+                    game.getMenuScreen().getGameScreen().getWorldLoader().getRayHandler(), 5, null, 2, 0f, 0f);
+
+            light.attachToBody(this.getBody());
+            light.setColor(1f, 0, 0, 0.5f);
+
+            if ((this.getBody().getPosition().x - object.getBody().getPosition().x) >= 10
+                    || (this.getBody().getPosition().x - object.getBody().getPosition().x) <= -10 ){
+                this.getBody().setTransform(-1000, -1000, 0);
+                this.getBody().setLinearVelocity(0, 0);
+                timeFromShoot = 0;
+            }
+
+            if (this.getBody().getLinearVelocity().x == 0){
+                bulletSound.play(soundVolume);
+                if (object.getCurrentFrame().isFlipX() == false){
+                    this.getBody().setTransform(object.getBody().getPosition().x + object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y - (object.getSprite().getHeight()/12), 0);
+                    this.getBody().setLinearVelocity(this.getSpeedX(), 0);
+                } else if (object.getCurrentFrame().isFlipX() == true) {
+                    this.getBody().setTransform(object.getBody().getPosition().x - object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y - (object.getSprite().getHeight()/12), 0);
+                    this.getBody().setLinearVelocity(-this.getSpeedX(), 0);
+                }
+            }
+        }
     }
 
     public void update(float deltaTime) {
@@ -246,4 +281,6 @@ public class Bullet extends LivingObject {
     public void setRegion(TextureRegion region) {
         this.region = region;
     }
+
+
 }

@@ -51,7 +51,7 @@ public class Player extends LivingObject {
         body.createFixture(fixtureDef);
         //ATTRIBUTE
         speed = new Vector2(25f,25f);
-        damageCoolDownTime = 0;
+        damageCoolDownTime = 1f;
         score = 500;
         lives = 3;
         maxSpeed = new Vector2(8,8);
@@ -106,17 +106,17 @@ public class Player extends LivingObject {
         }
         if (gameOverActivated != true){
             super.render(batch);
+            if (damageCoolDownTime <= 0.7){
+                batch.setColor(1f,0.2f,0.2f,1f);
+            }
             if (walkAnimation.isActive() == true){
                 currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
             }
             else if (jumpAnimation.isActive() == true){
                 currentFrame = jumpAnimation.getAnimation().getKeyFrame(stateTime, true);
             }
-            try{
-                batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
-            }catch (NullPointerException e) {
-                System.out.println("error: " + e);
-            }
+            batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
+            batch.setColor(1f,1f,1f,1f);
             bullet.render(batch);
         }
 
@@ -127,7 +127,6 @@ public class Player extends LivingObject {
 
     @Override
     public void update(float deltaTime) {
-
         if (gameOverActivated != true){
             super.update(deltaTime);
             this.damageCoolDownTime += deltaTime;
@@ -146,19 +145,22 @@ public class Player extends LivingObject {
     }
 
     public void looseLife(int amount){
-        super.looseLife(amount);
-        randomInt = rand.nextInt(3)+1;
+        if (damageCoolDownTime >= 0.7f){
+            super.looseLife(amount);
+            damageCoolDownTime = 0;
+            randomInt = rand.nextInt(3)+1;
 
-        switch(randomInt){
-            case 1:
-                this.game.getAssets().getSound_player_hit_01().play(1f);
-                break;
-            case 2:
-                this.game.getAssets().getSound_player_hit_02().play(1f);
-                break;
-            case 3:
-                this.game.getAssets().getSound_player_hit_03().play(1f);
-                break;
+            switch(randomInt){
+                case 1:
+                    this.game.getAssets().getSound_player_hit_01().play(1f);
+                    break;
+                case 2:
+                    this.game.getAssets().getSound_player_hit_02().play(1f);
+                    break;
+                case 3:
+                    this.game.getAssets().getSound_player_hit_03().play(1f);
+                    break;
+            }
         }
     }
 

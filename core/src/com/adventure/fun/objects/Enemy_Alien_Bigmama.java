@@ -52,9 +52,10 @@ public class Enemy_Alien_Bigmama extends LivingObject {
 
         currentFrame = new TextureRegion();
 
-        bullet = new Bullet(game,-100,-100,0.8f,0.8f,world,game.getAssets().getBullet_blitzkugel(),true);
-        bullet.setSpeedX(3);
-        bullet.setReloadTime(3.0f);
+        bullet = new Bullet(game,-100,-100,1.3f,1.3f,world,game.getAssets().getBullet_bigmama(),true);
+        bullet.getShootAnimation().setAnimationSpeed(0.5f);
+        bullet.setSpeedX(6);
+        bullet.setReloadTime(2f);
 
         walkAnimation = new ObjectAnimation(game.getAssets().getAlien_bigmama(),3,1,0,2,0.08f);
         walkAnimation.setIsActive(true);
@@ -89,14 +90,23 @@ public class Enemy_Alien_Bigmama extends LivingObject {
             }
             bullet.setBulletShoot(true);
 
-        }else if (removeFlag == true){
-            bullet.setBulletShoot(true);
-        }
 
+
+        }else if (removeFlag == true) {
+            bullet.setBulletShoot(true);
+
+        }
     }
 
     public void update(float deltaTime){
-        logic(deltaTime);
+        if (isDestroyed == false){
+            if (walkAnimation.isActive() == true){
+                currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
+            }
+            logic(deltaTime);
+            bullet.shootBulletBigmama(this);
+        }
+        bullet.update(deltaTime);
     }
 
     @Override
@@ -127,13 +137,12 @@ public class Enemy_Alien_Bigmama extends LivingObject {
 
 
     public void render(SpriteBatch batch){
+        super.render(batch);
         if (removeFlag != true){
-            if (walkAnimation.isActive() == true){
-                currentFrame = walkAnimation.getAnimation().getKeyFrame(stateTime, true);
-            }
             batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth() ,sprite.getHeight());
         }
-        super.render(batch);
+        bullet.render(batch);
+
     }
 
     public Bullet getBullet() {

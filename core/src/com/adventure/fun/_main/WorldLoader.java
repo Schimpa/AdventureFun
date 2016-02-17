@@ -6,7 +6,7 @@ import com.adventure.fun.items.Item_Health;
 import com.adventure.fun.items.Item_Score;
 import com.adventure.fun.objects.Enemy_Alien_Bigmama;
 import com.adventure.fun.objects.Enemy_Alien_Kugus;
-import com.adventure.fun.objects.Enemy_Alien_Soldier;
+import com.adventure.fun.objects.Enemy_Alien_Takel;
 import com.adventure.fun.objects.Enemy_Alien_Fingus;
 import com.adventure.fun.objects.Player;
 import com.adventure.fun.physics.CollisionListener;
@@ -39,7 +39,7 @@ public class WorldLoader {
     //Spieler
     private Player player;
     private Array<Enemy_Alien_Fingus> enemies_alien_zombie;
-    private Array<Enemy_Alien_Soldier> enemies_alien_soldier;
+    private Array<Enemy_Alien_Takel> enemies_alien_takel;
     private Array<Enemy_Alien_Kugus> enemies_alien_kugus;
     private Array<Enemy_Alien_Bigmama> enemies_alien_bigmama;
 
@@ -79,8 +79,8 @@ public class WorldLoader {
         for(Enemy_Alien_Fingus enemyAlienZombie : enemies_alien_zombie){
             enemyAlienZombie.dispose();
         }
-        for(Enemy_Alien_Soldier enemyAlienSoldier : enemies_alien_soldier){
-            enemyAlienSoldier.dispose();
+        for(Enemy_Alien_Takel enemyAlienTakel : enemies_alien_takel){
+            enemyAlienTakel.dispose();
         }
         for(Enemy_Alien_Kugus enemyAlienKugus : enemies_alien_kugus){
             enemyAlienKugus.dispose();
@@ -108,7 +108,7 @@ public class WorldLoader {
         items_Health_1 = new Item_Health(this,1);
 
         enemies_alien_zombie = new Array<Enemy_Alien_Fingus>();
-        enemies_alien_soldier = new Array<Enemy_Alien_Soldier>();
+        enemies_alien_takel = new Array<Enemy_Alien_Takel>();
         enemies_alien_kugus = new Array<Enemy_Alien_Kugus>();
         enemies_alien_bigmama = new Array<Enemy_Alien_Bigmama>();
 
@@ -148,8 +148,8 @@ public class WorldLoader {
         for (Enemy_Alien_Fingus enemyAlienZombie : enemies_alien_zombie){
             enemyAlienZombie.render(batch);
         }
-        for (Enemy_Alien_Soldier enemyAlienSoldier : enemies_alien_soldier){
-            enemyAlienSoldier.render(batch);
+        for (Enemy_Alien_Takel enemyAlienTakel : enemies_alien_takel){
+            enemyAlienTakel.render(batch);
         }
         for(Enemy_Alien_Kugus enemyAlienKugus : enemies_alien_kugus){
             enemyAlienKugus.render(batch);
@@ -186,8 +186,8 @@ public class WorldLoader {
         for (Enemy_Alien_Fingus enemyAlienZombie : enemies_alien_zombie){
             enemyAlienZombie.getParticles().render(batch,deltaTime);
         }
-        for (Enemy_Alien_Soldier enemyAlienSoldier : enemies_alien_soldier){
-            enemyAlienSoldier.getParticles().render(batch,deltaTime);
+        for (Enemy_Alien_Takel enemyAlienTakel : enemies_alien_takel){
+            enemyAlienTakel.getParticles().render(batch,deltaTime);
         }
         for(Enemy_Alien_Kugus enemyAlienKugus : enemies_alien_kugus){
             enemyAlienKugus.getParticles().render(batch,deltaTime);
@@ -206,8 +206,8 @@ public class WorldLoader {
         for(Enemy_Alien_Fingus enemyAlienZombie : enemies_alien_zombie){
             enemyAlienZombie.update(deltaTime);
         }
-        for(Enemy_Alien_Soldier enemyAlienSoldier : enemies_alien_soldier){
-            enemyAlienSoldier.update(deltaTime);
+        for(Enemy_Alien_Takel enemyAlienTakel : enemies_alien_takel){
+            enemyAlienTakel.update(deltaTime);
         }
         for(Enemy_Alien_Kugus enemyAlienKugus : enemies_alien_kugus){
             enemyAlienKugus.update(deltaTime);
@@ -434,15 +434,15 @@ public class WorldLoader {
             i++;
         }
 
-        //ENEMY-ALIEN-SOLDIER
+        //ENEMY-ALIEN-TAKEL
         int j = 0;
         for(MapObject object: map.getLayers().get(13).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            Enemy_Alien_Soldier newEnemyAlienSoldier = new Enemy_Alien_Soldier(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world,this.player);
-            newEnemyAlienSoldier.getBody().setUserData("Enemy_"+i);
-            newEnemyAlienSoldier.getBullet().getBody().setUserData("Bullet_Enemy_Soldier_"+j);
-            enemies_alien_soldier.add(newEnemyAlienSoldier);
+            Enemy_Alien_Takel newEnemyAlienTakel = new Enemy_Alien_Takel(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world,this.player);
+            newEnemyAlienTakel.getBody().setUserData("Enemy_"+i);
+            newEnemyAlienTakel.getBullet().getBody().setUserData("Bullet_Enemy_Takel_"+j);
+            enemies_alien_takel.add(newEnemyAlienTakel);
             i++;
             j++;
         }
@@ -461,24 +461,23 @@ public class WorldLoader {
 
         //ENEMY ALIEN BIGMAMA
         i = 0;
-        j = 0;
         for(MapObject object: map.getLayers().get(15).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             Enemy_Alien_Bigmama newEnemyAlienBigmama = new Enemy_Alien_Bigmama(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,4f,8f,world,this.player);
             newEnemyAlienBigmama.getBody().setUserData("Enemy_Alien_Bigmama_" + i);
-            newEnemyAlienBigmama.getBullet().getBody().setUserData("Bullet_Enemy_Bigmama_"+j);
+            newEnemyAlienBigmama.getBullet().getBody().setUserData("Bullet_Enemy_Bigmama_"+i);
             enemies_alien_bigmama.add(newEnemyAlienBigmama);
             i++;
         }
     }
 
-    public Array<Enemy_Alien_Soldier> getEnemies_alien_soldier() {
-        return enemies_alien_soldier;
+    public Array<Enemy_Alien_Takel> getEnemies_alien_takel() {
+        return enemies_alien_takel;
     }
 
-    public void setEnemies_alien_soldier(Array<Enemy_Alien_Soldier> enemies_alien_soldier) {
-        this.enemies_alien_soldier = enemies_alien_soldier;
+    public void setEnemies_alien_takel(Array<Enemy_Alien_Takel> enemies_alien_takel) {
+        this.enemies_alien_takel = enemies_alien_takel;
     }
 
     public RayHandler getRayHandler() {

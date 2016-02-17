@@ -12,10 +12,23 @@ public class ObjectAnimation {
     private Animation animation;
     private TextureRegion[] frames;
 
+    private int lengthX,lengthY,startNum,endNum;
+    private float animationSpeed;
+
     private boolean isActive;
+
+    public void takeParameters(int lengthX,int lengthY,int startNum,int endNum,float animationSpeed){
+        this.lengthX = lengthX;
+        this.lengthY = lengthY;
+        this.startNum = startNum;
+        this.endNum = endNum;
+        this.animationSpeed = animationSpeed;
+    }
 
     // TEXTURE - LÄNGE DES BILDES (AB 1) - HÖHE DES BILDES (AB 1) - STARTNUMMER ( AB 0) - ENDNUMMER (AB 0)
     public ObjectAnimation(Texture texture,int lengthX,int lengthY,int startNum,int endNum,float animationSpeed){
+        takeParameters(lengthX,lengthY,startNum,endNum,animationSpeed);
+
         TextureRegion[][] tmp = TextureRegion.split(texture,
                 texture.getWidth()/lengthX, texture.getHeight()/lengthY);
 
@@ -37,9 +50,10 @@ public class ObjectAnimation {
     }
 
     public ObjectAnimation(TextureRegion region,int lengthX,int lengthY,int startNum,int endNum,float animationSpeed) {
+        takeParameters(lengthX,lengthY,startNum,endNum,animationSpeed);
+
         TextureRegion[][] tmp = region.split(
                 region.getRegionWidth() / lengthX, region.getRegionHeight() / lengthY);
-
 
         int tempNum = 0;
 
@@ -85,5 +99,45 @@ public class ObjectAnimation {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public int getLengthX() {
+        return lengthX;
+    }
+
+    public void setLengthX(int lengthX) {
+        this.lengthX = lengthX;
+    }
+
+    public int getLengthY() {
+        return lengthY;
+    }
+
+    public void setLengthY(int lengthY) {
+        this.lengthY = lengthY;
+    }
+
+    public int getStartNum() {
+        return startNum;
+    }
+
+    public void setStartNum(int startNum) {
+        this.startNum = startNum;
+    }
+
+    public int getEndNum() {
+        return endNum;
+    }
+
+    public void setEndNum(int endNum) {
+        this.endNum = endNum;
+    }
+
+    public float getAnimationSpeed() {
+        return animationSpeed;
+    }
+
+    public void setAnimationSpeed(float animationSpeed) {
+        this.animationSpeed = animationSpeed;
     }
 }

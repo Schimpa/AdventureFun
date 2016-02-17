@@ -130,8 +130,8 @@ public class GameScreen implements Screen {
 	@Override
 	public void resize(int width,int height){
 		//camera.getPlayerCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 2, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY() )* 2 );
-		camera.getBackgroundCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 2, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY())* 2 );
-		camera.getMiddlegroundCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) , (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY()) );
+		//camera.getBackgroundCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 2, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY())* 2 );
+		//camera.getMiddlegroundCamera().setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) , (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY()) );
 		camera.getHudStage().getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.getGameOverStage().getViewport().update(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 

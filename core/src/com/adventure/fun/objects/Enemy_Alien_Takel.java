@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.World;
 /**
  * Created by Dennis on 28.10.2015.
  */
-public class Enemy_Alien_Soldier extends LivingObject {
+public class Enemy_Alien_Takel extends LivingObject {
 
     private Player player;
     private Bullet bullet;
@@ -19,7 +19,7 @@ public class Enemy_Alien_Soldier extends LivingObject {
 
     private ObjectAnimation walkAnimation;
 
-    public Enemy_Alien_Soldier(MainWindow game, float x, float y, float sizeX, float sizeY, World world, Player player){
+    public Enemy_Alien_Takel(MainWindow game, float x, float y, float sizeX, float sizeY, World world, Player player){
         super(game);
         init(x,y,sizeX,sizeY,world);
         this.player = player;
@@ -39,7 +39,7 @@ public class Enemy_Alien_Soldier extends LivingObject {
 
         lives = 2;
 
-        body.setUserData("Enemy_Alien_Soldier");
+        body.setUserData("Enemy_Alien_Takel");
 
         bullet = new Bullet(game,-100,-100,0.8f,0.8f,world,game.getAssets().getBullet_blitzkugel(),true);
         bullet.setSpeedX(3);

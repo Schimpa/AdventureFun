@@ -83,10 +83,12 @@ public class Cameras {
         System.out.println("X:" + screenRatio.x + "|" + "Y:" +  screenRatio.y);
 
         backgroundCamera = new OrthographicCamera();
-        backgroundCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 5f, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY()) * 5f);
+        //backgroundCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 5f, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY()) * 5f);
+        System.out.println("X:" + (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 5f);
+        System.out.println("Y:" + (Gdx.graphics.getHeight() / Gdx.graphics.getPpiX()) * 5f);
 
         middlegroundCamera = new OrthographicCamera();
-        middlegroundCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 5f, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY()) * 5f);
+        //middlegroundCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 5f, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY()) * 5f);
 
         gameOverStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),batch);
         menuStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),batch);
@@ -96,23 +98,35 @@ public class Cameras {
 
         if (screenRatio.x == 16f && screenRatio.y == 9f){
             playerCamera.setToOrtho(false, screenRatio.x * 1.5f , screenRatio.y * 1.5f );
+            backgroundCamera.setToOrtho(false, screenRatio.x * 1.5f , screenRatio.y * 1.5f );
+            middlegroundCamera.setToOrtho(false, screenRatio.x * 1.5f , screenRatio.y * 1.5f );
             createHUD_16_9();
         } else if (screenRatio.x == 16f && screenRatio.y == 10f){
 
             playerCamera.setToOrtho(false, screenRatio.x * 1.5f , screenRatio.y * 1.5f );
+            backgroundCamera.setToOrtho(false, screenRatio.x * 1.5f , screenRatio.y * 1.5f );
+            middlegroundCamera.setToOrtho(false, screenRatio.x * 1.5f , screenRatio.y * 1.5f );
             createHUD_16_9();
         }
         else if (screenRatio.x == 4f && screenRatio.y == 3f){
             playerCamera.setToOrtho(false, screenRatio.x * 5.5f , screenRatio.y * 5.5f );
+            backgroundCamera.setToOrtho(false, screenRatio.x * 5.5f , screenRatio.y * 5.5f );
+            middlegroundCamera.setToOrtho(false, screenRatio.x * 5.5f , screenRatio.y * 5.5f );
             createHUD_4_3();
         }else if (screenRatio.x == 5f && screenRatio.y == 4f){
             playerCamera.setToOrtho(false, screenRatio.x * 3.5f , screenRatio.y * 3.5f );
+            backgroundCamera.setToOrtho(false, screenRatio.x * 3.5f , screenRatio.y * 3.5f );
+            middlegroundCamera.setToOrtho(false, screenRatio.x * 3.5f , screenRatio.y * 3.5f );
             createHUD_4_3();
         }else if (screenRatio.x == 5f && screenRatio.y == 3f){
             playerCamera.setToOrtho(false, screenRatio.x * 4f , screenRatio.y * 4f );
+            backgroundCamera.setToOrtho(false, screenRatio.x * 4f , screenRatio.y * 4f );
+            middlegroundCamera.setToOrtho(false, screenRatio.x * 4f , screenRatio.y * 4f );
             createHUD_5_3();
         }else{
             playerCamera.setToOrtho(false, screenRatio.x * 5.5f , screenRatio.y * 5.5f );
+            backgroundCamera.setToOrtho(false, screenRatio.x * 5.5f , screenRatio.y * 5.5f );
+            middlegroundCamera.setToOrtho(false, screenRatio.x * 5.5f , screenRatio.y * 5.5f );
             createHUD_16_9();
         }
 
@@ -348,6 +362,12 @@ public class Cameras {
         buttonMoveRight.setSize(Gdx.graphics.getWidth() / 100f * 15f, Gdx.graphics.getHeight() / 100f * 17f);
         buttonMoveRight.setPosition((Gdx.graphics.getWidth() / 100f) * 84f, Gdx.graphics.getHeight() / 100f * 4f);
 
+        buttonMenu = new TextButton("#",game.getSkin(),"default");
+        buttonMenu.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.01f, (Gdx.graphics.getHeight() / 100) * 0.01f);
+        buttonMenu.setColor(0.4f, 1, 0.4f, 0.6f);
+        buttonMenu.setSize(Gdx.graphics.getWidth() / 100f * 4f, Gdx.graphics.getHeight() / 100f * 4f);
+        buttonMenu.setPosition(Gdx.graphics.getWidth() / 100f * 95f, Gdx.graphics.getHeight() / 100f * 95f);
+
         nothingButton = new TextButton("",game.getSkin(),"default");
         nothingButton.setColor(1, 1, 1, 1);
         nothingButton.setSize(0,0);
@@ -389,6 +409,12 @@ public class Cameras {
         buttonMoveRight.setColor(0.7f, 1, 0.4f, 0.3f);
         buttonMoveRight.setSize(Gdx.graphics.getWidth() / 100f * 15f, Gdx.graphics.getHeight() / 100f * 17f);
         buttonMoveRight.setPosition((Gdx.graphics.getWidth() / 100f) * 84f, Gdx.graphics.getHeight() / 100f * 4f);
+
+        buttonMenu = new TextButton("#",game.getSkin(),"default");
+        buttonMenu.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.01f, (Gdx.graphics.getHeight() / 100) * 0.01f);
+        buttonMenu.setColor(0.4f, 1, 0.4f, 0.6f);
+        buttonMenu.setSize(Gdx.graphics.getWidth() / 100f * 4f, Gdx.graphics.getHeight() / 100f * 4f);
+        buttonMenu.setPosition(Gdx.graphics.getWidth() / 100f * 95f, Gdx.graphics.getHeight() / 100f * 95f);
 
         nothingButton = new TextButton("",game.getSkin(),"default");
         nothingButton.setColor(1, 1, 1, 1);
