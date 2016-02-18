@@ -228,35 +228,6 @@ public class Player extends LivingObject {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public float getStateTime() {
         return stateTime;
     }
