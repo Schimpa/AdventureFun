@@ -75,11 +75,9 @@ public class Enemy_Alien_Takel extends LivingObject {
                     this.move(true, deltaTime);
                 }
             }
-            randomInt = rand.nextInt(300) + 1;
+            randomInt = rand.nextInt(150) + 1;
             if (randomInt == 50) {
-                game.getAssets().getSound_alien_soldier_01().play(1f);
-            } else if (randomInt == 74) {
-                game.getAssets().getSound_alien_soldier_02().play(1f);
+                game.getAssets().getSound_alien_fingus().play(1f);
             }
             bullet.setBulletShoot(true);
 
@@ -126,7 +124,9 @@ public class Enemy_Alien_Takel extends LivingObject {
     @Override
     public void dispose(){
         particles.playEffect(this.getBody().getPosition().x,this.getBody().getPosition().y,particles.getExplosion_dead());
+        game.getAssets().getSound_alien_fingus_dead().play(1f);
         this.body.setTransform(-1000,-1000f,0);
+        player.setScore(player.getScore() + 200);
         super.dispose();
     }
 

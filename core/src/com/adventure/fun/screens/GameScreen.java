@@ -3,16 +3,13 @@ package com.adventure.fun.screens;
 import com.adventure.fun._main.Cameras;
 import com.adventure.fun._main.MainWindow;
 import com.adventure.fun._main.WorldLoader;
-import com.adventure.fun.texture.Textures;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 public class GameScreen implements Screen {
@@ -60,16 +57,20 @@ public class GameScreen implements Screen {
 
 		Gdx.input.setInputProcessor(multiplexer);
 
+		gameMiddleground = null;
+
 		chooseBackground();
 	}
 
 	public void chooseBackground(){
 		if (levelName.equals("maps/level_one.tmx")){
-			gameBackground = game.getAssets().getBackground();
-			gameMiddleground = game.getAssets().getMiddleground_01();
+			gameBackground = game.getAssets().getBackground_01();
+		}else if (levelName.equals("maps/level_two.tmx")){
+			gameBackground = game.getAssets().getBackground_02();
+		}else if (levelName.equals("maps/level_three.tmx")){
+			gameBackground = game.getAssets().getBackground_03();
 		}else{
-			gameBackground = game.getAssets().getBackground();
-			gameMiddleground = game.getAssets().getMiddleground_01();
+			gameBackground = game.getAssets().getBackground_01();
 		}
 	}
 
@@ -94,9 +95,11 @@ public class GameScreen implements Screen {
 		game.getBatch().setProjectionMatrix(camera.getBackgroundCamera().combined);
 		game.getBatch().draw(gameBackground, -15, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 30);
 		game.getBatch().draw(gameBackground, -15 + gameBackground.getWidth() / 40, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 30,0,0,gameBackground.getWidth(),gameBackground.getHeight(),true,false);
-		game.getBatch().setProjectionMatrix(camera.getMiddlegroundCamera().combined);
-		game.getBatch().draw(gameMiddleground, -15, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 30);
-		game.getBatch().draw(gameMiddleground, -15 + gameBackground.getWidth() / 40, -10f, gameBackground.getWidth() / 40, gameBackground.getHeight() / 30,0,0,gameBackground.getWidth(),gameBackground.getHeight(),true,false);
+		if (gameMiddleground != null){
+			game.getBatch().setProjectionMatrix(camera.getMiddlegroundCamera().combined);
+			game.getBatch().draw(gameMiddleground, -15, -10, gameBackground.getWidth() / 40, gameBackground.getHeight() / 30);
+			game.getBatch().draw(gameMiddleground, -15 + gameBackground.getWidth() / 40, -10f, gameBackground.getWidth() / 40, gameBackground.getHeight() / 30,0,0,gameBackground.getWidth(),gameBackground.getHeight(),true,false);
+		}
 
 		game.getBatch().end();
 

@@ -25,16 +25,21 @@ public class Assets {
     private Sound sound_step_02;
     private Sound sound_jump;
 
-    //ALIEN ZOMBIE
-    private Sound sound_alien_zombie;
-    private Sound sound_alien_zombie_dead;
+    //ALIEN FINGUS
+    private Sound sound_alien_fingus;
+    private Sound sound_alien_fingus_hit_01;
+    private Sound sound_alien_fingus_dead;
 
-    //ALIEN SOLDIER
-    private Sound sound_alien_soldier_01;
-    private Sound sound_alien_soldier_02;
-    private Sound sound_alien_soldier_hit_01;
-    private Sound sound_alien_soldier_hit_02;
-    private Sound sound_alien_soldier_dead;
+    //ALIEN TAKEL
+    private Sound sound_alien_takel_01;
+    private Sound sound_alien_takel_02;
+    private Sound sound_alien_takel_hit_01;
+    private Sound sound_alien_takel_hit_02;
+    private Sound sound_alien_takel_dead;
+
+    //ALIEN KUGUS
+    private Sound sound_alien_kugus_01;
+    private Sound sound_alien_kugus_02;
 
     private Sound sound_player_hit_01;
     private Sound sound_player_hit_02;
@@ -77,10 +82,11 @@ public class Assets {
     private TextureRegion whiteColor;
 
     //BACKGROUND
-    private Texture background;
+    private Texture background_01;
     private Texture background_02;
-    private Texture backgroundMenu;
-    private Texture backgroundMars;
+    private Texture background_03;
+    private Texture backgroundMenu_01;
+    private Texture backgroundMenu_02;
 
     //MIDDLEGROUND
     private Texture middleground_01;
@@ -92,10 +98,12 @@ public class Assets {
 
     public void load() {
 
-        assetManager.load("background/background_01.jpg",Texture.class);
-        assetManager.load("background/mars.jpg",Texture.class);
-        assetManager.load("background/mars_02.jpg",Texture.class);
+        assetManager.load("background/background_01.png",Texture.class);
         assetManager.load("background/background_02.png",Texture.class);
+        assetManager.load("background/background_03.png",Texture.class);
+        assetManager.load("background/backgroundMenu_01.jpg",Texture.class);
+        assetManager.load("background/backgroundMenu_02.jpg",Texture.class);
+
 
         assetManager.load("middleground/middleground_01.png",Texture.class);
 
@@ -118,12 +126,18 @@ public class Assets {
 
         assetManager.load("audio/alien_fingus.ogg",Sound.class);
         assetManager.load("audio/alien_fingus_dead.ogg", Sound.class);
+        assetManager.load("audio/alien_fingus_hit_01.ogg", Sound.class);
 
         assetManager.load("audio/alien_takel_01.ogg",Sound.class);
         assetManager.load("audio/alien_takel_02.ogg",Sound.class);
         assetManager.load("audio/alien_takel_hit_01.ogg",Sound.class);
         assetManager.load("audio/alien_takel_hit_02.ogg",Sound.class);
         assetManager.load("audio/alien_takel_dead.ogg",Sound.class);
+
+        assetManager.load("audio/alien_kugus_01.ogg",Sound.class);
+        assetManager.load("audio/alien_kugus_02.ogg",Sound.class);
+
+
         assetManager.load("audio/player_hit_01.ogg",Sound.class);
         assetManager.load("audio/player_hit_02.ogg",Sound.class);
         assetManager.load("audio/player_hit_03.ogg",Sound.class);
@@ -147,14 +161,18 @@ public class Assets {
 
         sound_jump = assetManager.get("audio/jump.ogg", Sound.class);
 
-        sound_alien_zombie = assetManager.get("audio/alien_fingus.ogg", Sound.class);
-        sound_alien_zombie_dead = assetManager.get("audio/alien_fingus_dead.ogg", Sound.class);
+        sound_alien_fingus = assetManager.get("audio/alien_fingus.ogg", Sound.class);
+        sound_alien_fingus_dead = assetManager.get("audio/alien_fingus_dead.ogg", Sound.class);
+        sound_alien_fingus_hit_01 = assetManager.get("audio/alien_fingus_hit_01.ogg", Sound.class);
 
-        sound_alien_soldier_01 = assetManager.get("audio/alien_takel_01.ogg", Sound.class);
-        sound_alien_soldier_02 = assetManager.get("audio/alien_takel_02.ogg", Sound.class);
-        sound_alien_soldier_hit_01 = assetManager.get("audio/alien_takel_hit_01.ogg", Sound.class);
-        sound_alien_soldier_hit_02 = assetManager.get("audio/alien_takel_hit_02.ogg", Sound.class);
-        sound_alien_soldier_dead = assetManager.get("audio/alien_takel_dead.ogg", Sound.class);
+        sound_alien_takel_01 = assetManager.get("audio/alien_takel_01.ogg", Sound.class);
+        sound_alien_takel_02 = assetManager.get("audio/alien_takel_02.ogg", Sound.class);
+        sound_alien_takel_hit_01 = assetManager.get("audio/alien_takel_hit_01.ogg", Sound.class);
+        sound_alien_takel_hit_02 = assetManager.get("audio/alien_takel_hit_02.ogg", Sound.class);
+        sound_alien_takel_dead = assetManager.get("audio/alien_takel_dead.ogg", Sound.class);
+
+        sound_alien_kugus_01 = assetManager.get("audio/alien_kugus_01.ogg",Sound.class);
+        sound_alien_kugus_02 = assetManager.get("audio/alien_kugus_02.ogg",Sound.class);
 
         sound_player_hit_01 = assetManager.get("audio/player_hit_01.ogg", Sound.class);
         sound_player_hit_02 = assetManager.get("audio/player_hit_02.ogg", Sound.class);
@@ -163,10 +181,11 @@ public class Assets {
         atlas = assetManager.get("texture_data/images.pack.atlas",TextureAtlas.class);
 
         //BACKGROUND
-        background = assetManager.get("background/background_01.jpg",Texture.class);
-        backgroundMenu = assetManager.get("background/mars.jpg",Texture.class);
-        backgroundMars = assetManager.get("background/mars_02.jpg", Texture.class);
-        background_02 = assetManager.get("background/background_02.png", Texture.class);
+        background_01 = assetManager.get("background/background_01.png",Texture.class);
+        background_02 = assetManager.get("background/background_02.png",Texture.class);
+        background_03 = assetManager.get("background/background_03.png", Texture.class);
+        backgroundMenu_01= assetManager.get("background/backgroundMenu_01.jpg", Texture.class);
+        backgroundMenu_02= assetManager.get("background/backgroundMenu_02.jpg", Texture.class);
 
         //MIDDLEGROUND
         middleground_01 = assetManager.get("middleground/middleground_01.png",Texture.class);
@@ -220,20 +239,20 @@ public class Assets {
         this.alien_bigmama = alien_bigmama;
     }
 
-    public Sound getSound_alien_zombie() {
-        return sound_alien_zombie;
+    public Sound getSound_alien_fingus() {
+        return sound_alien_fingus;
     }
 
-    public void setSound_alien_zombie(Sound sound_alien_zombie) {
-        this.sound_alien_zombie = sound_alien_zombie;
+    public void setSound_alien_fingus(Sound sound_alien_fingus) {
+        this.sound_alien_fingus = sound_alien_fingus;
     }
 
-    public Sound getSound_alien_zombie_dead() {
-        return sound_alien_zombie_dead;
+    public Sound getSound_alien_fingus_dead() {
+        return sound_alien_fingus_dead;
     }
 
-    public void setSound_alien_zombie_dead(Sound sound_alien_zombie_dead) {
-        this.sound_alien_zombie_dead = sound_alien_zombie_dead;
+    public void setSound_alien_fingus_dead(Sound sound_alien_fingus_dead) {
+        this.sound_alien_fingus_dead = sound_alien_fingus_dead;
     }
 
     public Sound getSound_shoot_laser_04() {
@@ -365,20 +384,12 @@ public class Assets {
         this.bullet_laser = bullet;
     }
 
-    public Texture getBackground() {
-        return background;
+    public Texture getBackground_01() {
+        return background_01;
     }
 
-    public void setBackground(Texture background) {
-        this.background = background;
-    }
-
-    public Texture getBackgroundMenu() {
-        return backgroundMenu;
-    }
-
-    public void setBackgroundMenu(Texture backgroundMenu) {
-        this.backgroundMenu = backgroundMenu;
+    public void setBackground_01(Texture background_01) {
+        this.background_01 = background_01;
     }
 
     public TextureRegion getAlien_takel() {
@@ -389,20 +400,20 @@ public class Assets {
         this.alien_takel = alien_takel;
     }
 
-    public Sound getSound_alien_soldier_01() {
-        return sound_alien_soldier_01;
+    public Sound getSound_alien_takel_01() {
+        return sound_alien_takel_01;
     }
 
-    public void setSound_alien_soldier_01(Sound sound_alien_soldier_01) {
-        this.sound_alien_soldier_01 = sound_alien_soldier_01;
+    public void setSound_alien_takel_01(Sound sound_alien_takel_01) {
+        this.sound_alien_takel_01 = sound_alien_takel_01;
     }
 
-    public Sound getSound_alien_soldier_02() {
-        return sound_alien_soldier_02;
+    public Sound getSound_alien_takel_02() {
+        return sound_alien_takel_02;
     }
 
-    public void setSound_alien_soldier_02(Sound sound_alien_soldier_02) {
-        this.sound_alien_soldier_02 = sound_alien_soldier_02;
+    public void setSound_alien_takel_02(Sound sound_alien_takel_02) {
+        this.sound_alien_takel_02 = sound_alien_takel_02;
     }
 
     public Sound getSound_click_in() {
@@ -421,36 +432,28 @@ public class Assets {
         this.sound_click_out = sound_click_out;
     }
 
-    public Sound getSound_alien_soldier_hit_01() {
-        return sound_alien_soldier_hit_01;
+    public Sound getSound_alien_takel_hit_01() {
+        return sound_alien_takel_hit_01;
     }
 
-    public void setSound_alien_soldier_hit_01(Sound sound_alien_soldier_hit_01) {
-        this.sound_alien_soldier_hit_01 = sound_alien_soldier_hit_01;
+    public void setSound_alien_takel_hit_01(Sound sound_alien_takel_hit_01) {
+        this.sound_alien_takel_hit_01 = sound_alien_takel_hit_01;
     }
 
-    public Sound getSound_alien_soldier_hit_02() {
-        return sound_alien_soldier_hit_02;
+    public Sound getSound_alien_takel_hit_02() {
+        return sound_alien_takel_hit_02;
     }
 
-    public void setSound_alien_soldier_hit_02(Sound sound_alien_soldier_hit_02) {
-        this.sound_alien_soldier_hit_02 = sound_alien_soldier_hit_02;
+    public void setSound_alien_takel_hit_02(Sound sound_alien_takel_hit_02) {
+        this.sound_alien_takel_hit_02 = sound_alien_takel_hit_02;
     }
 
-    public Sound getSound_alien_soldier_dead() {
-        return sound_alien_soldier_dead;
+    public Sound getSound_alien_takel_dead() {
+        return sound_alien_takel_dead;
     }
 
-    public void setSound_alien_soldier_dead(Sound sound_alien_soldier_dead) {
-        this.sound_alien_soldier_dead = sound_alien_soldier_dead;
-    }
-
-    public Texture getBackgroundMars() {
-        return backgroundMars;
-    }
-
-    public void setBackgroundMars(Texture backgroundMars) {
-        this.backgroundMars = backgroundMars;
+    public void setSound_alien_takel_dead(Sound sound_alien_takel_dead) {
+        this.sound_alien_takel_dead = sound_alien_takel_dead;
     }
 
     public Sound getSound_player_hit_01() {
@@ -576,5 +579,53 @@ public class Assets {
 
     public void setBullet_bigmama(TextureRegion bullet_bigmama) {
         this.bullet_bigmama = bullet_bigmama;
+    }
+
+    public Texture getBackground_03() {
+        return background_03;
+    }
+
+    public void setBackground_03(Texture background_03) {
+        this.background_03 = background_03;
+    }
+
+    public Texture getBackgroundMenu_01() {
+        return backgroundMenu_01;
+    }
+
+    public void setBackgroundMenu_01(Texture backgroundMenu_01) {
+        this.backgroundMenu_01 = backgroundMenu_01;
+    }
+
+    public Texture getBackgroundMenu_02() {
+        return backgroundMenu_02;
+    }
+
+    public void setBackgroundMenu_02(Texture backgroundMenu_02) {
+        this.backgroundMenu_02 = backgroundMenu_02;
+    }
+
+    public Sound getSound_alien_kugus_01() {
+        return sound_alien_kugus_01;
+    }
+
+    public void setSound_alien_kugus_01(Sound sound_alien_kugus_01) {
+        this.sound_alien_kugus_01 = sound_alien_kugus_01;
+    }
+
+    public Sound getSound_alien_kugus_02() {
+        return sound_alien_kugus_02;
+    }
+
+    public void setSound_alien_kugus_02(Sound sound_alien_kugus_02) {
+        this.sound_alien_kugus_02 = sound_alien_kugus_02;
+    }
+
+    public Sound getSound_alien_fingus_hit_01() {
+        return sound_alien_fingus_hit_01;
+    }
+
+    public void setSound_alien_fingus_hit_01(Sound sound_alien_fingus_hit_01) {
+        this.sound_alien_fingus_hit_01 = sound_alien_fingus_hit_01;
     }
 }

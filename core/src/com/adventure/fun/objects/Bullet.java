@@ -50,10 +50,11 @@ public class Bullet extends LivingObject {
 
     public Bullet(MainWindow game,float x,float y,float sizeX,float sizeY,World world,TextureRegion region,boolean isAnimation){
         super(game);
-        init(x, y, sizeX, sizeY, world, region,isAnimation);
+        soundVolume = 1f;
+        initNormalBullet(x, y, sizeX, sizeY, world, region,isAnimation);
     }
 
-    public void init(float x,float y,float sizeX,float sizeY,World world,TextureRegion region,boolean isAnimation) {
+    public void initNormalBullet(float x,float y,float sizeX,float sizeY,World world,TextureRegion region,boolean isAnimation) {
         super.init(x, y, sizeX, sizeY, world);
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef);
@@ -61,8 +62,6 @@ public class Bullet extends LivingObject {
         reloadTime = 0f;
         speedX = 0f;
         timeFromShoot = 0f;
-
-        soundVolume = 1f;
 
         this.region = region;
         this.isAnimation = isAnimation;
@@ -82,8 +81,41 @@ public class Bullet extends LivingObject {
             shootAnimation = new ObjectAnimation(region, 4, 1, 0, 3, 0.05f);
             shootAnimation.setIsActive(true);
         }
+
         shape.dispose();
     }
+
+    public void initGreenlBullet(float x,float y,float sizeX,float sizeY,World world,TextureRegion region,boolean isAnimation) {
+        super.init(x, y, sizeX, sizeY, world);
+        fixtureDef.isSensor = true;
+        body.createFixture(fixtureDef);
+
+        reloadTime = 0f;
+        speedX = 0f;
+        timeFromShoot = 0f;
+
+        this.region = region;
+        this.isAnimation = isAnimation;
+
+        this.bulletSound = game.getAssets().getSound_shoot_laser_03();
+        bulletShoot = false;
+
+        MassData massData = new MassData();
+        massData.mass = 0;
+        body.setMassData(massData);
+
+        currentFrame = new TextureRegion();
+
+        if (region.equals(game.getAssets().getBullet_bigmama()) && isAnimation == true){
+            createBulletBigmama();
+        }else if (isAnimation == true){
+            shootAnimation = new ObjectAnimation(region, 4, 1, 0, 3, 0.05f);
+            shootAnimation.setIsActive(true);
+        }
+
+        shape.dispose();
+    }
+
 
     public void createBulletBigmama(){
         shootAnimation = new ObjectAnimation(region, 2, 1, 0, 1, 0.05f);

@@ -2,17 +2,13 @@ package com.adventure.fun.objects;
 
 import com.adventure.fun._main.MainWindow;
 import com.adventure.fun.effects.ObjectAnimation;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-
-import java.util.Random;
 
 /**
  * Created by Dennis on 28.10.2015.
@@ -134,11 +130,11 @@ public class Enemy_Alien_Kugus extends LivingObject {
                     this.move(true,deltaTime);
                 }
             }
-            randomInt = rand.nextInt(300)+1;
+            randomInt = rand.nextInt(150)+1;
             if (randomInt == 50){
-                game.getAssets().getSound_alien_soldier_01().play(1f);
+                game.getAssets().getSound_alien_kugus_01().play(1f);
             }else if (randomInt == 74){
-                game.getAssets().getSound_alien_soldier_02().play(1f);
+                game.getAssets().getSound_alien_kugus_02().play(1f);
             }
         }else{
             weaponAnimation.setIsActive(false);
@@ -188,6 +184,7 @@ public class Enemy_Alien_Kugus extends LivingObject {
     public void dispose(){
         particles.playEffect(this.getBody().getPosition().x,this.getBody().getPosition().y,particles.getExplosion_dead());
         this.body.setTransform(-1000,-1000f,0);
+        player.setScore(player.getScore() + 500);
         super.dispose();
     }
 

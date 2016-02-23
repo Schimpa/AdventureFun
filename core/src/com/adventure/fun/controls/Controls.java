@@ -53,7 +53,7 @@ public class Controls implements InputProcessor {
                 worldLoader.getPlayer().getBody().getLinearVelocity().y >= -0.1f) {
             worldLoader.getPlayer().setIsJumping(true);
             worldLoader.getPlayer().setJumpTimer(0);
-            //worldLoader.getGame().getAssets().getSound_jump().play(0.1f);
+            worldLoader.getGame().getAssets().getSound_jump().play(1f);
         }
 
         bulletShot();

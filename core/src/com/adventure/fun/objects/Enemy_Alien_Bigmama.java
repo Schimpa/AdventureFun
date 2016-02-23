@@ -5,8 +5,6 @@ import com.adventure.fun.effects.ObjectAnimation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.Random;
@@ -84,9 +82,9 @@ public class Enemy_Alien_Bigmama extends LivingObject {
             }
             randomInt = rand.nextInt(300) + 1;
             if (randomInt == 50) {
-                game.getAssets().getSound_alien_soldier_01().play(1f);
+                game.getAssets().getSound_alien_takel_01().play(1f);
             } else if (randomInt == 74) {
-                game.getAssets().getSound_alien_soldier_02().play(1f);
+                game.getAssets().getSound_alien_takel_02().play(1f);
             }
             bullet.setBulletShoot(true);
 
@@ -132,6 +130,7 @@ public class Enemy_Alien_Bigmama extends LivingObject {
     public void dispose(){
         particles.playEffect(this.getBody().getPosition().x,this.getBody().getPosition().y,particles.getExplosion_dead());
         this.body.setTransform(-1000,-1000f,0);
+        player.setScore(player.getScore() + 2000);
         super.dispose();
     }
 

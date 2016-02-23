@@ -454,16 +454,16 @@ public class Cameras {
         buttonContinue.setPosition(Gdx.graphics.getWidth() / 100 * 30, Gdx.graphics.getHeight() / 100 * 70);
 
         //buttonExit
-        buttonExit = new TextButton("Continue",game.getSkin(),"default");
+        buttonExit = new TextButton("Exit",game.getSkin(),"default");
         buttonExit.setColor(0.7f, 1, 0.4f, 0.5f);
         buttonExit.setSize(Gdx.graphics.getWidth() / 100 * 40, Gdx.graphics.getHeight() / 100 * 30);
-        buttonExit.setPosition(Gdx.graphics.getWidth() / 100 * 30, Gdx.graphics.getHeight() / 100 * 10);
+        buttonExit.setPosition(Gdx.graphics.getWidth() / 100 * 30, Gdx.graphics.getHeight() / 100 * 6);
 
         //buttonRetryMenu
-        buttonRetryMenu = new TextButton("Continue",game.getSkin(),"default");
+        buttonRetryMenu = new TextButton("Retry",game.getSkin(),"default");
         buttonRetryMenu.setColor(0.7f, 1, 0.4f, 0.5f);
         buttonRetryMenu.setSize(Gdx.graphics.getWidth() / 100 * 40, Gdx.graphics.getHeight() / 100 * 30);
-        buttonRetryMenu.setPosition(Gdx.graphics.getWidth() / 100 * 30, Gdx.graphics.getHeight() / 100 * 40);
+        buttonRetryMenu.setPosition(Gdx.graphics.getWidth() / 100 * 30, Gdx.graphics.getHeight() / 100 * 38);
 
         menuStage.addActor(buttonContinue);
         menuStage.addActor(buttonExit);
@@ -487,7 +487,34 @@ public class Cameras {
                 game.getMenuScreen().getGameScreen().getMultiplexer().addProcessor(hudStage);
                 game.getMenuScreen().getGameScreen().getMultiplexer().addProcessor(worldLoader.getControls());
                 Gdx.input.setInputProcessor(game.getMenuScreen().getGameScreen().getMultiplexer());
-                System.out.println("Testes");
+            }
+        });
+
+        buttonRetryMenu.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.getMenuScreen().setGameScreen(new GameScreen(game,game.getMenuScreen().getGameScreen().getLevelName(),game.getMenuScreen().getGameScreen().isActivateLights()));
+                game.getAssets().getSound_click_in().play(1f);
+                game.setScreen(game.getMenuScreen().getGameScreen());
+            }
+        });
+
+        buttonExit.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                game.getAssets().getSound_click_in().play(1f);
+                game.setScreen(new LevelChooseScreen(game));
             }
         });
     }

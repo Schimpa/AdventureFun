@@ -58,6 +58,7 @@ public class Enemy_Alien_Fingus extends LivingObject {
     public void dispose(){
         particles.playEffect(this.getBody().getPosition().x,this.getBody().getPosition().y,particles.getExplosion_dead());
         this.body.setTransform(-1000,-1000f,0);
+        player.setScore(player.getScore() + 100);
         super.dispose();
     }
 
@@ -67,9 +68,9 @@ public class Enemy_Alien_Fingus extends LivingObject {
                 player.getBody().getPosition().x - this.getBody().getPosition().x < reactionDistance&&
                 player.getBody().getPosition().y - this.getBody().getPosition().y > -5 &&
                 player.getBody().getPosition().y - this.getBody().getPosition().y < 5 ){
-            randomInt = rand.nextInt(300)+1;
+            randomInt = rand.nextInt(150)+1;
             if (randomInt == 48){
-                game.getAssets().getSound_alien_zombie().play(0.2f);
+                game.getAssets().getSound_alien_fingus().play(0.2f);
             }
 
             this.stateTime += deltaTime;

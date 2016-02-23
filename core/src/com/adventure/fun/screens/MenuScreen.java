@@ -77,7 +77,7 @@ public class MenuScreen implements Screen {
 
 
 
-        backgroundImage = game.getAssets().getBackgroundMenu();
+        backgroundImage = game.getAssets().getBackgroundMenu_02();
 
         this.stage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),game.getBatch());
 
