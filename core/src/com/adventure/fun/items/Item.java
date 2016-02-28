@@ -75,7 +75,6 @@ public abstract class Item{
                 this.items.get(i).getWorld().destroyBody(this.items.get(i));
                 this.items_texture.get(i).setColor(0,0,0,0);
                 this.items.get(i).setUserData(name + i + "_Destroyed");
-                Gdx.app.debug(this.items.get(i).getUserData().toString(),"destroyed");
             }
         }
     }

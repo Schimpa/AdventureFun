@@ -43,6 +43,9 @@ public class Bullet extends LivingObject {
     //ZEIT NACHDEM EIN NEUES GESCHOSS GESCHOSSEN WERDEN KANN
     private float reloadTime;
 
+    //SCHADEN DES GESCHOSSES
+    private float bulletDamage;
+
     //DAS LICHT DES GESCHOSSESE
     private PointLight bulletLight;
 
@@ -52,21 +55,25 @@ public class Bullet extends LivingObject {
         super(game);
         soundVolume = 1f;
         initNormalBullet(x, y, sizeX, sizeY, world, region,isAnimation);
+
+
     }
 
     public void initNormalBullet(float x,float y,float sizeX,float sizeY,World world,TextureRegion region,boolean isAnimation) {
         super.init(x, y, sizeX, sizeY, world);
         fixtureDef.isSensor = true;
+        fixtureDef.filter.groupIndex = (short)-3;
         body.createFixture(fixtureDef);
 
-        reloadTime = 0f;
+        reloadTime = 0.4f;
         speedX = 0f;
         timeFromShoot = 0f;
+        bulletDamage = 1;
 
         this.region = region;
         this.isAnimation = isAnimation;
 
-        this.bulletSound = game.getAssets().getSound_shoot_laser_03();
+        this.bulletSound = game.getAssets().getSound_shoot_laser_01();
         bulletShoot = false;
 
         MassData massData = new MassData();
@@ -85,19 +92,22 @@ public class Bullet extends LivingObject {
         shape.dispose();
     }
 
-    public void initGreenlBullet(float x,float y,float sizeX,float sizeY,World world,TextureRegion region,boolean isAnimation) {
+
+    public void createGreenBullet(float x,float y,float sizeX,float sizeY,World world,TextureRegion region,boolean isAnimation) {
         super.init(x, y, sizeX, sizeY, world);
+        fixtureDef.filter.groupIndex = (short)-3;
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef);
 
-        reloadTime = 0f;
+        reloadTime = 3f;
         speedX = 0f;
         timeFromShoot = 0f;
+        bulletDamage = 2;
 
         this.region = region;
         this.isAnimation = isAnimation;
 
-        this.bulletSound = game.getAssets().getSound_shoot_laser_03();
+        this.bulletSound = game.getAssets().getSound_shoot_laser_04();
         bulletShoot = false;
 
         MassData massData = new MassData();
@@ -105,19 +115,13 @@ public class Bullet extends LivingObject {
         body.setMassData(massData);
 
         currentFrame = new TextureRegion();
-
-        if (region.equals(game.getAssets().getBullet_bigmama()) && isAnimation == true){
-            createBulletBigmama();
-        }else if (isAnimation == true){
-            shootAnimation = new ObjectAnimation(region, 4, 1, 0, 3, 0.05f);
-            shootAnimation.setIsActive(true);
-        }
 
         shape.dispose();
     }
 
 
     public void createBulletBigmama(){
+        setBulletSound(game.getAssets().getSound_shoot_alien_01());
         shootAnimation = new ObjectAnimation(region, 2, 1, 0, 1, 0.05f);
         shootAnimation.setIsActive(true);
     }

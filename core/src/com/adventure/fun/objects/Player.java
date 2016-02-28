@@ -48,6 +48,7 @@ public class Player extends LivingObject {
 
     public void init(float x,float y,float sizeX,float sizeY,World world) {
         super.init(x,y,sizeX,sizeY,world);
+        fixtureDef.filter.groupIndex = (short)-2;
         body.createFixture(fixtureDef);
 
         //ATTRIBUTE
@@ -71,7 +72,7 @@ public class Player extends LivingObject {
         bullet = new Bullet(game,-100,-100,0.4f,0.4f,world,game.getAssets().getBullet_Laser(),false);
         bullet.getBody().setUserData("Bullet_Player");
         bullet.setSpeedX(30);
-        bullet.setBulletSound(game.getAssets().getSound_shoot_laser_02());
+        bullet.setBulletSound(game.getAssets().getSound_shoot_laser_01());
 
         //JETZTIGE ANIMATION
         currentFrame = new TextureRegion();

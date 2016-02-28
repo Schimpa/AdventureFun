@@ -35,6 +35,7 @@ public class Enemy_Alien_Bigmama extends LivingObject {
     public void init(float x,float y,float sizeX,float sizeY,World world){
         super.init(x, y, sizeX, sizeY, world);
         shape.setAsBox((sprite.getWidth() / 2) * 0.5f, sprite.getHeight() / 2.1f);
+        fixtureDef.filter.groupIndex = (short)-1;
         body.createFixture(fixtureDef);
 
         reactionDistance = 13;

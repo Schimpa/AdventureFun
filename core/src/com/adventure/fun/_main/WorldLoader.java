@@ -4,6 +4,7 @@ import com.adventure.fun.controls.Controls;
 import com.adventure.fun.effects.Particles;
 import com.adventure.fun.items.Item_Health;
 import com.adventure.fun.items.Item_Score;
+import com.adventure.fun.items.Item_Weapon_Green;
 import com.adventure.fun.objects.Enemy_Alien_Bigmama;
 import com.adventure.fun.objects.Enemy_Alien_Kugus;
 import com.adventure.fun.objects.Enemy_Alien_Takel;
@@ -51,6 +52,8 @@ public class WorldLoader {
     private Item_Score items_Score_200;
     private Item_Score items_Score_500;
     private Item_Score items_Score_1000;
+
+    private Item_Weapon_Green items_Weapon_Green;
 
     private Item_Health items_Health_1;
 
@@ -104,6 +107,7 @@ public class WorldLoader {
         items_Score_200 = new Item_Score(this,200);
         items_Score_500 = new Item_Score(this,500);
         items_Score_1000 = new Item_Score(this,1000);
+        items_Weapon_Green = new Item_Weapon_Green(this);
 
         items_Health_1 = new Item_Health(this,1);
 
@@ -162,6 +166,7 @@ public class WorldLoader {
         items_Score_200.render(batch);
         items_Score_500.render(batch);
         items_Score_1000.render(batch);
+        items_Weapon_Green.render(batch);
 
         items_Health_1.render(batch);
 
@@ -220,6 +225,8 @@ public class WorldLoader {
         items_Score_200.checkDestruction();
         items_Score_500.checkDestruction();
         items_Score_1000.checkDestruction();
+
+        items_Weapon_Green.checkDestruction();
 
         items_Health_1.checkDestruction();
 
@@ -299,6 +306,7 @@ public class WorldLoader {
             fdef.shape = shape;
             fdef.isSensor = true;
             fdef.restitution = 0;
+            fdef.filter.groupIndex = (short)-3;
 
 
             Body body = world.createBody(bdef);
@@ -327,6 +335,7 @@ public class WorldLoader {
             fdef.shape = shape;
             fdef.isSensor = true;
             fdef.restitution = 0;
+            fdef.filter.groupIndex = (short)-3;
 
 
             Body body = world.createBody(bdef);
@@ -355,6 +364,7 @@ public class WorldLoader {
             fdef.shape = shape;
             fdef.isSensor = true;
             fdef.restitution = 0;
+            fdef.filter.groupIndex = (short)-3;
 
 
             Body body = world.createBody(bdef);
@@ -383,6 +393,7 @@ public class WorldLoader {
             fdef.shape = shape;
             fdef.isSensor = true;
             fdef.restitution = 0;
+            fdef.filter.groupIndex = (short)-3;
 
 
             Body body = world.createBody(bdef);
@@ -411,6 +422,7 @@ public class WorldLoader {
             fdef.shape = shape;
             fdef.isSensor = true;
             fdef.restitution = 0;
+            fdef.filter.groupIndex = (short)-3;
 
 
             Body body = world.createBody(bdef);
@@ -423,9 +435,38 @@ public class WorldLoader {
             i++;
         }
 
-        //ENEMY-ALIEN-ZOMBIE
+        //ITEM WEAPON GREEN
         i = 0;
         for(MapObject object: map.getLayers().get(12).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            BodyDef bdef = new BodyDef();
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(0.01f,0.01f);
+
+            FixtureDef fdef = new FixtureDef();
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.restitution = 0;
+            fdef.filter.groupIndex = (short)-3;
+
+
+            Body body = world.createBody(bdef);
+            body.setUserData("Item_Weapon_Green_"+i);
+            body.createFixture(fdef);
+
+            items_Weapon_Green.getItems().add(body);
+            items_Weapon_Green.getItems_texture().add(items_Weapon_Green.createSpriteForBody(rect, game.getAssets().getItem_weapon_green()));
+
+            i++;
+        }
+
+        //ENEMY-ALIEN-FINGUS
+        i = 0;
+        for(MapObject object: map.getLayers().get(16).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             Enemy_Alien_Fingus newEnemyAlienZombie = new Enemy_Alien_Fingus(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,2f,3.4f,world,this.player);
@@ -436,7 +477,7 @@ public class WorldLoader {
 
         //ENEMY-ALIEN-TAKEL
         int j = 0;
-        for(MapObject object: map.getLayers().get(13).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object: map.getLayers().get(17).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             Enemy_Alien_Takel newEnemyAlienTakel = new Enemy_Alien_Takel(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world,this.player);
@@ -449,7 +490,7 @@ public class WorldLoader {
 
         i = 0;
         //ENEMY ALIEN KUGUS
-        for(MapObject object: map.getLayers().get(14).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object: map.getLayers().get(18).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             Enemy_Alien_Kugus newEnemyAlienKugus = new Enemy_Alien_Kugus(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,2.4f,4.4f,world,this.player);
@@ -461,7 +502,7 @@ public class WorldLoader {
 
         //ENEMY ALIEN BIGMAMA
         i = 0;
-        for(MapObject object: map.getLayers().get(15).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object: map.getLayers().get(19).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             Enemy_Alien_Bigmama newEnemyAlienBigmama = new Enemy_Alien_Bigmama(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,4f,8f,world,this.player);
@@ -630,5 +671,13 @@ public class WorldLoader {
 
     public void setForegroundLayers(int[] foregroundLayers) {
         this.foregroundLayers = foregroundLayers;
+    }
+
+    public Item_Weapon_Green getItems_Weapon_Green() {
+        return items_Weapon_Green;
+    }
+
+    public void setItems_Weapon_Green(Item_Weapon_Green items_Weapon_Green) {
+        this.items_Weapon_Green = items_Weapon_Green;
     }
 }

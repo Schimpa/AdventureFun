@@ -66,6 +66,14 @@ public abstract class LivingObject {
     //PARTIKEL EINES OBJEKTES
     protected Particles particles;
 
+    /*
+        COLLISION GROUPS
+        -1 = PLAYER
+        -2 = ENEMIES
+        -3 = BULLET & ITEMS
+
+     */
+
 
 
     public LivingObject(MainWindow game){
@@ -99,7 +107,7 @@ public abstract class LivingObject {
         fixtureDef.isSensor = false;
         fixtureDef.friction = 1;
         fixtureDef.shape = shape;
-        fixtureDef.filter.groupIndex = (short)1;
+
 
         body = world.createBody(bodyDef);
 

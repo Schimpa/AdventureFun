@@ -28,6 +28,7 @@ public class Enemy_Alien_Takel extends LivingObject {
 
     public void init(float x,float y,float sizeX,float sizeY,World world){
         super.init(x,y,sizeX,sizeY,world);
+        fixtureDef.filter.groupIndex = (short)-1;
         body.createFixture(fixtureDef);
         reactionDistance = 10;
         speed = new Vector2(12f,12f);
@@ -42,6 +43,7 @@ public class Enemy_Alien_Takel extends LivingObject {
         body.setUserData("Enemy_Alien_Takel");
 
         bullet = new Bullet(game,-100,-100,0.8f,0.8f,world,game.getAssets().getBullet_blitzkugel(),true);
+        bullet.setBulletSound(game.getAssets().getSound_shoot_laser_03());
         bullet.setSpeedX(3);
         bullet.setReloadTime(3.0f);
 

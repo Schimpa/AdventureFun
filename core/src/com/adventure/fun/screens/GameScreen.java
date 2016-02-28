@@ -69,6 +69,9 @@ public class GameScreen implements Screen {
 			gameBackground = game.getAssets().getBackground_02();
 		}else if (levelName.equals("maps/level_three.tmx")){
 			gameBackground = game.getAssets().getBackground_03();
+		}else if (levelName.equals("maps/level_five.tmx")){
+			gameBackground = game.getAssets().getBackground_05();
+			gameMiddleground = game.getAssets().getMiddleground_05();
 		}else{
 			gameBackground = game.getAssets().getBackground_01();
 		}

@@ -34,7 +34,7 @@ public class Enemy_Alien_Fingus extends LivingObject {
 
     public void init(float x,float y,float sizeX,float sizeY,World world){
         super.init(x,y,sizeX,sizeY,world);
-
+        fixtureDef.filter.groupIndex = (short)-1;
         body.createFixture(fixtureDef);
         reactionDistance = 10;
         speed = new Vector2(12f,12f);

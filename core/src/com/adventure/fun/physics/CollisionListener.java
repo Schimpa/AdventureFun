@@ -175,6 +175,17 @@ public class CollisionListener implements ContactListener {
             }
         }
 
+        for(int i = 0;i < gameScreen.getWorldLoader().getItems_Weapon_Green().getItems().size;i++){
+            if (contactBody01.getUserData().toString().equals("Item_Weapon_Green_"+i) || contactBody02.getUserData().toString().equals("Item_Weapon_Green_"+i) &&
+                    contactBody01.getUserData().toString().equals("Player") || contactBody02.getUserData().toString().equals("Player") ) {
+                Body body = gameScreen.getWorldLoader().getItems_Weapon_Green().getItems().get(i);
+                Gdx.app.debug("Item:", body.getUserData().toString());
+                if (body.getUserData().toString().equals("Item_Weapon_Green_"+i)){
+                    body.setUserData("Item_Weapon_Green_" + i + "_Destroy");
+                }
+            }
+        }
+
 
 
         //COLLISION ENEMY_ALIEN_KUGUS --- PLAYER

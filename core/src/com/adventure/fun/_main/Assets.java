@@ -18,7 +18,7 @@ public class Assets {
     private Sound sound_shoot_laser_04;
     private Sound sound_shoot_laserbeam_01;
 
-    private Sound sound_alien_shoot_01;
+    private Sound sound_shoot_alien_01;
 
 
     private Sound sound_step_01;
@@ -64,6 +64,7 @@ public class Assets {
     private TextureRegion bullet_laser;
     private TextureRegion bullet_blitz;
     private TextureRegion bullet_bigmama;
+    private TextureRegion bullet_green;
 
     //ITEMS
     private TextureRegion item_Score_100;
@@ -85,11 +86,13 @@ public class Assets {
     private Texture background_01;
     private Texture background_02;
     private Texture background_03;
+    private Texture background_05;
     private Texture backgroundMenu_01;
     private Texture backgroundMenu_02;
 
     //MIDDLEGROUND
     private Texture middleground_01;
+    private Texture middleground_05;
 
     public Assets(){
         assetManager = new AssetManager();
@@ -101,11 +104,13 @@ public class Assets {
         assetManager.load("background/background_01.png",Texture.class);
         assetManager.load("background/background_02.png",Texture.class);
         assetManager.load("background/background_03.png",Texture.class);
+        assetManager.load("background/background_05.png",Texture.class);
         assetManager.load("background/backgroundMenu_01.jpg",Texture.class);
         assetManager.load("background/backgroundMenu_02.jpg",Texture.class);
 
 
         assetManager.load("middleground/middleground_01.png",Texture.class);
+        assetManager.load("middleground/middleground_05.png",Texture.class);
 
         assetManager.load("texture_data/images.pack.atlas",TextureAtlas.class);
 
@@ -150,7 +155,7 @@ public class Assets {
         sound_shoot_laser_02 = assetManager.get("audio/shoot_laser_02.ogg", Sound.class);
         sound_shoot_laser_03 = assetManager.get("audio/shoot_laser_03.ogg", Sound.class);
         sound_shoot_laser_04 = assetManager.get("audio/shoot_laser_04.ogg", Sound.class);
-        sound_alien_shoot_01 = assetManager.get("audio/shoot_alien_01.ogg", Sound.class);
+        sound_shoot_alien_01 = assetManager.get("audio/shoot_alien_01.ogg", Sound.class);
         sound_shoot_laserbeam_01 = assetManager.get("audio/shoot_laserbeam_01.ogg", Sound.class);
 
         sound_step_01 = assetManager.get("audio/step_stone_01.ogg", Sound.class);
@@ -184,11 +189,13 @@ public class Assets {
         background_01 = assetManager.get("background/background_01.png",Texture.class);
         background_02 = assetManager.get("background/background_02.png",Texture.class);
         background_03 = assetManager.get("background/background_03.png", Texture.class);
+        background_05 = assetManager.get("background/background_05.png", Texture.class);
         backgroundMenu_01= assetManager.get("background/backgroundMenu_01.jpg", Texture.class);
         backgroundMenu_02= assetManager.get("background/backgroundMenu_02.jpg", Texture.class);
 
         //MIDDLEGROUND
         middleground_01 = assetManager.get("middleground/middleground_01.png",Texture.class);
+        middleground_05 = assetManager.get("middleground/middleground_05.png",Texture.class);
 
         //ITEMS
         item_Score_100 = atlas.findRegion("score_one");
@@ -214,6 +221,7 @@ public class Assets {
         bullet_blitzkugel = atlas.findRegion("bullet_blitzkugel");
         bullet_blitz = atlas.findRegion("bullet_blitz");
         bullet_bigmama = atlas.findRegion("bullet_bigmama");
+        bullet_green = atlas.findRegion("bullet_green");
 
     }
 
@@ -263,12 +271,12 @@ public class Assets {
         this.sound_shoot_laser_04 = sound_shoot_laser_04;
     }
 
-    public Sound getSound_alien_shoot_01() {
-        return sound_alien_shoot_01;
+    public Sound getSound_shoot_alien_01() {
+        return sound_shoot_alien_01;
     }
 
-    public void setSound_alien_shoot_01(Sound sound_alien_shoot_01) {
-        this.sound_alien_shoot_01 = sound_alien_shoot_01;
+    public void setSound_shoot_alien_01(Sound sound_shoot_alien_01) {
+        this.sound_shoot_alien_01 = sound_shoot_alien_01;
     }
 
     public AssetManager getAssetManager() {
@@ -627,5 +635,29 @@ public class Assets {
 
     public void setSound_alien_fingus_hit_01(Sound sound_alien_fingus_hit_01) {
         this.sound_alien_fingus_hit_01 = sound_alien_fingus_hit_01;
+    }
+
+    public Texture getBackground_05() {
+        return background_05;
+    }
+
+    public void setBackground_05(Texture background_05) {
+        this.background_05 = background_05;
+    }
+
+    public Texture getMiddleground_05() {
+        return middleground_05;
+    }
+
+    public void setMiddleground_05(Texture middleground_05) {
+        this.middleground_05 = middleground_05;
+    }
+
+    public TextureRegion getBullet_green() {
+        return bullet_green;
+    }
+
+    public void setBullet_green(TextureRegion bullet_green) {
+        this.bullet_green = bullet_green;
     }
 }
