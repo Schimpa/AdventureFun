@@ -116,8 +116,8 @@ public class WorldLoader {
 
         world = new World(new Vector2(0,-15f), true);
 
-        backgroundLayers = new int[]{0,1,2};
-        foregroundLayers = new int[]{3};
+        backgroundLayers = new int[]{0,1};
+        foregroundLayers = new int[]{2,3};
 
         createLights();
 

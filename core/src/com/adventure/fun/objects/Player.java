@@ -49,6 +49,7 @@ public class Player extends LivingObject {
     public void init(float x,float y,float sizeX,float sizeY,World world) {
         super.init(x,y,sizeX,sizeY,world);
         body.createFixture(fixtureDef);
+
         //ATTRIBUTE
         speed = new Vector2(25f,25f);
         damageCoolDownTime = 1f;

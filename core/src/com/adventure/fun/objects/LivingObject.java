@@ -99,6 +99,7 @@ public abstract class LivingObject {
         fixtureDef.isSensor = false;
         fixtureDef.friction = 1;
         fixtureDef.shape = shape;
+        fixtureDef.filter.groupIndex = (short)1;
 
         body = world.createBody(bodyDef);
 

@@ -73,7 +73,8 @@ public class Enemy_Alien_Kugus extends LivingObject {
 
     public void init(float x,float y,float sizeX,float sizeY,World world){
         super.init(x,y,sizeX,sizeY,world);
-        super.body.createFixture(super.fixtureDef);
+        fixtureDef.filter.groupIndex = 1;
+        body.createFixture(super.fixtureDef);
         createWeaponBody(false);
 
 
