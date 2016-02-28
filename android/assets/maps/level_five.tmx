@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="400" height="100" tilewidth="32" tileheight="32" nextobjectid="525">
+ <tileset firstgid="1" name="texture" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="texture.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="257" name="shadow" tilewidth="32" tileheight="32" tilecount="30">
+  <image source="shadow.png" width="160" height="192"/>
+ </tileset>
+ <tileset firstgid="287" name="environment" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="environment.png" width="512" height="512"/>
+ </tileset>
+ <layer name="Background" width="400" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt3UEOgjAQQNHiBXTlDbwnN9YjCAcwmZlCsPBe0iWBFT8FWloDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC29kwMAFhl2qEfAKyy7dAPAFY6AUCFdgCQpR0AZHluBUCFdgCQZe4BQIV2AJBl7gFAlnYAkGFNOQAV2gFAlnYAkKUbAGSZdwAQYf91AKL8uwOAqEoztAMAvQAgSycAAAAAAAAAuDrvygHI8I0uAFHWeAAQZU05AFE9e5FoB/ynV3LAL72N0AwYi37QSzfgmvSDqq27oR8wFv0gaq9eaAaMST/O7T219plqx2oDwP6We/S83Kvno6+jh14AUKEXAFRoBsC47rfWHrdjzq0dAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHB+XwW+L8Y=
+  </data>
+ </layer>
+ <layer name="Ground" width="400" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt3VtS20gUBuC2yOtUAqR4ZikshaV4KVkKc9nAXN5hLu8zQN4zx2BXVAaEut2yJPv7qk4hS7hRKHP+tCxZKQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHLevi7R8jHqIuo8ae38AmIcPTVqeRDVRi0Z+ANDP58iM86izqFP5AUCOJt18W6SbsXcDgJmJecc3730AkMv8A4ACkR2rDAGALJEfV5EfV2PvBwDzYv4BQAnzDwCKOP8KgAKfIj8+unYQAAAAAAAAAAA4QPeLlB6iHhdP93sCgF4WTUpN1EnzdL8nAOjlNDLjLOq8ebrfEwD05jNGACjhMw4BKGH+AUARn3EIQAn3mAWghPkHACXMPwAo4PwrAEp8bJ7u8wQAwERdpHSdUV86lldjAXAkMvOjK0vkB52+LtLyMeoh6t45UjB7ufnwXsFbPjRpeRLVRC0a+QFzt86HdgYUZ4f8oMvnyIzzqLOo0x3zI+c16XUKw3gjPxy/YhgTuD7D6xTqkB/s1QSuD/c6hTpq58cv0Rt+jvop6sfnSrGcYt1qW/b2VGFMylW/J6z5BxyMV/KjT72ZIX9E//496reoX58rxXKKdatt2dtThTEpV/uesFO4Plx+QB3v5EfXnGPz+Es7P/6J/v131F9Rfz5XiuUU61bbsrenCmNSrvY9YWvdn2OX98rlB9SRmR/b9erf6m30iLvF9x4Ryze3rWMWudtrjJn5O+nsP8em5j2Z9j3/kB8wnK4sKKmVOedH6f9pD1nNnr/v+wPKDxjOuh9ujkMtW8eiluuvl+uvN6+s2358vRpzrvlRkpXHoGrP3/P5V/IDhrOVDdv5sdzKiIPNj9K51lGo2PM/xVgf93jtufyA4bTyYpMhm8fFoncvb1v9JpZX64q31xizyy7H6o7CBM65LSU/YDgd+XFVOuac5h813u85eBO45q+U/IDhtN7/qDb/mEt+7JodR9OHZjL/+GHxsuQHDOeV7Njkx2XpmHM4flUjO46lD03hmr8+5AfsV0d+FPsv+vi/rV4ey6t1xdtrjNlWKzuOpQ/N5Z6w8gP26+Llubmbulxnyd3669W6Z7bXtR/nLref3/U9m587q5q6Q/v3rMgP2K835h/XmflxmVGb5+eOX7ovfZ+Xu093F9/zbvL9+NDz8C3yA4ZzUWf+0bdXt7+vpLf3qdd+Xtf+vTdG5361fo+T6Mm75oT8APq6eHn94Kb69utdenrfPl3U27cqZ//2kh+1+vRQmSE/AOrYR5+eas2V/ACmYOweLj/yyQ9gCsbu4fIjn/wApmDsHi4/8skPYArG7uHyI5/8AKZg7B4uP/LJD2AKxu7h8gNgnsbu4fIDYJ7G7uHyAwAAAAAAAAAAAAAAAAAAAAAAmJL/AXtb33Q=
+  </data>
+ </layer>
+ <layer name="Overlay" width="400" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt3clu21YUBuBLygW6KTwCfR0/mh5NbfICabt3h+xbD1mnh7KdMCyHS1ayTfL7gB8iyJAmJOQeHQ5iSgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAy3dbpHQXuY88FK+9NwDMRVGmVEY2kZPytfcGgLk4j5pxEbmMXKkfAIzwuUjXqYwAwAifq/Meeg8ARtJ/ADBJmbZRQ7avvRsAzEyZdlE/dq+9GwDMjP4DgCn0HwBM4PorAKY4jdpxpn4A8OShSNv7yF3ktuf8xo8jAsDynZRpu4mUkaJsrx9qAgBNV1EzLiMXkfOW+qF2ANDJtVUATOHeDgCm6Og/HLsCoE/bvR1qBwBD/LYuAFM0+w+9BwA59B8ATFK7/krvAUCus6gfpxG1A4Ax/G4VAADwEvQdAIyldgCsx22R0l3kvtg/u2MytQNgXYoypTKyKffP7sjmGU8A63YeNeMiclnun93RS70AoK7vfnE1A4Aubb+XCwBDuvoPPQfAMjwUaXsfuYvcHvL5fp4XCLBoJzHObyJlpCgPWj88rxxW6H18b3wX+Tny02NSTKeYVy0bXF4Zu07ONjm8q6gZl5GLyPlh64f+A1bot/h//2vkl8iHx6SYTjGvWja4vDJ2nZxtciTH6BX0H7BKH2P8/ivyZ+SPx6SYTjGvWja4vDJ2nZxtMs6neN++K9P1U3ad//AIvULX88qdP4fluynS9e/F1+tnYnp3U/s+ObR8yjo52xziHuav6vXjU9/7eIRe4bTcP7Njr/lZ+Ixg2eZYP9rGouZYtabxKrd+HONejTW+38CjudWPMePUWsa0EfXjIM8WVzOAypzqh/Gq3Uv0H2oGLE81dgxkW39tirF7e1M7pxrT1bzs5VPWydlmk3Gr26H6j7ZjgGoGLFeMGUPZVtfkPOU/5tB//J/xaw1jX/W5Rt3IOX/eev2VGgHr1Fc7qp6jqhvVmPJcQ5rrv/X6YVwbVvt+0Hv97lnUj9PavYPqBqxb2zGq2muVL/Wj7bvpWz5+ZWzLU68fff2HY1JAXe0YVdvrcx+ye05z/X9iHP+7NpbHdDUve/mUdXK2aXzLV/t8q/px/TxfvQD69J3zlPZsnvLWbTLinDfA8X1ffJuhsfmlte1Dc5+bAeD4fii+zdDYfKwa0lWvmn+/ub9tAeBl5YzNXT3KFDk9hdoAsAxdPUrOeYm+3kIvAbBsfX3J2KgTAOQc+9JfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzNe/r9v+SA==
+  </data>
+ </layer>
+ <layer name="Shadow" width="400" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt3U1y20YUhVFRI01U5SVqKVyKluJNJDtwvARPQ1bEimSDBEE2cPs1z6l6kySSYrgfvqKgn6cnAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYBSvu3UHgFrW7oJ+AIwp3Q39AKgp3Q39AKgp3Q39AKgp3Q39AKgp3Q39AKgp3Q39AKgp3Q39AKgp3Q39AKgp3Q39AKgp3Q39AKgp3Q39AKgp3Q39AKgp3Q39AKgp3Q39AKgp3Q3tAKgp3Q79AKgp3Q79AKgp3Q79AKgp3Q79AKgp3Q79YAQ/d9cPjCLdDv2gOk3gUaXboR9UdmrHy+7yOPeMKN0Oe0R15/rg3DO6dDvsEZXd2g7nnhGk22GPqOqnc8+DS7fDHlHR6bmHc88jS7fDHlHVPZ+7cu4ZQbod9ohqjq897m2Hc88I0u2wR1Tk3EO+HfaISlq99nDuGUG6HfaIKlo8M3fuGUm6HfaI3n3+uVWtXns494wg3Q57RBUt2+HcM4J0O+wRPTs972jdDueeEaTbYY/oVevnHc49o0m3wx7RozWedzj3jCbdDntED6Z+x9Oa7XDuGUG6HfaIlEu/E3Dtdjj3jCDdjuMcdvU9fR14DOeacc3ve9IP+CrdDv0gZete6AejSbdDP9jK56/FTTVDPxhJeof0gy3tDmctfd71g1Gkd0g/2NLhrL29/jeLz+TLFW+nHzySdDv0gy3pB7STbod+sCX9gHbS7dAPtnD6ml39gHbS7RipH8f706/d0/7c96Sxvd//Lna7p+/XnMln/YBZ6XaM0o+pXnz05OL3OdPe1PVe+jW7Xn/AvHQ7RujH6T71bff/ferbmT+Thqxj7vvKW5xJ/YCv0u2o3o/P7Zj4c/0xtHPNzyJpeSb1A75q3YLn3dP3l+Xznr4Ot7jUjgv3JRb4/efirtkM/YBlvJa4zS3tOI3PYc275nnRmj+LRD9gnn4sd0873DcuO/fce2pan139gGX0Y5l72/Fxjfhw7nNS6Z9xqB8wr7d+/HV4H3/fsFuHt9kf3nZ/z8ee06Idj37vuPQM4yjdDf2A6/XWjx+H9/HP7o/7zP7Sc9Tjvz+8zf7H/H93z+yP/38t2vE68f5Hcu0z76PE723SD2ij9d5Nfd/uKFq145HvHb32Qj9guZV2b8h53uBa9e7ea5jugn5AO+k9NV/uWbOztar3/wZ/F+8T1+Kt5ceA6tJ7ahbf11ZR/fXCCtf5feIavbX8GFBdek/NTfe2Jq9LdOLiNX6fuF5vLT8GVJfeU7P8njP1z0d+FpEY/YB56T01psfRD5iX3lNjehz9gHnpPTWmx9miH1MDlaT31JgeRz9gXnpPjelxUvsClaT31JgeJ7UvUEl6T43pcVL7ApWk99SYHie1L1BJek+N6XFS+wKVpPfUmB4ntS9QSXpPjelxUvsClaT31JgeJ7UvUEl6T43pcVL7ApWk99SYHie1L1BJek+N6XFS+wKVpPfUmB4ntS9QSXpPjelxUvsClaT31JgeJ7UvUMm/qh9oug==
+  </data>
+ </layer>
+ <objectgroup name="Spawn">
+  <object id="432" x="704" y="2304" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="End"/>
+ <objectgroup name="Collision">
+  <object id="464" x="640" y="2240" width="32" height="224"/>
+  <object id="465" x="672" y="2432" width="1760" height="32"/>
+  <object id="466" x="2400" y="2400" width="32" height="32"/>
+  <object id="467" x="2432" y="2368" width="32" height="32"/>
+  <object id="468" x="2464" y="2336" width="32" height="32"/>
+  <object id="469" x="2496" y="2304" width="32" height="32"/>
+  <object id="470" x="2528" y="2272" width="32" height="32"/>
+  <object id="471" x="2560" y="2240" width="32" height="32"/>
+  <object id="472" x="2592" y="2208" width="32" height="32"/>
+  <object id="473" x="2624" y="2176" width="32" height="32"/>
+  <object id="474" x="2656" y="2144" width="128" height="32"/>
+  <object id="475" x="2784" y="2176" width="160" height="32"/>
+  <object id="476" x="2944" y="2208" width="32" height="128"/>
+  <object id="477" x="2976" y="2304" width="32" height="160"/>
+  <object id="478" x="3008" y="2432" width="192" height="32"/>
+  <object id="479" x="3200" y="2464" width="256" height="32"/>
+  <object id="480" x="3456" y="2496" width="32" height="32"/>
+  <object id="481" x="3488" y="2528" width="160" height="32"/>
+  <object id="482" x="3648" y="2560" width="416" height="32"/>
+  <object id="483" x="4064" y="2528" width="96" height="32"/>
+  <object id="484" x="4160" y="2496" width="192" height="32"/>
+  <object id="486" x="4352" y="2464" width="128" height="32"/>
+  <object id="488" x="672" y="2240" width="416" height="32"/>
+  <object id="489" x="1056" y="1856" width="32" height="384"/>
+  <object id="491" x="4480" y="2432" width="512" height="32"/>
+  <object id="492" x="4992" y="2400" width="128" height="32"/>
+  <object id="493" x="5120" y="2368" width="128" height="32"/>
+  <object id="494" x="5248" y="2336" width="64" height="32"/>
+  <object id="495" x="5312" y="2304" width="64" height="32"/>
+  <object id="496" x="5376" y="2272" width="224" height="32"/>
+  <object id="497" x="5600" y="2240" width="96" height="32"/>
+  <object id="498" x="5696" y="2208" width="96" height="32"/>
+  <object id="499" x="5792" y="2176" width="96" height="32"/>
+  <object id="500" x="5888" y="2144" width="64" height="32"/>
+  <object id="502" x="5952" y="2112" width="416" height="32"/>
+  <object id="503" x="6336" y="2144" width="32" height="608"/>
+  <object id="504" x="5984" y="1952" width="544" height="32"/>
+  <object id="505" x="6496" y="1984" width="32" height="768"/>
+  <object id="506" x="6016" y="1888" width="96" height="32"/>
+  <object id="507" x="6016" y="1920" width="32" height="32"/>
+  <object id="508" x="6112" y="1856" width="96" height="32"/>
+  <object id="509" x="6208" y="1824" width="128" height="32"/>
+  <object id="510" x="6336" y="1792" width="32" height="32"/>
+  <object id="511" x="6368" y="1760" width="32" height="32"/>
+  <object id="512" x="6400" y="1728" width="32" height="32"/>
+  <object id="513" x="6432" y="1664" width="64" height="32"/>
+  <object id="514" x="6432" y="1696" width="32" height="32"/>
+  <object id="515" x="6496" y="1632" width="32" height="32"/>
+  <object id="516" x="6528" y="1600" width="32" height="32"/>
+  <object id="519" x="6560" y="1536" width="32" height="64"/>
+  <object id="520" x="6592" y="1472" width="32" height="64"/>
+  <object id="521" x="6624" y="1440" width="32" height="32"/>
+  <object id="522" x="6656" y="1344" width="32" height="96"/>
+  <object id="523" x="6688" y="1312" width="32" height="32"/>
+  <object id="524" x="6720" y="1280" width="416" height="32"/>
+ </objectgroup>
+ <objectgroup name="Item_Point_100"/>
+ <objectgroup name="Item_Point_200"/>
+ <objectgroup name="Item_Point_500"/>
+ <objectgroup name="Item_Point_1000"/>
+ <objectgroup name="Item_Health"/>
+ <objectgroup name="Enemy_Alien_Fingus">
+  <object id="433" x="1728" y="2304" width="32" height="32"/>
+  <object id="434" x="1792" y="2304" width="32" height="32"/>
+  <object id="437" x="3392" y="2368" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Enemy_Alien_Soldier"/>
+ <objectgroup name="Enemy_Alien_Kugus">
+  <object id="435" x="3680" y="2400" width="32" height="32"/>
+  <object id="436" x="4000" y="2400" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Enemy_Alien_BigMama"/>
+</map>
