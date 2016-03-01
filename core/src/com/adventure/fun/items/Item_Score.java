@@ -1,11 +1,6 @@
 package com.adventure.fun.items;
 
 import com.adventure.fun._main.WorldLoader;
-import com.adventure.fun.texture.Textures;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Created by Dennis on 22.11.2015.

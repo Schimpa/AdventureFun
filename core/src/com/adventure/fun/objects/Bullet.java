@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.sun.org.apache.xerces.internal.impl.dv.xs.AnySimpleDV;
 
 import box2dLight.PointLight;
 
@@ -93,30 +94,8 @@ public class Bullet extends LivingObject {
     }
 
 
-    public void createGreenBullet(float x,float y,float sizeX,float sizeY,World world,TextureRegion region,boolean isAnimation) {
-        super.init(x, y, sizeX, sizeY, world);
-        fixtureDef.filter.groupIndex = (short)-3;
-        fixtureDef.isSensor = true;
-        body.createFixture(fixtureDef);
-
-        reloadTime = 3f;
-        speedX = 0f;
-        timeFromShoot = 0f;
-        bulletDamage = 2;
-
-        this.region = region;
-        this.isAnimation = isAnimation;
-
-        this.bulletSound = game.getAssets().getSound_shoot_laser_04();
-        bulletShoot = false;
-
-        MassData massData = new MassData();
-        massData.mass = 0;
-        body.setMassData(massData);
-
-        currentFrame = new TextureRegion();
-
-        shape.dispose();
+    public void createGreenBullet() {
+        //CHANGE PROPERTIES. DON'T CREATE NEW INSTANCE
     }
 
 

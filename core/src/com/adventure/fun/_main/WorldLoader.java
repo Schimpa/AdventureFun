@@ -107,7 +107,7 @@ public class WorldLoader {
         items_Score_200 = new Item_Score(this,200);
         items_Score_500 = new Item_Score(this,500);
         items_Score_1000 = new Item_Score(this,1000);
-        items_Weapon_Green = new Item_Weapon_Green(this);
+        items_Weapon_Green = new Item_Weapon_Green(this,1000);
 
         items_Health_1 = new Item_Health(this,1);
 
@@ -226,9 +226,9 @@ public class WorldLoader {
         items_Score_500.checkDestruction();
         items_Score_1000.checkDestruction();
 
-        items_Weapon_Green.checkDestruction();
-
         items_Health_1.checkDestruction();
+
+        items_Weapon_Green.checkDestruction();
 
         rayHandler.update();
         world.step(deltaTime, 60, 20);
@@ -435,8 +435,8 @@ public class WorldLoader {
             i++;
         }
 
+        i=0;
         //ITEM WEAPON GREEN
-        i = 0;
         for(MapObject object: map.getLayers().get(12).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
@@ -463,6 +463,35 @@ public class WorldLoader {
 
             i++;
         }
+        i = 0;
+        /*
+        for(MapObject object: map.getLayers().get(11).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            BodyDef bdef = new BodyDef();
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(0.01f,0.01f);
+
+            FixtureDef fdef = new FixtureDef();
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.restitution = 0;
+            fdef.filter.groupIndex = (short)-3;
+
+
+            Body body = world.createBody(bdef);
+            body.setUserData("Item_Weapon_Green_"+i);
+            body.createFixture(fdef);
+
+            items_Weapon_Green.getItems().add(body);
+            items_Weapon_Green.getItems_texture().add(items_Weapon_Green.createSpriteForBody(rect, game.getAssets().getItem_weapon_green()));
+
+            i++;
+        }
+        */
 
         //ENEMY-ALIEN-FINGUS
         i = 0;
