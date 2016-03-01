@@ -8,8 +8,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.sun.org.apache.xerces.internal.impl.dv.xs.AnySimpleDV;
@@ -45,7 +48,7 @@ public class Bullet extends LivingObject {
     private float reloadTime;
 
     //SCHADEN DES GESCHOSSES
-    private float bulletDamage;
+    private int bulletDamage;
 
     //DAS LICHT DES GESCHOSSESE
     private PointLight bulletLight;
@@ -66,15 +69,12 @@ public class Bullet extends LivingObject {
         fixtureDef.filter.groupIndex = (short)-3;
         body.createFixture(fixtureDef);
 
-        reloadTime = 0.4f;
-        speedX = 0f;
+        createRedBullet();
         timeFromShoot = 0f;
-        bulletDamage = 1;
 
         this.region = region;
         this.isAnimation = isAnimation;
 
-        this.bulletSound = game.getAssets().getSound_shoot_laser_01();
         bulletShoot = false;
 
         MassData massData = new MassData();
@@ -95,7 +95,39 @@ public class Bullet extends LivingObject {
 
 
     public void createGreenBullet() {
-        //CHANGE PROPERTIES. DON'T CREATE NEW INSTANCE
+        this.region = game.getAssets().getBullet_green();
+        this.setBulletSound(game.getAssets().getSound_shoot_laser_04());
+        this.setSpeed(new Vector2(12f,12f));
+        this.setMaxSpeed(new Vector2(12f,12f));
+        this.reloadTime = 1.5f;
+        this.bulletDamage = 2;
+    }
+
+    public void createBlueBullet(){
+        this.region = game.getAssets().getBullet_blue();
+        this.setBulletSound(game.getAssets().getSound_shoot_laser_04());
+        this.setSpeed(new Vector2(5f,5f));
+        this.setMaxSpeed(new Vector2(5f,5f));
+        this.reloadTime = 1f;
+        this.bulletDamage = 1;
+    }
+
+    public void createYellowBullet(){
+        this.region = game.getAssets().getBullet_yellow();
+        this.setBulletSound(game.getAssets().getSound_shoot_laser_04());
+        this.setSpeed(new Vector2(20f,20f));
+        this.setMaxSpeed(new Vector2(20f,20f));
+        this.reloadTime = 3f;
+        this.bulletDamage = 3;
+    }
+
+    public void createRedBullet(){
+        this.region = game.getAssets().getBullet_Red();
+        this.setBulletSound(game.getAssets().getSound_shoot_laser_01());
+        this.setSpeed(new Vector2(25f,25f));
+        this.setMaxSpeed(new Vector2(25f,25f));
+        this.reloadTime = 0.4f;
+        this.bulletDamage = 1;
     }
 
 
@@ -116,11 +148,13 @@ public class Bullet extends LivingObject {
     public boolean shootBullet(LivingObject object){
         if (timeFromShoot >= reloadTime && bulletShoot == true){
             bulletShoot = false;
+            /*
             PointLight light = new PointLight(
                     game.getMenuScreen().getGameScreen().getWorldLoader().getRayHandler(), 5, null, 2, 0f, 0f);
 
             light.attachToBody(this.getBody());
-            light.setColor(1f, 0, 0, 0.5f);
+            light.setColor(1f, 0, 0, 0.5f);*
+            */
 
             if ((this.getBody().getPosition().x - object.getBody().getPosition().x) >= 10
                     || (this.getBody().getPosition().x - object.getBody().getPosition().x) <= -10 ){
@@ -128,15 +162,14 @@ public class Bullet extends LivingObject {
                 this.getBody().setLinearVelocity(0, 0);
                 timeFromShoot = 0;
             }
-
             if (this.getBody().getLinearVelocity().x == 0){
                 bulletSound.play(soundVolume);
                 if (object.getCurrentFrame().isFlipX() == false){
                     this.getBody().setTransform(object.getBody().getPosition().x + object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
-                    this.getBody().setLinearVelocity(this.getSpeedX(), 0);
+                    this.getBody().setLinearVelocity(this.getSpeed().x, 0);
                 } else if (object.getCurrentFrame().isFlipX() == true) {
                     this.getBody().setTransform(object.getBody().getPosition().x - object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
-                    this.getBody().setLinearVelocity(-this.getSpeedX(), 0);
+                    this.getBody().setLinearVelocity(-this.getSpeed().x, 0);
                 }
             }
         }
@@ -297,5 +330,11 @@ public class Bullet extends LivingObject {
         this.region = region;
     }
 
+    public int getBulletDamage() {
+        return bulletDamage;
+    }
 
+    public void setBulletDamage(int bulletDamage) {
+        this.bulletDamage = bulletDamage;
+    }
 }

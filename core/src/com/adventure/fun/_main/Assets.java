@@ -61,10 +61,14 @@ public class Assets {
 
     //BULLETS
     private TextureRegion bullet_blitzkugel;
-    private TextureRegion bullet_laser;
+
     private TextureRegion bullet_blitz;
     private TextureRegion bullet_bigmama;
+
     private TextureRegion bullet_green;
+    private TextureRegion bullet_red;
+    private TextureRegion bullet_yellow;
+    private TextureRegion bullet_blue;
 
     //ITEMS
     private TextureRegion item_Score_100;
@@ -74,6 +78,10 @@ public class Assets {
     private TextureRegion item_Health;
 
     private TextureRegion item_weapon_green;
+    private TextureRegion item_weapon_blue;
+    private TextureRegion item_weapon_red;
+    private TextureRegion item_weapon_yellow;
+
 
     //ICONS
     private TextureRegion icon_Health;
@@ -195,7 +203,7 @@ public class Assets {
 
         //MIDDLEGROUND
         middleground_01 = assetManager.get("middleground/middleground_01.png",Texture.class);
-        middleground_05 = assetManager.get("middleground/middleground_05.png",Texture.class);
+        middleground_05 = assetManager.get("middleground/middleground_05.png", Texture.class);
 
         //ITEMS
         item_Score_100 = atlas.findRegion("score_one");
@@ -205,6 +213,9 @@ public class Assets {
         item_Health = atlas.findRegion("battery");
 
         item_weapon_green = atlas.findRegion("weapon_green");
+        item_weapon_red = atlas.findRegion("weapon_red");
+        item_weapon_blue = atlas.findRegion("weapon_blue");
+        item_weapon_yellow = atlas.findRegion("weapon_yellow");
 
         //ICONS
         icon_Health = atlas.findRegion("icon_Health");
@@ -217,11 +228,14 @@ public class Assets {
         alien_kugus = atlas.findRegion("alien_kugus");
         alien_bigmama = atlas.findRegion("alien_bigmama");
 
-        bullet_laser = atlas.findRegion("bullet_laser");
         bullet_blitzkugel = atlas.findRegion("bullet_blitzkugel");
         bullet_blitz = atlas.findRegion("bullet_blitz");
         bullet_bigmama = atlas.findRegion("bullet_bigmama");
+
         bullet_green = atlas.findRegion("bullet_green");
+        bullet_red = atlas.findRegion("bullet_red");
+        bullet_yellow = atlas.findRegion("bullet_yellow");
+        bullet_blue = atlas.findRegion("bullet_blue");
 
     }
 
@@ -384,12 +398,12 @@ public class Assets {
         this.alien_fingus = alien_fingus;
     }
 
-    public TextureRegion getBullet_Laser() {
-        return bullet_laser;
+    public TextureRegion getBullet_Red() {
+        return bullet_red;
     }
 
-    public void setBullet_Laser(TextureRegion bullet) {
-        this.bullet_laser = bullet;
+    public void setBullet_Red(TextureRegion bullet) {
+        this.bullet_red = bullet;
     }
 
     public Texture getBackground_01() {
@@ -514,14 +528,6 @@ public class Assets {
 
     public void setAlien_kugus(TextureRegion alien_kugus) {
         this.alien_kugus = alien_kugus;
-    }
-
-    public TextureRegion getBullet_laser() {
-        return bullet_laser;
-    }
-
-    public void setBullet_laser(TextureRegion bullet_laser) {
-        this.bullet_laser = bullet_laser;
     }
 
     public Texture getBackground_02() {
@@ -659,5 +665,45 @@ public class Assets {
 
     public void setBullet_green(TextureRegion bullet_green) {
         this.bullet_green = bullet_green;
+    }
+
+    public TextureRegion getBullet_yellow() {
+        return bullet_yellow;
+    }
+
+    public void setBullet_yellow(TextureRegion bullet_yellow) {
+        this.bullet_yellow = bullet_yellow;
+    }
+
+    public TextureRegion getBullet_blue() {
+        return bullet_blue;
+    }
+
+    public void setBullet_blue(TextureRegion bullet_blue) {
+        this.bullet_blue = bullet_blue;
+    }
+
+    public TextureRegion getItem_weapon_blue() {
+        return item_weapon_blue;
+    }
+
+    public void setItem_weapon_blue(TextureRegion item_weapon_blue) {
+        this.item_weapon_blue = item_weapon_blue;
+    }
+
+    public TextureRegion getItem_weapon_red() {
+        return item_weapon_red;
+    }
+
+    public void setItem_weapon_red(TextureRegion item_weapon_red) {
+        this.item_weapon_red = item_weapon_red;
+    }
+
+    public TextureRegion getItem_weapon_yellow() {
+        return item_weapon_yellow;
+    }
+
+    public void setItem_weapon_yellow(TextureRegion item_weapon_yellow) {
+        this.item_weapon_yellow = item_weapon_yellow;
     }
 }

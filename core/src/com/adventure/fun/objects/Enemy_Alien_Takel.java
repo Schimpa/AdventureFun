@@ -44,7 +44,7 @@ public class Enemy_Alien_Takel extends LivingObject {
 
         bullet = new Bullet(game,-100,-100,0.8f,0.8f,world,game.getAssets().getBullet_blitzkugel(),true);
         bullet.setBulletSound(game.getAssets().getSound_shoot_laser_03());
-        bullet.setSpeedX(3);
+        bullet.setSpeed(new Vector2(6,6));
         bullet.setReloadTime(3.0f);
 
         currentFrame = new TextureRegion();

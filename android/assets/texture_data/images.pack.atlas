@@ -60,23 +60,37 @@ bullet_blitzkugel
   orig: 128, 32
   offset: 0, 0
   index: -1
-bullet_green
+bullet_blue
   rotate: false
   xy: 394, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-bullet_laser
+bullet_green
   rotate: false
   xy: 428, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-icon_Health
+bullet_red
   rotate: false
   xy: 462, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+bullet_yellow
+  rotate: false
+  xy: 496, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+icon_Health
+  rotate: false
+  xy: 530, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -90,35 +104,56 @@ player_move
   index: -1
 score_four
   rotate: false
-  xy: 496, 2
+  xy: 564, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 score_one
   rotate: false
-  xy: 530, 2
+  xy: 598, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 score_three
   rotate: false
-  xy: 564, 2
+  xy: 632, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 score_two
   rotate: false
-  xy: 598, 2
+  xy: 666, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+weapon_blue
+  rotate: false
+  xy: 700, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 weapon_green
   rotate: false
-  xy: 632, 2
+  xy: 734, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+weapon_red
+  rotate: false
+  xy: 768, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+weapon_yellow
+  rotate: false
+  xy: 802, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

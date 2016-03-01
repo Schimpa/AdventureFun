@@ -283,6 +283,10 @@
   <object id="380" x="5344" y="4384" width="32" height="32"/>
   <object id="402" x="4480" y="1472" width="32" height="32"/>
  </objectgroup>
+ <objectgroup name="WEAPON GREEN"/>
+ <objectgroup name="WEAPON BLUE"/>
+ <objectgroup name="WEAPON RED"/>
+ <objectgroup name="WEAPON YELLOW"/>
  <objectgroup name="ENEMY_FINGUS">
   <object id="317" x="3072" y="928" width="32" height="32"/>
   <object id="318" x="4864" y="928" width="32" height="32"/>
@@ -339,4 +343,7 @@
  <objectgroup name="ENEMY_BIGMAMA">
   <object id="373" x="3968" y="416" width="32" height="32"/>
  </objectgroup>
+ <objectgroup name="ENEMY BIGDADDY"/>
+ <objectgroup name="ENEMY SPECIAL"/>
+ <objectgroup name="ENEMY KEFOS"/>
 </map>

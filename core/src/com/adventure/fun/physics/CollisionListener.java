@@ -225,7 +225,7 @@ public class CollisionListener implements ContactListener {
             if (contactBody01.getUserData().toString().equals("Enemy_Alien_Bigmama_" + i) && contactBody02.getUserData().toString().equals("Player") ||
                     contactBody02.getUserData().toString().equals("Enemy_Alien_Bigmama_" + i) && contactBody01.getUserData().toString().equals("Player")) {
                 if (gameScreen.getWorldLoader().getPlayer().getDamageCoolDownTime() >= 0.7){
-                    gameScreen.getWorldLoader().getPlayer().looseLife(1);
+                    gameScreen.getWorldLoader().getPlayer().looseLife( gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
 
                     if (contactBody01.getUserData().toString().equals("Player")){
 
@@ -257,7 +257,7 @@ public class CollisionListener implements ContactListener {
             if (contactBody01.getUserData().toString().equals("Enemy_"+i) && contactBody02.getUserData().toString().equals("Bullet_Player") ||
                     contactBody02.getUserData().toString().equals("Enemy_"+i) && contactBody01.getUserData().toString().equals("Bullet_Player"))
             {
-                gameScreen.getWorldLoader().getEnemies_alien_zombie().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_zombie().get(i).getLives() - 1);
+                gameScreen.getWorldLoader().getEnemies_alien_zombie().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_zombie().get(i).getLives() - gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
                 gameScreen.getWorldLoader().getGame().getAssets().getSound_alien_fingus_hit_01();
                 if (contactBody01.getUserData().toString().equals("Bullet_Player")){
                     gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x,
@@ -277,7 +277,7 @@ public class CollisionListener implements ContactListener {
             if (contactBody01.getUserData().toString().equals("Enemy_"+ (i + gameScreen.getWorldLoader().getEnemies_alien_zombie().size)) && contactBody02.getUserData().toString().equals("Bullet_Player") ||
                     contactBody02.getUserData().toString().equals("Enemy_"+(i + gameScreen.getWorldLoader().getEnemies_alien_zombie().size)) && contactBody01.getUserData().toString().equals("Bullet_Player")){
 
-                gameScreen.getWorldLoader().getEnemies_alien_takel().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_takel().get(i).getLives() - 1);
+                gameScreen.getWorldLoader().getEnemies_alien_takel().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_takel().get(i).getLives() -  gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
 
                 if (contactBody01.getUserData().toString().equals("Bullet_Player")){
                     gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
@@ -296,7 +296,7 @@ public class CollisionListener implements ContactListener {
             if (contactBody01.getUserData().toString().equals("Enemy_Alien_Bigmama_" + i)&& contactBody02.getUserData().toString().equals("Bullet_Player") ||
                     contactBody02.getUserData().toString().equals("Enemy_Alien_Bigmama_" + i) && contactBody01.getUserData().toString().equals("Bullet_Player")){
 
-                gameScreen.getWorldLoader().getEnemies_alien_bigmama().get(i).looseLife(1);
+                gameScreen.getWorldLoader().getEnemies_alien_bigmama().get(i).looseLife( gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
 
                 if (contactBody01.getUserData().toString().equals("Bullet_Player")){
                     gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
@@ -316,7 +316,7 @@ public class CollisionListener implements ContactListener {
             if (contactBody01.getUserData().toString().equals("Enemy_Alien_Kugus_"+i) && contactBody02.getUserData().toString().equals("Bullet_Player") ||
                     contactBody02.getUserData().toString().equals("Enemy_Alien_Kugus_"+i) && contactBody01.getUserData().toString().equals("Bullet_Player")){
 
-                gameScreen.getWorldLoader().getEnemies_alien_kugus().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_kugus().get(i).getLives() - 1);
+                gameScreen.getWorldLoader().getEnemies_alien_kugus().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_kugus().get(i).getLives() -  gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
 
                 if (contactBody01.getUserData().toString().equals("Bullet_Player")){
                     gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,

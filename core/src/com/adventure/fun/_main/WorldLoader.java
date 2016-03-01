@@ -107,7 +107,7 @@ public class WorldLoader {
         items_Score_200 = new Item_Score(this,200);
         items_Score_500 = new Item_Score(this,500);
         items_Score_1000 = new Item_Score(this,1000);
-        items_Weapon_Green = new Item_Weapon_Green(this,1000);
+        items_Weapon_Green = new Item_Weapon_Green(this);
 
         items_Health_1 = new Item_Health(this,1);
 

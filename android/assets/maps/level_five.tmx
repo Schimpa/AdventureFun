@@ -95,6 +95,10 @@
  <objectgroup name="Item_Point_500"/>
  <objectgroup name="Item_Point_1000"/>
  <objectgroup name="Item_Health"/>
+ <objectgroup name="Item_Weapon_Green"/>
+ <objectgroup name="Item_Weapon_Blue"/>
+ <objectgroup name="Item_Weapon_Red"/>
+ <objectgroup name="Item_Weapon_Yellow"/>
  <objectgroup name="Enemy_Alien_Fingus">
   <object id="433" x="1728" y="2304" width="32" height="32"/>
   <object id="434" x="1792" y="2304" width="32" height="32"/>
@@ -106,4 +110,7 @@
   <object id="436" x="4000" y="2400" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Enemy_Alien_BigMama"/>
+ <objectgroup name="Enemy_Alien_Bigdaddy"/>
+ <objectgroup name="Enemy_Alien_Special"/>
+ <objectgroup name="Enemy_Alien_Kefos"/>
 </map>
