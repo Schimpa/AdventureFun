@@ -4,8 +4,12 @@ import com.adventure.fun.controls.Controls;
 import com.adventure.fun.effects.Particles;
 import com.adventure.fun.items.Item_Health;
 import com.adventure.fun.items.Item_Score;
+import com.adventure.fun.items.Item_Weapon_Blue;
 import com.adventure.fun.items.Item_Weapon_Green;
+import com.adventure.fun.items.Item_Weapon_Red;
+import com.adventure.fun.items.Item_Weapon_Yellow;
 import com.adventure.fun.objects.Enemy_Alien_Bigmama;
+import com.adventure.fun.objects.Enemy_Alien_Kefos;
 import com.adventure.fun.objects.Enemy_Alien_Kugus;
 import com.adventure.fun.objects.Enemy_Alien_Takel;
 import com.adventure.fun.objects.Enemy_Alien_Fingus;
@@ -43,6 +47,7 @@ public class WorldLoader {
     private Array<Enemy_Alien_Takel> enemies_alien_takel;
     private Array<Enemy_Alien_Kugus> enemies_alien_kugus;
     private Array<Enemy_Alien_Bigmama> enemies_alien_bigmama;
+    private Array<Enemy_Alien_Kefos> enemies_alien_kefos;
 
     private MainWindow game;
     private GameScreen gameScreen;
@@ -54,6 +59,9 @@ public class WorldLoader {
     private Item_Score items_Score_1000;
 
     private Item_Weapon_Green items_Weapon_Green;
+    private Item_Weapon_Blue items_Weapon_Blue;
+    private Item_Weapon_Red items_Weapon_Red;
+    private Item_Weapon_Yellow items_Weapon_Yellow;
 
     private Item_Health items_Health_1;
 
@@ -91,6 +99,9 @@ public class WorldLoader {
         for(Enemy_Alien_Bigmama enemyAlienBigmama : enemies_alien_bigmama){
             enemyAlienBigmama.dispose();
         }
+        for(Enemy_Alien_Kefos enemyAlienKefos : enemies_alien_kefos){
+            enemyAlienKefos.dispose();
+        }
 
         player.dispose();
         map.dispose();
@@ -107,7 +118,11 @@ public class WorldLoader {
         items_Score_200 = new Item_Score(this,200);
         items_Score_500 = new Item_Score(this,500);
         items_Score_1000 = new Item_Score(this,1000);
+
         items_Weapon_Green = new Item_Weapon_Green(this);
+        items_Weapon_Blue = new Item_Weapon_Blue(this);
+        items_Weapon_Red = new Item_Weapon_Red(this);
+        items_Weapon_Yellow = new Item_Weapon_Yellow(this);
 
         items_Health_1 = new Item_Health(this,1);
 
@@ -115,6 +130,7 @@ public class WorldLoader {
         enemies_alien_takel = new Array<Enemy_Alien_Takel>();
         enemies_alien_kugus = new Array<Enemy_Alien_Kugus>();
         enemies_alien_bigmama = new Array<Enemy_Alien_Bigmama>();
+        enemies_alien_kefos = new Array<Enemy_Alien_Kefos>();
 
         controls = new Controls(this);
 
@@ -161,12 +177,19 @@ public class WorldLoader {
         for(Enemy_Alien_Bigmama enemyAlienBigmama : enemies_alien_bigmama){
             enemyAlienBigmama.render(batch);
         }
+        for(Enemy_Alien_Kefos enemyAlienKefos : enemies_alien_kefos){
+            enemyAlienKefos.render(batch);
+        }
 
         items_Score_100.render(batch);
         items_Score_200.render(batch);
         items_Score_500.render(batch);
         items_Score_1000.render(batch);
+
         items_Weapon_Green.render(batch);
+        items_Weapon_Blue.render(batch);
+        items_Weapon_Red.render(batch);
+        items_Weapon_Yellow.render(batch);
 
         items_Health_1.render(batch);
 
@@ -200,6 +223,9 @@ public class WorldLoader {
         for(Enemy_Alien_Bigmama enemyAlienBigmama : enemies_alien_bigmama){
             enemyAlienBigmama.getParticles().render(batch,deltaTime);
         }
+        for(Enemy_Alien_Kefos enemyAlienKefos : enemies_alien_kefos){
+            enemyAlienKefos.getParticles().render(batch,deltaTime);
+        }
 
         player.getParticles().render(batch,deltaTime);
     }
@@ -220,6 +246,9 @@ public class WorldLoader {
         for(Enemy_Alien_Bigmama enemyAlienBigmama : enemies_alien_bigmama){
             enemyAlienBigmama.update(deltaTime);
         }
+        for(Enemy_Alien_Kefos enemyAlienKefos : enemies_alien_kefos){
+            enemyAlienKefos.update(deltaTime);
+        }
 
         items_Score_100.checkDestruction();
         items_Score_200.checkDestruction();
@@ -229,6 +258,9 @@ public class WorldLoader {
         items_Health_1.checkDestruction();
 
         items_Weapon_Green.checkDestruction();
+        items_Weapon_Blue.checkDestruction();
+        items_Weapon_Red.checkDestruction();
+        items_Weapon_Yellow.checkDestruction();
 
         rayHandler.update();
         world.step(deltaTime, 60, 20);
@@ -263,32 +295,6 @@ public class WorldLoader {
             body.createFixture(fdef);
             i++;
         }
-        //STAIRS
-        /*
-        for(MapObject object: map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            BodyDef bdef = new BodyDef();
-            bdef.position.set(rect.getX() / 32 + rect.getWidth() /32 - rect.getWidth() / 32, rect.getY() / 32 + rect.getHeight() /32 - rect.getWidth() / 32);
-
-            PolygonShape shape = new PolygonShape();
-
-            Vector2[] polygons = new Vector2[3];
-            polygons[0] = new Vector2(0,0);
-            polygons[1] = new Vector2(1,0);
-            polygons[2] = new Vector2(1,1);
-
-
-            shape.set(polygons);
-
-            FixtureDef fdef = new FixtureDef();
-            fdef.shape = shape;
-            fdef.density = 1;
-            Body body = world.createBody(bdef);
-            body.setUserData("Stair_Right_"+i);
-            body.createFixture(fdef);
-            i++;
-        }
-        */
 
         //ITEM - SCORE - 100
         i = 0;
@@ -463,9 +469,9 @@ public class WorldLoader {
 
             i++;
         }
-        i = 0;
-        /*
-        for(MapObject object: map.getLayers().get(11).getObjects().getByType(RectangleMapObject.class)){
+        i=0;
+        //ITEM WEAPON BLUE
+        for(MapObject object: map.getLayers().get(13).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             BodyDef bdef = new BodyDef();
@@ -483,16 +489,72 @@ public class WorldLoader {
 
 
             Body body = world.createBody(bdef);
-            body.setUserData("Item_Weapon_Green_"+i);
+            body.setUserData("Item_Weapon_Blue_"+i);
             body.createFixture(fdef);
 
-            items_Weapon_Green.getItems().add(body);
-            items_Weapon_Green.getItems_texture().add(items_Weapon_Green.createSpriteForBody(rect, game.getAssets().getItem_weapon_green()));
+            items_Weapon_Blue.getItems().add(body);
+            items_Weapon_Blue.getItems_texture().add(items_Weapon_Blue.createSpriteForBody(rect, game.getAssets().getItem_weapon_blue()));
 
             i++;
         }
-        */
 
+        i=0;
+        //ITEM WEAPON BLUE
+        for(MapObject object: map.getLayers().get(14).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            BodyDef bdef = new BodyDef();
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(0.01f,0.01f);
+
+            FixtureDef fdef = new FixtureDef();
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.restitution = 0;
+            fdef.filter.groupIndex = (short)-3;
+
+
+            Body body = world.createBody(bdef);
+            body.setUserData("Item_Weapon_Red_"+i);
+            body.createFixture(fdef);
+
+            items_Weapon_Red.getItems().add(body);
+            items_Weapon_Red.getItems_texture().add(items_Weapon_Red.createSpriteForBody(rect, game.getAssets().getItem_weapon_red()));
+
+            i++;
+        }
+
+        i=0;
+        //ITEM WEAPON BLUE
+        for(MapObject object: map.getLayers().get(15).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            BodyDef bdef = new BodyDef();
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(0.01f,0.01f);
+
+            FixtureDef fdef = new FixtureDef();
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            fdef.restitution = 0;
+            fdef.filter.groupIndex = (short)-3;
+
+
+            Body body = world.createBody(bdef);
+            body.setUserData("Item_Weapon_Yellow_"+i);
+            body.createFixture(fdef);
+
+            items_Weapon_Yellow.getItems().add(body);
+            items_Weapon_Yellow.getItems_texture().add(items_Weapon_Yellow.createSpriteForBody(rect, game.getAssets().getItem_weapon_yellow()));
+
+            i++;
+        }
         //ENEMY-ALIEN-FINGUS
         i = 0;
         for(MapObject object: map.getLayers().get(16).getObjects().getByType(RectangleMapObject.class)){
@@ -536,8 +598,19 @@ public class WorldLoader {
 
             Enemy_Alien_Bigmama newEnemyAlienBigmama = new Enemy_Alien_Bigmama(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,4f,8f,world,this.player);
             newEnemyAlienBigmama.getBody().setUserData("Enemy_Alien_Bigmama_" + i);
-            newEnemyAlienBigmama.getBullet().getBody().setUserData("Bullet_Enemy_Bigmama_"+i);
+            newEnemyAlienBigmama.getBullet().getBody().setUserData("Bullet_Enemy_Bigmama_" + i);
             enemies_alien_bigmama.add(newEnemyAlienBigmama);
+            i++;
+        }
+
+        i = 0;
+        for(MapObject object: map.getLayers().get(22).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            Enemy_Alien_Kefos newEnemyAlienKefos = new Enemy_Alien_Kefos(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,7f,2f,world,this.player);
+            newEnemyAlienKefos.getBody().setUserData("Enemy_Alien_Kefos_" + i);
+            newEnemyAlienKefos.getBullet().getBody().setUserData("Bullet_Enemy_Kefos_"+i);
+            enemies_alien_kefos.add(newEnemyAlienKefos);
             i++;
         }
     }
@@ -708,5 +781,29 @@ public class WorldLoader {
 
     public void setItems_Weapon_Green(Item_Weapon_Green items_Weapon_Green) {
         this.items_Weapon_Green = items_Weapon_Green;
+    }
+
+    public Item_Weapon_Blue getItems_Weapon_Blue() {
+        return items_Weapon_Blue;
+    }
+
+    public void setItems_Weapon_Blue(Item_Weapon_Blue items_Weapon_Blue) {
+        this.items_Weapon_Blue = items_Weapon_Blue;
+    }
+
+    public Item_Weapon_Red getItems_Weapon_Red() {
+        return items_Weapon_Red;
+    }
+
+    public void setItems_Weapon_Red(Item_Weapon_Red items_Weapon_Red) {
+        this.items_Weapon_Red = items_Weapon_Red;
+    }
+
+    public Item_Weapon_Yellow getItems_Weapon_Yellow() {
+        return items_Weapon_Yellow;
+    }
+
+    public void setItems_Weapon_Yellow(Item_Weapon_Yellow items_Weapon_Yellow) {
+        this.items_Weapon_Yellow = items_Weapon_Yellow;
     }
 }

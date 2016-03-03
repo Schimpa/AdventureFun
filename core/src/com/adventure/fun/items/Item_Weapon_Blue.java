@@ -8,11 +8,9 @@ import com.adventure.fun._main.WorldLoader;
 public class Item_Weapon_Blue extends Item {
 
 
-    private int score;
 
-    public Item_Weapon_Blue(WorldLoader worldLoader, int score){
+    public Item_Weapon_Blue(WorldLoader worldLoader){
         super(worldLoader);
-        this.score = score;
         name = "Item_Weapon_Blue_";
     }
 
@@ -22,8 +20,7 @@ public class Item_Weapon_Blue extends Item {
         super.checkDestruction();
         for(int i = 0;i < this.items.size;i++){
             if (this.items.get(i).getUserData().toString().equals(name + i + "_Destroyed") && isDestroyed.get(i) == false){
-                worldLoader.getPlayer().setScore(worldLoader.getPlayer().getScore() + this.score);
-                worldLoader.getPlayer().getBullet().createGreenBullet();
+                worldLoader.getPlayer().getBullet().createBlueBullet();
                 this.isDestroyed.set(i,true);
             }
         }

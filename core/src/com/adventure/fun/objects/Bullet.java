@@ -96,7 +96,7 @@ public class Bullet extends LivingObject {
 
     public void createGreenBullet() {
         this.region = game.getAssets().getBullet_green();
-        this.setBulletSound(game.getAssets().getSound_shoot_laser_04());
+        this.setBulletSound(game.getAssets().getSound_shoot_alien_01());
         this.setSpeed(new Vector2(12f,12f));
         this.setMaxSpeed(new Vector2(12f,12f));
         this.reloadTime = 1.5f;
@@ -123,7 +123,7 @@ public class Bullet extends LivingObject {
 
     public void createRedBullet(){
         this.region = game.getAssets().getBullet_Red();
-        this.setBulletSound(game.getAssets().getSound_shoot_laser_01());
+        this.setBulletSound(game.getAssets().getSound_shoot_laser_02());
         this.setSpeed(new Vector2(25f,25f));
         this.setMaxSpeed(new Vector2(25f,25f));
         this.reloadTime = 0.4f;

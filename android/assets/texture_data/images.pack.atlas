@@ -1,166 +1,173 @@
 
 images.pack.png
-size: 1024,128
+size: 2048,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 alien_bigmama
   rotate: false
-  xy: 2, 4
+  xy: 390, 7
   size: 192, 96
   orig: 192, 96
   offset: 0, 0
   index: -1
 alien_fingus
   rotate: false
-  xy: 196, 36
+  xy: 2, 5
   size: 192, 64
   orig: 192, 64
   offset: 0, 0
   index: -1
+alien_kefos
+  rotate: false
+  xy: 2, 71
+  size: 384, 32
+  orig: 384, 32
+  offset: 0, 0
+  index: -1
 alien_kugus
   rotate: false
-  xy: 746, 36
+  xy: 746, 39
   size: 128, 64
   orig: 128, 64
   offset: 0, 0
   index: -1
 alien_takel
   rotate: false
-  xy: 584, 36
+  xy: 584, 39
   size: 160, 64
   orig: 160, 64
   offset: 0, 0
   index: -1
 battery
   rotate: false
-  xy: 360, 2
+  xy: 1170, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 bullet_bigmama
   rotate: false
-  xy: 294, 2
+  xy: 1104, 71
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
 bullet_blitz
   rotate: false
-  xy: 196, 2
+  xy: 1006, 71
   size: 96, 32
   orig: 96, 32
   offset: 0, 0
   index: -1
 bullet_blitzkugel
   rotate: false
-  xy: 876, 68
+  xy: 876, 71
   size: 128, 32
   orig: 128, 32
   offset: 0, 0
   index: -1
 bullet_blue
   rotate: false
-  xy: 394, 2
+  xy: 1204, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 bullet_green
   rotate: false
-  xy: 428, 2
+  xy: 1238, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 bullet_red
   rotate: false
-  xy: 462, 2
+  xy: 1272, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 bullet_yellow
   rotate: false
-  xy: 496, 2
+  xy: 1306, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 icon_Health
   rotate: false
-  xy: 530, 2
+  xy: 1340, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 player_move
   rotate: false
-  xy: 390, 36
+  xy: 196, 5
   size: 192, 64
   orig: 192, 64
   offset: 0, 0
   index: -1
 score_four
   rotate: false
-  xy: 564, 2
+  xy: 1374, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 score_one
   rotate: false
-  xy: 598, 2
+  xy: 1408, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 score_three
   rotate: false
-  xy: 632, 2
+  xy: 1442, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 score_two
   rotate: false
-  xy: 666, 2
+  xy: 1476, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 weapon_blue
   rotate: false
-  xy: 700, 2
+  xy: 1510, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 weapon_green
   rotate: false
-  xy: 734, 2
+  xy: 1544, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 weapon_red
   rotate: false
-  xy: 768, 2
+  xy: 1578, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 weapon_yellow
   rotate: false
-  xy: 802, 2
+  xy: 1612, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 whiteColor
   rotate: false
-  xy: 876, 65
+  xy: 2, 2
   size: 1, 1
   orig: 1, 1
   offset: 0, 0

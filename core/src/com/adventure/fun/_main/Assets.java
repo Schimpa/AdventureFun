@@ -58,6 +58,7 @@ public class Assets {
     private TextureRegion alien_takel;
     private TextureRegion alien_kugus;
     private TextureRegion alien_bigmama;
+    private TextureRegion alien_kefos;
 
     //BULLETS
     private TextureRegion bullet_blitzkugel;
@@ -227,6 +228,7 @@ public class Assets {
         alien_takel = atlas.findRegion("alien_takel");
         alien_kugus = atlas.findRegion("alien_kugus");
         alien_bigmama = atlas.findRegion("alien_bigmama");
+        alien_kefos = atlas.findRegion("alien_kefos");
 
         bullet_blitzkugel = atlas.findRegion("bullet_blitzkugel");
         bullet_blitz = atlas.findRegion("bullet_blitz");
@@ -705,5 +707,21 @@ public class Assets {
 
     public void setItem_weapon_yellow(TextureRegion item_weapon_yellow) {
         this.item_weapon_yellow = item_weapon_yellow;
+    }
+
+    public TextureRegion getAlien_kefos() {
+        return alien_kefos;
+    }
+
+    public void setAlien_kefos(TextureRegion alien_kefos) {
+        this.alien_kefos = alien_kefos;
+    }
+
+    public TextureRegion getBullet_red() {
+        return bullet_red;
+    }
+
+    public void setBullet_red(TextureRegion bullet_red) {
+        this.bullet_red = bullet_red;
     }
 }
