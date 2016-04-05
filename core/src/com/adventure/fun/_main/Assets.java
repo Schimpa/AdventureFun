@@ -1,14 +1,20 @@
 package com.adventure.fun._main;
 
 
+import com.adventure.fun.audio.MySound;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-public class Assets {
+
+public class Assets implements Cloneable {
 
     private AssetManager assetManager;
 
@@ -103,10 +109,20 @@ public class Assets {
     private Texture middleground_01;
     private Texture middleground_05;
 
-    public Assets(){
+    public Assets(boolean loadAssets) {
         assetManager = new AssetManager();
-        load();
+        if (loadAssets){
+            load();
+        }
     }
+
+    public Sound copySoundAsset(String pfad){
+        Assets assets = new Assets(false);
+        assets.assetManager.load("audio/shoot_laserbeam_01.ogg",Sound.class);
+        Sound sound = assets.assetManager.get("audio/shoot_laserbeam_01.ogg", Sound.class);
+        return sound;
+    }
+
 
     public void load() {
 
@@ -240,6 +256,9 @@ public class Assets {
         bullet_blue = atlas.findRegion("bullet_blue");
 
     }
+
+
+
 
     public void dispose() {
         assetManager.dispose();
@@ -724,4 +743,6 @@ public class Assets {
     public void setBullet_red(TextureRegion bullet_red) {
         this.bullet_red = bullet_red;
     }
+
+
 }

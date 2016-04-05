@@ -104,6 +104,10 @@
  <objectgroup name="Item_Point_500"/>
  <objectgroup name="Item_Point_1000"/>
  <objectgroup name="Item_Health"/>
+ <objectgroup name="WEAPON GREEN"/>
+ <objectgroup name="WEAPON BLUE"/>
+ <objectgroup name="WEAPON RED"/>
+ <objectgroup name="WEAPON YELLOW"/>
  <objectgroup name="Enemy_Fingus">
   <object id="204" x="2656" y="3808" width="32" height="32"/>
   <object id="207" x="2240" y="2816" width="32" height="32"/>
@@ -114,4 +118,7 @@
  </objectgroup>
  <objectgroup name="Enemy_Kugus"/>
  <objectgroup name="Enemy_BigMama"/>
+ <objectgroup name="Enemy_Bigdaddy"/>
+ <objectgroup name="Enemy_Special"/>
+ <objectgroup name="Enemy_Kefos"/>
 </map>

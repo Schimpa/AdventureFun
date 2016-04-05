@@ -256,4 +256,6 @@ public class GameScreen implements Screen {
 	public void setShowMenuScreen(boolean showMenuScreen) {
 		this.showMenuScreen = showMenuScreen;
 	}
+
+
 }

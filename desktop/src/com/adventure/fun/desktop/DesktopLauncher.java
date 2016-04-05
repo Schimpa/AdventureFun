@@ -11,7 +11,7 @@ import javax.swing.text.View;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 
-		createTextureAtlas();
+		//createTextureAtlas();
 
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();

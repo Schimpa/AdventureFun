@@ -34,7 +34,7 @@ public class MainWindow extends Game{
         initFont();
         initSkin();
         batch = new SpriteBatch();
-        assets = new Assets();
+        assets = new Assets(true);
         isLoaded = false;
     }
 

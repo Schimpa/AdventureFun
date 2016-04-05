@@ -7,15 +7,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
-/**
- * Created by Dennis on 28.10.2015.
- */
 public class Enemy_Alien_Kefos extends LivingObject {
 
     private Player player;
     private Bullet bullet;
 
     private int reactionDistance;    //Der Abstand, bei den Gegner den Spieler anfangen zu bemerken
+
+    //DIE ZEIT AB WANN DER KEFOS WIEDER SPRINGEN KANN
+    private float jumpTimer;
 
     private ObjectAnimation walkAnimation;
 
@@ -30,7 +30,7 @@ public class Enemy_Alien_Kefos extends LivingObject {
         super.init(x,y,sizeX,sizeY,world);
         fixtureDef.filter.groupIndex = (short)-1;
         body.createFixture(fixtureDef);
-        reactionDistance = 10;
+        reactionDistance = 18;
         speed = new Vector2(15f,15f);
         maxSpeed = new Vector2(4,4);
         removeFlag = false;
@@ -38,14 +38,16 @@ public class Enemy_Alien_Kefos extends LivingObject {
 
         stateTime = 0.0f;
 
+        jumpTimer = 0;
+
         lives = 3;
 
         body.setUserData("Enemy_Alien_Kefos");
 
         bullet = new Bullet(game,-100,-100,0.8f,0.8f,world,game.getAssets().getBullet_blitzkugel(),true);
         bullet.setBulletSound(game.getAssets().getSound_shoot_laser_03());
-        bullet.setSpeed(new Vector2(6,6));
-        bullet.setReloadTime(3.0f);
+        bullet.setSpeed(new Vector2(5,5));
+        bullet.setReloadTime(5.0f);
 
         currentFrame = new TextureRegion();
 
@@ -55,35 +57,39 @@ public class Enemy_Alien_Kefos extends LivingObject {
         particles.activateParticle(particles.getExplosion_blitzkugel());
         particles.activateParticle(particles.getExplosion_dead());
 
+        setIsJumping(true);
+
         shape.dispose();
     }
 
-    public void logic(float deltaTime){
-        if (    player.getBody().getPosition().x - this.getBody().getPosition().x > -reactionDistance &&
+    public void logic(float deltaTime) {
+        if (player.getBody().getPosition().x - this.getBody().getPosition().x > -reactionDistance &&
                 player.getBody().getPosition().x - this.getBody().getPosition().x < reactionDistance &&
                 player.getBody().getPosition().y - this.getBody().getPosition().y > -5 &&
-                player.getBody().getPosition().y - this.getBody().getPosition().y < 5  ) {
+                player.getBody().getPosition().y - this.getBody().getPosition().y < 5) {
 
-                this.stateTime += deltaTime;
-                //LEFT OR RIGHT
-                if (player.getBody().getPosition().x - this.getBody().getPosition().x < 0) {
-                    this.move(false, deltaTime);
-                }
-
-                if (player.getBody().getPosition().x - this.getBody().getPosition().x > 0) {
-                    this.move(true, deltaTime);
-                }
+            this.stateTime += deltaTime;
+            //LEFT OR RIGHT
+            if (player.getBody().getPosition().x - this.getBody().getPosition().x < 0) {
+                this.move(false, deltaTime);
             }
+
+            if (player.getBody().getPosition().x - this.getBody().getPosition().x > 0) {
+                this.move(true, deltaTime);
+            }
+            if (jumpTimer > 2) {
+                this.jump();
+                jumpTimer = 0;
+            }
+            bullet.setBulletShoot(true);
             randomInt = rand.nextInt(150) + 1;
             if (randomInt == 50) {
                 game.getAssets().getSound_alien_fingus().play(1f);
             }
-            bullet.setBulletShoot(true);
-        else if (removeFlag == true){
-            bullet.setBulletShoot(true);
-        }
 
         }
+    }
+
 
 
 
@@ -96,6 +102,7 @@ public class Enemy_Alien_Kefos extends LivingObject {
             }
             logic(deltaTime);
             bullet.shootBullet(this);
+            jumpTimer += deltaTime;
         }
         bullet.update(deltaTime);
 

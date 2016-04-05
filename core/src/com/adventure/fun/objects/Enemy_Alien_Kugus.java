@@ -1,6 +1,8 @@
 package com.adventure.fun.objects;
 
+import com.adventure.fun._main.Assets;
 import com.adventure.fun._main.MainWindow;
+import com.adventure.fun.audio.MySound;
 import com.adventure.fun.effects.ObjectAnimation;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -90,6 +92,7 @@ public class Enemy_Alien_Kugus extends LivingObject {
 
         body.setUserData("Enemy_Alien_Kugus");
 
+
         currentFrame = new TextureRegion();
         currentWeaponFrame = new TextureRegion();
 
@@ -98,16 +101,29 @@ public class Enemy_Alien_Kugus extends LivingObject {
 
         weaponAnimation = new ObjectAnimation(game.getAssets().getBullet_blitz(),3,1,0,2,0.10f);
         weaponAnimation.setIsActive(false);
+
+        //weaponSound = new MySound(game.getAssets().getSound_shoot_laserbeam_01());
         weaponSound = game.getAssets().getSound_shoot_laserbeam_01();
+
+
+        //weaponSound = game.getAssets().copySoundAsset("audio/shoot_laserbeam_01.ogg");
+
+
+
+
+
+
 
         particles.activateParticle(particles.getExplosion_blitzkugel());
         particles.activateParticle(particles.getExplosion_dead());
         particles.activateParticle(particles.getFunken_01());
 
+
         shape.dispose();
     }
 
     public void logic(float deltaTime){
+
         if (player.getBody().getPosition().x - this.getBody().getPosition().x > -reactionDistance &&
                 player.getBody().getPosition().x - this.getBody().getPosition().x < reactionDistance &&
                 player.getBody().getPosition().y - this.getBody().getPosition().y > -5 &&
@@ -116,6 +132,7 @@ public class Enemy_Alien_Kugus extends LivingObject {
             if (sound_reload >= 5){
                 sound_reload = 0;
                 weaponSound.play(0.5f);
+
             }
 
             if (player.getBody().getPosition().x - this.getBody().getPosition().x < 2 &&
@@ -139,7 +156,7 @@ public class Enemy_Alien_Kugus extends LivingObject {
             }
         }else{
             weaponAnimation.setIsActive(false);
-            weaponSound.stop();
+            weaponSound.pause();
             sound_reload = 5;
         }
     }

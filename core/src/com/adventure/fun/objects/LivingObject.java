@@ -19,7 +19,7 @@ import java.util.Random;
 /**
  * Created by Dennis on 27.10.2015.
  */
-public abstract class LivingObject {
+public abstract class LivingObject  {
 
     protected MainWindow game;
 
@@ -174,20 +174,6 @@ public abstract class LivingObject {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public boolean getIsJumping() {
         return isJumping;
     }
@@ -307,5 +293,13 @@ public abstract class LivingObject {
 
     public void setParticles(Particles particles) {
         this.particles = particles;
+    }
+
+    public MainWindow getGame() {
+        return game;
+    }
+
+    public void setGame(MainWindow game) {
+        this.game = game;
     }
 }

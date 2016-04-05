@@ -53,6 +53,9 @@ public class Bullet extends LivingObject {
     //DAS LICHT DES GESCHOSSESE
     private PointLight bulletLight;
 
+    //ANZAHL DER GESCHOSSE DIE ÜBRIG BLEIBEN
+    private int bullets;
+
 
 
     public Bullet(MainWindow game,float x,float y,float sizeX,float sizeY,World world,TextureRegion region,boolean isAnimation){
@@ -101,6 +104,7 @@ public class Bullet extends LivingObject {
         this.setMaxSpeed(new Vector2(12f,12f));
         this.reloadTime = 1.5f;
         this.bulletDamage = 2;
+        this.bullets = 10;
     }
 
     public void createBlueBullet(){
@@ -110,6 +114,7 @@ public class Bullet extends LivingObject {
         this.setMaxSpeed(new Vector2(5f,5f));
         this.reloadTime = 1f;
         this.bulletDamage = 1;
+        this.bullets = 10;
     }
 
     public void createYellowBullet(){
@@ -119,6 +124,7 @@ public class Bullet extends LivingObject {
         this.setMaxSpeed(new Vector2(20f,20f));
         this.reloadTime = 3f;
         this.bulletDamage = 3;
+        this.bullets = 10;
     }
 
     public void createRedBullet(){
@@ -148,6 +154,12 @@ public class Bullet extends LivingObject {
     public boolean shootBullet(LivingObject object){
         if (timeFromShoot >= reloadTime && bulletShoot == true){
             bulletShoot = false;
+            if (object instanceof Player ){
+                game.getMenuScreen().getGameScreen().getCamera().setBarPercent(game.getMenuScreen().getGameScreen().getCamera().getBarPercent() - 20);
+                if (game.getMenuScreen().getGameScreen().getCamera().getBarPercent() <= 0){
+                    game.getMenuScreen().getGameScreen().getCamera().setBarPercent(0);
+                }
+            }
             /*
             PointLight light = new PointLight(
                     game.getMenuScreen().getGameScreen().getWorldLoader().getRayHandler(), 5, null, 2, 0f, 0f);
@@ -234,7 +246,6 @@ public class Bullet extends LivingObject {
             this.removeFlag = false;
         }
     }
-
 
     public float getSoundVolume() {
         return soundVolume;

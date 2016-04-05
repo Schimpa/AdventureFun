@@ -37,7 +37,7 @@ public class Controls implements InputProcessor {
     }
 
     public void bulletShot(){
-        if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.BUTTON_R2)){
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && worldLoader.getGame().getMenuScreen().getGameScreen().getCamera().getBarPercent() > 20 ){
             this.worldLoader.getPlayer().getBullet().setBulletShoot(true);
         }
     }

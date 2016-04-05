@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -57,6 +58,18 @@ public class Cameras {
 
     private Vector2 screenRatio;
 
+    private ShapeRenderer shapeRenderer;
+
+    //Bullet Prozent Bar
+    private float barPositionX;
+    private float barPositionY;
+    private float barScaleX;
+    private float barScaleY;
+
+    private float barPercent;
+
+
+    //Daten für die Lebensanzeige
     float posX,posY,sizeX,sizeY;
 
     public void dispose(){
@@ -89,6 +102,8 @@ public class Cameras {
 
         middlegroundCamera = new OrthographicCamera();
         //middlegroundCamera.setToOrtho(false, (Gdx.graphics.getWidth() / Gdx.graphics.getPpiX()) * 5f, (Gdx.graphics.getHeight() / Gdx.graphics.getPpiY()) * 5f);
+
+        shapeRenderer = new ShapeRenderer();
 
         gameOverStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),batch);
         menuStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),batch);
@@ -289,6 +304,15 @@ public class Cameras {
         posY = Gdx.graphics.getHeight() / 100f * 90f;
         sizeX = Gdx.graphics.getWidth() / 100f * 5f;
         sizeY = Gdx.graphics.getWidth() / 100f * 5f;
+
+        barPositionX = Gdx.graphics.getWidth() / 100f * 3f;
+        barPositionY = Gdx.graphics.getHeight() / 100f * 84f;
+        barScaleX = Gdx.graphics.getWidth() / 100f * 25f;
+        barScaleY = Gdx.graphics.getWidth() / 100f * 2f;
+
+
+
+        barPercent = 100;
 
         buttonJump = new TextButton("<>",game.getSkin(),"default");
         buttonJump.getLabel().setFontScale((Gdx.graphics.getWidth() / 100f) * 0.08f, (Gdx.graphics.getHeight() / 100f) * 0.08f);
@@ -522,6 +546,10 @@ public class Cameras {
     public void update(float deltaTime){
         score.setText(Integer.toString(worldLoader.getPlayer().getScore()));
 
+        if (barPercent <= 100){
+            barPercent += deltaTime*5;
+        }
+
         //Setzt Kamerapositionen des Spielers
         playerCamera.position.x = worldLoader.getPlayer().getBody().getPosition().x;
         playerCamera.position.y = worldLoader.getPlayer().getBody().getPosition().y + 2;
@@ -540,6 +568,7 @@ public class Cameras {
 
         gameOverStage.act(deltaTime);
         menuStage.act(deltaTime);
+        shapeRenderer.updateMatrices();
     }
 
     public void drawHealthIcons(){
@@ -583,6 +612,22 @@ public class Cameras {
 
     public void render(SpriteBatch batch){
         hudStage.draw();
+        if (game.getMenuScreen().getGameScreen().isShowGameOverScreen() == false){
+            shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            if (game.getMenuScreen().getGameScreen().getWorldLoader().getPlayer().getBullet().getRegion() == game.getAssets().getBullet_Red()){
+                shapeRenderer.setColor(Color.RED);
+                shapeRenderer.rect(barPositionX,barPositionY,barScaleX,barScaleY);
+                shapeRenderer.setColor(Color.GREEN);
+                shapeRenderer.rect(barPositionX,barPositionY,(barScaleX / 100) * barPercent,barScaleY);
+
+            }else{
+                shapeRenderer.setColor(Color.BLUE);
+                shapeRenderer.rect(barPositionX,barPositionY,barScaleX,barScaleY);
+            }
+            shapeRenderer.end();
+
+        }
         drawHealthIcons();
     }
 
@@ -816,5 +861,53 @@ public class Cameras {
 
     public void setSizeY(float sizeY) {
         this.sizeY = sizeY;
+    }
+
+    public float getBarPercent() {
+        return barPercent;
+    }
+
+    public void setBarPercent(float barPercent) {
+        this.barPercent = barPercent;
+    }
+
+    public ShapeRenderer getShapeRenderer() {
+        return shapeRenderer;
+    }
+
+    public void setShapeRenderer(ShapeRenderer shapeRenderer) {
+        this.shapeRenderer = shapeRenderer;
+    }
+
+    public float getBarPositionX() {
+        return barPositionX;
+    }
+
+    public void setBarPositionX(float barPositionX) {
+        this.barPositionX = barPositionX;
+    }
+
+    public float getBarPositionY() {
+        return barPositionY;
+    }
+
+    public void setBarPositionY(float barPositionY) {
+        this.barPositionY = barPositionY;
+    }
+
+    public float getBarScaleX() {
+        return barScaleX;
+    }
+
+    public void setBarScaleX(float barScaleX) {
+        this.barScaleX = barScaleX;
+    }
+
+    public float getBarScaleY() {
+        return barScaleY;
+    }
+
+    public void setBarScaleY(float barScaleY) {
+        this.barScaleY = barScaleY;
     }
 }

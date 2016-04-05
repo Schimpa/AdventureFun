@@ -806,4 +806,12 @@ public class WorldLoader {
     public void setItems_Weapon_Yellow(Item_Weapon_Yellow items_Weapon_Yellow) {
         this.items_Weapon_Yellow = items_Weapon_Yellow;
     }
+
+    public Array<Enemy_Alien_Kefos> getEnemies_alien_kefos() {
+        return enemies_alien_kefos;
+    }
+
+    public void setEnemies_alien_kefos(Array<Enemy_Alien_Kefos> enemies_alien_kefos) {
+        this.enemies_alien_kefos = enemies_alien_kefos;
+    }
 }

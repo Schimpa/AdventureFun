@@ -291,8 +291,8 @@ public class CollisionListener implements ContactListener {
             if (contactBody01.getUserData().toString().equals("Enemy_"+i) && contactBody02.getUserData().toString().equals("Bullet_Player") ||
                     contactBody02.getUserData().toString().equals("Enemy_"+i) && contactBody01.getUserData().toString().equals("Bullet_Player"))
             {
-                gameScreen.getWorldLoader().getEnemies_alien_zombie().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_zombie().get(i).getLives() - gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
-                gameScreen.getWorldLoader().getGame().getAssets().getSound_alien_fingus_hit_01();
+                //gameScreen.getWorldLoader().getEnemies_alien_zombie().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_zombie().get(i).getLives() - gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
+                gameScreen.getWorldLoader().getEnemies_alien_zombie().get(i).looseLife(gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
                 if (contactBody01.getUserData().toString().equals("Bullet_Player")){
                     gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x,
                             contactBody01.getPosition().y, gameScreen.getWorldLoader().getPlayer().getParticles().getExplosion_bullet_01());
@@ -361,6 +361,26 @@ public class CollisionListener implements ContactListener {
                 }
                 if (gameScreen.getWorldLoader().getEnemies_alien_kugus().get(i).getLives() <= 0){
                     gameScreen.getWorldLoader().getEnemies_alien_kugus().get(i).setRemoveFlag(true);
+                }
+            }
+        }
+
+        //COLLISION ENEMY_KEFOS --- PLAYER BULLET
+        for(int i = 0; i < gameScreen.getWorldLoader().getEnemies_alien_kefos().size; i++){
+            if (contactBody01.getUserData().toString().equals("Enemy_Alien_Kefos_"+i) && contactBody02.getUserData().toString().equals("Bullet_Player") ||
+                    contactBody02.getUserData().toString().equals("Enemy_Alien_Kefos_"+i) && contactBody01.getUserData().toString().equals("Bullet_Player")){
+
+                gameScreen.getWorldLoader().getEnemies_alien_kefos().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_kefos().get(i).getLives() -  gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
+
+                if (contactBody01.getUserData().toString().equals("Bullet_Player")){
+                    gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
+                            gameScreen.getWorldLoader().getPlayer().getParticles().getExplosion_bullet_01());
+                }else if (contactBody02.getUserData().toString().equals("Bullet_Player")){
+                    gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
+                            gameScreen.getWorldLoader().getPlayer().getParticles().getExplosion_bullet_01());
+                }
+                if (gameScreen.getWorldLoader().getEnemies_alien_kefos().get(i).getLives() <= 0){
+                    gameScreen.getWorldLoader().getEnemies_alien_kefos().get(i).setRemoveFlag(true);
                 }
             }
         }

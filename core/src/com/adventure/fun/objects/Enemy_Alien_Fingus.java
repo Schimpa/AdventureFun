@@ -66,7 +66,7 @@ public class Enemy_Alien_Fingus extends LivingObject {
 
     public void logic(float deltaTime){
         if (player.getBody().getPosition().x - this.getBody().getPosition().x > -reactionDistance &&
-                player.getBody().getPosition().x - this.getBody().getPosition().x < reactionDistance&&
+                player.getBody().getPosition().x - this.getBody().getPosition().x < reactionDistance &&
                 player.getBody().getPosition().y - this.getBody().getPosition().y > -5 &&
                 player.getBody().getPosition().y - this.getBody().getPosition().y < 5 ){
             randomInt = rand.nextInt(150)+1;
@@ -84,6 +84,15 @@ public class Enemy_Alien_Fingus extends LivingObject {
                 this.move(true,deltaTime);
             }
         }
+    }
+
+    @Override
+    public void looseLife(int amount){
+        super.looseLife(amount);
+        if (this.lives > 0 ){
+            this.getGame().getAssets().getSound_alien_fingus_hit_01().play(1f);
+        }
+
     }
 
     public void update(float deltaTime){
