@@ -74,7 +74,7 @@ public class LevelChooseScreen implements Screen {
         buttonLevel09 = game.getMenuScreen().createButton("1-9",0.1f,0.1f,70,15,25,20);
 
         buttonBack = game.getMenuScreen().createButton("BACK",0.05f,0.05f,2,2,15,10);
-        buttonBack.getLabel().setFontScale(game.getFont().getScaleX() / 2,game.getFont().getScaleY() / 2);
+        buttonBack.getLabel().setFontScale(game.getFont().getScaleX() / 2, game.getFont().getScaleY() / 2);
 
         buttonBack.addListener(new ClickListener() {
             @Override
@@ -95,6 +95,8 @@ public class LevelChooseScreen implements Screen {
         createButtonListener(buttonLevel03,"maps/level_three.tmx",false);
         createButtonListener(buttonLevel04,"maps/level_four.tmx",false);
         createButtonListener(buttonLevel05,"maps/level_five.tmx",false);
+        createButtonListener(buttonLevel06,"maps/level_six.tmx",false);
+        createButtonListener(buttonLevel07,"maps/level_seven.tmx",false);
 
         stage.addActor(buttonLevel01);
         stage.addActor(buttonLevel02);

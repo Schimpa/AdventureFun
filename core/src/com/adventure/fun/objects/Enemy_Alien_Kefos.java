@@ -23,7 +23,6 @@ public class Enemy_Alien_Kefos extends LivingObject {
         super(game);
         init(x,y,sizeX,sizeY,world);
         this.player = player;
-
     }
 
     public void init(float x,float y,float sizeX,float sizeY,World world){
@@ -89,10 +88,6 @@ public class Enemy_Alien_Kefos extends LivingObject {
 
         }
     }
-
-
-
-
 
 
     public void update(float deltaTime){

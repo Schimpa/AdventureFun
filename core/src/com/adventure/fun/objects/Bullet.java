@@ -111,8 +111,8 @@ public class Bullet extends LivingObject {
         this.region = game.getAssets().getBullet_blue();
         this.setBulletSound(game.getAssets().getSound_shoot_laser_04());
         this.setSpeed(new Vector2(5f,5f));
-        this.setMaxSpeed(new Vector2(5f,5f));
-        this.reloadTime = 1f;
+        this.setMaxSpeed(new Vector2(40f,40f));
+        this.reloadTime = 0.6f;
         this.bulletDamage = 1;
         this.bullets = 10;
     }

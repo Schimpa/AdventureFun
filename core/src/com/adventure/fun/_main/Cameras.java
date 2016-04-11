@@ -219,7 +219,9 @@ public class Cameras {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 System.out.println("TouchDown:  " + event);
-                worldLoader.getPlayer().getBullet().setBulletShoot(true);
+                if (worldLoader.getGame().getMenuScreen().getGameScreen().getCamera().getBarPercent() > 20 ){
+                    worldLoader.getPlayer().getBullet().setBulletShoot(true);
+                }
                 return super.touchDown(event, x, y, pointer, button);
             }
 
@@ -547,7 +549,7 @@ public class Cameras {
         score.setText(Integer.toString(worldLoader.getPlayer().getScore()));
 
         if (barPercent <= 100){
-            barPercent += deltaTime*5;
+            barPercent += deltaTime*10;
         }
 
         //Setzt Kamerapositionen des Spielers
