@@ -78,6 +78,8 @@ public class Bullet extends LivingObject {
         this.region = region;
         this.isAnimation = isAnimation;
 
+        bullets = -1;
+
         bulletShoot = false;
 
         MassData massData = new MassData();
@@ -183,6 +185,7 @@ public class Bullet extends LivingObject {
                     this.getBody().setTransform(object.getBody().getPosition().x - object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y, 0);
                     this.getBody().setLinearVelocity(-this.getSpeed().x, 0);
                 }
+                bullets -= 1;
             }
         }
         return true;
@@ -213,6 +216,7 @@ public class Bullet extends LivingObject {
                     this.getBody().setTransform(object.getBody().getPosition().x - object.getSprite().getWidth() / 1.5f, object.getBody().getPosition().y - (object.getSprite().getHeight()/12), 0);
                     this.getBody().setLinearVelocity(-this.getSpeedX(), 0);
                 }
+
             }
         }
     }
@@ -347,5 +351,13 @@ public class Bullet extends LivingObject {
 
     public void setBulletDamage(int bulletDamage) {
         this.bulletDamage = bulletDamage;
+    }
+
+    public int getBullets() {
+        return bullets;
+    }
+
+    public void setBullets(int bullets) {
+        this.bullets = bullets;
     }
 }

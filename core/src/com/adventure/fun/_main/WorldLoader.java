@@ -8,9 +8,11 @@ import com.adventure.fun.items.Item_Weapon_Blue;
 import com.adventure.fun.items.Item_Weapon_Green;
 import com.adventure.fun.items.Item_Weapon_Red;
 import com.adventure.fun.items.Item_Weapon_Yellow;
+import com.adventure.fun.objects.Enemy_Alien_Bigdaddy;
 import com.adventure.fun.objects.Enemy_Alien_Bigmama;
 import com.adventure.fun.objects.Enemy_Alien_Kefos;
 import com.adventure.fun.objects.Enemy_Alien_Kugus;
+import com.adventure.fun.objects.Enemy_Alien_Special;
 import com.adventure.fun.objects.Enemy_Alien_Takel;
 import com.adventure.fun.objects.Enemy_Alien_Fingus;
 import com.adventure.fun.objects.Player;
@@ -48,6 +50,8 @@ public class WorldLoader {
     private Array<Enemy_Alien_Kugus> enemies_alien_kugus;
     private Array<Enemy_Alien_Bigmama> enemies_alien_bigmama;
     private Array<Enemy_Alien_Kefos> enemies_alien_kefos;
+    private Array<Enemy_Alien_Special> enemies_alien_special;
+    private Array<Enemy_Alien_Bigdaddy> enemies_alien_bigdaddy;
 
     private MainWindow game;
     private GameScreen gameScreen;
@@ -102,6 +106,12 @@ public class WorldLoader {
         for(Enemy_Alien_Kefos enemyAlienKefos : enemies_alien_kefos){
             enemyAlienKefos.dispose();
         }
+        for(Enemy_Alien_Special enemyAlienSpecial : enemies_alien_special){
+            enemyAlienSpecial.dispose();
+        }
+        for(Enemy_Alien_Bigdaddy enemyAlienBigdaddy : enemies_alien_bigdaddy){
+            enemyAlienBigdaddy.dispose();
+        }
 
         player.dispose();
         map.dispose();
@@ -131,6 +141,8 @@ public class WorldLoader {
         enemies_alien_kugus = new Array<Enemy_Alien_Kugus>();
         enemies_alien_bigmama = new Array<Enemy_Alien_Bigmama>();
         enemies_alien_kefos = new Array<Enemy_Alien_Kefos>();
+        enemies_alien_special = new Array<Enemy_Alien_Special>();
+        enemies_alien_bigdaddy = new Array<Enemy_Alien_Bigdaddy>();
 
         controls = new Controls(this);
 
@@ -180,6 +192,12 @@ public class WorldLoader {
         for(Enemy_Alien_Kefos enemyAlienKefos : enemies_alien_kefos){
             enemyAlienKefos.render(batch);
         }
+        for(Enemy_Alien_Special enemyAlienSpecial : enemies_alien_special){
+            enemyAlienSpecial.render(batch);
+        }
+        for(Enemy_Alien_Bigdaddy enemyAlienBigdaddy : enemies_alien_bigdaddy){
+            enemyAlienBigdaddy.render(batch);
+        }
 
         items_Score_100.render(batch);
         items_Score_200.render(batch);
@@ -226,6 +244,12 @@ public class WorldLoader {
         for(Enemy_Alien_Kefos enemyAlienKefos : enemies_alien_kefos){
             enemyAlienKefos.getParticles().render(batch,deltaTime);
         }
+        for(Enemy_Alien_Special enemyAlienSpecial : enemies_alien_special){
+            enemyAlienSpecial.getParticles().render(batch,deltaTime);
+        }
+        for(Enemy_Alien_Bigdaddy enemyAlienBigdaddy : enemies_alien_bigdaddy){
+            enemyAlienBigdaddy.getParticles().render(batch,deltaTime);
+        }
 
         player.getParticles().render(batch,deltaTime);
     }
@@ -248,6 +272,12 @@ public class WorldLoader {
         }
         for(Enemy_Alien_Kefos enemyAlienKefos : enemies_alien_kefos){
             enemyAlienKefos.update(deltaTime);
+        }
+        for(Enemy_Alien_Special enemyAlienSpecial : enemies_alien_special){
+            enemyAlienSpecial.update(deltaTime);
+        }
+        for(Enemy_Alien_Bigdaddy enemyAlienBigdaddy : enemies_alien_bigdaddy){
+            enemyAlienBigdaddy.update(deltaTime);
         }
 
         items_Score_100.checkDestruction();
@@ -603,6 +633,31 @@ public class WorldLoader {
             i++;
         }
 
+        //ENEMY ALIEN BIGDADDY
+        i = 0;
+        for(MapObject object: map.getLayers().get(20).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            Enemy_Alien_Bigdaddy newEnemyAlienBigdaddy = new Enemy_Alien_Bigdaddy(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,4f,8f,world,this.player);
+            newEnemyAlienBigdaddy.getBody().setUserData("Enemy_Alien_Bigdaddy_" + i);
+            newEnemyAlienBigdaddy.getBullet().getBody().setUserData("Bullet_Enemy_Bigdaddy_" + i);
+            enemies_alien_bigdaddy.add(newEnemyAlienBigdaddy);
+            i++;
+        }
+
+        //ENEMY ALIEN SPECIAL
+        i = 0;
+        for(MapObject object: map.getLayers().get(21).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            Enemy_Alien_Special newEnemyAlienSpecial = new Enemy_Alien_Special(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.95f,3.6f,world,this.player);
+            newEnemyAlienSpecial.getBody().setUserData("Enemy_Alien_Special_" + i);
+            newEnemyAlienSpecial.getBullet().getBody().setUserData("Bullet_Enemy_Special_" + i);
+            enemies_alien_special.add(newEnemyAlienSpecial);
+            i++;
+        }
+
+        //ENEMY ALIEN KEFOS
         i = 0;
         for(MapObject object: map.getLayers().get(22).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -813,5 +868,21 @@ public class WorldLoader {
 
     public void setEnemies_alien_kefos(Array<Enemy_Alien_Kefos> enemies_alien_kefos) {
         this.enemies_alien_kefos = enemies_alien_kefos;
+    }
+
+    public Array<Enemy_Alien_Special> getEnemies_alien_special() {
+        return enemies_alien_special;
+    }
+
+    public void setEnemies_alien_special(Array<Enemy_Alien_Special> enemies_alien_special) {
+        this.enemies_alien_special = enemies_alien_special;
+    }
+
+    public Array<Enemy_Alien_Bigdaddy> getEnemies_alien_bigdaddy() {
+        return enemies_alien_bigdaddy;
+    }
+
+    public void setEnemies_alien_bigdaddy(Array<Enemy_Alien_Bigdaddy> enemies_alien_bigdaddy) {
+        this.enemies_alien_bigdaddy = enemies_alien_bigdaddy;
     }
 }

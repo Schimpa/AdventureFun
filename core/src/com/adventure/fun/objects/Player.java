@@ -115,6 +115,11 @@ public class Player extends LivingObject {
             else if (jumpAnimation.isActive() == true){
                 currentFrame = jumpAnimation.getAnimation().getKeyFrame(stateTime, true);
             }
+
+            if (this.getBullet().getBullets() == 0){
+                this.getBullet().createRedBullet();
+            }
+
             batch.draw(currentFrame, body.getPosition().x - sprite.getWidth() / 2, body.getPosition().y - sprite.getHeight() / 2, sprite.getWidth(), sprite.getHeight());
             batch.setColor(1f,1f,1f,1f);
             bullet.render(batch);

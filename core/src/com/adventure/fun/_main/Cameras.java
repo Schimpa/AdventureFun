@@ -625,7 +625,7 @@ public class Cameras {
 
             }else{
                 shapeRenderer.setColor(Color.BLUE);
-                shapeRenderer.rect(barPositionX,barPositionY,barScaleX,barScaleY);
+                shapeRenderer.rect(barPositionX,barPositionY,barScaleX / 100 * (this.getWorldLoader().getPlayer().getBullet().getBullets()*10) ,barScaleY);
             }
             shapeRenderer.end();
 

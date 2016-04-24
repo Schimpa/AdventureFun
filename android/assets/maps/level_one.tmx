@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-up" width="400" height="100" tilewidth="32" tileheight="32" nextobjectid="478">
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="400" height="100" tilewidth="32" tileheight="32" nextobjectid="481">
  <tileset firstgid="1" name="texture" tilewidth="32" tileheight="32" tilecount="256">
   <image source="texture.png" width="512" height="512"/>
  </tileset>
@@ -324,10 +324,13 @@
  <objectgroup name="Enemy_Alien_Kugus">
   <object id="57" x="1120" y="192" width="32" height="32"/>
  </objectgroup>
- <objectgroup name="Enemy_Alien_BigMama">
-  <object id="431" x="1920" y="2336" width="32" height="32"/>
+ <objectgroup name="Enemy_Alien_BigMama"/>
+ <objectgroup name="Enemy_Alien_BigDaddy">
+  <object id="478" x="2112" y="2304" width="32" height="32"/>
  </objectgroup>
- <objectgroup name="Enemy_Alien_BigDaddy"/>
- <objectgroup name="Enemy_Alien_Special"/>
+ <objectgroup name="Enemy_Alien_Special">
+  <object id="479" x="1408" y="2400" width="32" height="32"/>
+  <object id="480" x="1568" y="2400" width="32" height="32"/>
+ </objectgroup>
  <objectgroup name="Enemy_Alien_Kefos"/>
 </map>

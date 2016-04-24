@@ -65,9 +65,12 @@ public class Assets implements Cloneable {
     private TextureRegion alien_kugus;
     private TextureRegion alien_bigmama;
     private TextureRegion alien_kefos;
+    private TextureRegion alien_special;
+    private TextureRegion alien_bigdaddy;
 
     //BULLETS
     private TextureRegion bullet_blitzkugel;
+    private TextureRegion bullet_feuerkugel;
 
     private TextureRegion bullet_blitz;
     private TextureRegion bullet_bigmama;
@@ -245,8 +248,11 @@ public class Assets implements Cloneable {
         alien_kugus = atlas.findRegion("alien_kugus");
         alien_bigmama = atlas.findRegion("alien_bigmama");
         alien_kefos = atlas.findRegion("alien_kefos");
+        alien_bigdaddy = atlas.findRegion("alien_bigdaddy");
+        alien_special = atlas.findRegion("alien_special");
 
         bullet_blitzkugel = atlas.findRegion("bullet_blitzkugel");
+        bullet_feuerkugel = atlas.findRegion("bullet_feuerkugel");
         bullet_blitz = atlas.findRegion("bullet_blitz");
         bullet_bigmama = atlas.findRegion("bullet_bigmama");
 
@@ -268,7 +274,6 @@ public class Assets implements Cloneable {
     public TextureRegion getAlien_bigmama() {
         return alien_bigmama;
     }
-
 
     public Texture getMiddleground_01() {
         return middleground_01;
@@ -744,5 +749,27 @@ public class Assets implements Cloneable {
         this.bullet_red = bullet_red;
     }
 
+    public TextureRegion getAlien_special() {
+        return alien_special;
+    }
 
+    public void setAlien_special(TextureRegion alien_special) {
+        this.alien_special = alien_special;
+    }
+
+    public TextureRegion getAlien_bigdaddy() {
+        return alien_bigdaddy;
+    }
+
+    public void setAlien_bigdaddy(TextureRegion alien_bigdaddy) {
+        this.alien_bigdaddy = alien_bigdaddy;
+    }
+
+    public TextureRegion getBullet_feuerkugel() {
+        return bullet_feuerkugel;
+    }
+
+    public void setBullet_feuerkugel(TextureRegion bullet_feuerkugel) {
+        this.bullet_feuerkugel = bullet_feuerkugel;
+    }
 }

@@ -41,21 +41,18 @@ public class CollisionListener implements ContactListener {
         }
 
 
+        if (contactBody02.getUserData().toString().equals("Bullet_Player") && !contactBody01.getUserData().toString().contains("Bullet_Enemy")) {
+            gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody02.getPosition().x, contactBody02.getPosition().y,
+                    gameScreen.getWorldLoader().getPlayer().getParticles().getExplosion_bullet_01());
+            gameScreen.getWorldLoader().getPlayer().getBullet().setRemoveFlag(true);
+        }else if (contactBody01.getUserData().toString().equals("Bullet_Player") && !contactBody02.getUserData().toString().contains("Bullet_Enemy")) {
+            gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
+                    gameScreen.getWorldLoader().getPlayer().getParticles().getExplosion_bullet_01());
+            gameScreen.getWorldLoader().getPlayer().getBullet().setRemoveFlag(true);
+        }
 
         //ANZAHL DER GESCHOSSE VON ALIEN TAKEL
         for(int i = 0; i <= gameScreen.getWorldLoader().getEnemies_alien_takel().size; i++){
-            //COLLISION BULLET-ENEMY-TAKEL --- PLAYER-BULLET
-            if (contactBody02.getUserData().toString().equals("Bullet_Player") && !contactBody01.getUserData().toString().contains("Bullet_Enemy")) {
-                gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody02.getPosition().x, contactBody02.getPosition().y,
-                        gameScreen.getWorldLoader().getPlayer().getParticles().getExplosion_bullet_01());
-                gameScreen.getWorldLoader().getPlayer().getBullet().setRemoveFlag(true);
-            }else if (contactBody01.getUserData().toString().equals("Bullet_Player") && !contactBody02.getUserData().toString().contains("Bullet_Enemy")) {
-                gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
-                        gameScreen.getWorldLoader().getPlayer().getParticles().getExplosion_bullet_01());
-                gameScreen.getWorldLoader().getPlayer().getBullet().setRemoveFlag(true);
-            }
-
-
             //COLLISION BULLET-ENEMY-TAKEL --- PLAYER
             if (contactBody01.getUserData().toString().equals("Bullet_Enemy_Takel_"+i) && contactBody02.getUserData().toString().equals("Player") ||
                     contactBody02.getUserData().toString().equals("Bullet_Enemy_Takel_"+i) && contactBody01.getUserData().toString().equals("Player")) {
@@ -68,6 +65,22 @@ public class CollisionListener implements ContactListener {
                             gameScreen.getWorldLoader().getEnemies_alien_takel().get(i).getParticles().getExplosion_blitzkugel());
                 }
                 gameScreen.getWorldLoader().getEnemies_alien_takel().get(i).getBullet().setRemoveFlag(true);
+            }
+        }
+
+        for(int i = 0; i <= gameScreen.getWorldLoader().getEnemies_alien_kefos().size; i++){
+            //COLLISION BULLET-ENEMY-TAKEL --- PLAYER
+            if (contactBody01.getUserData().toString().equals("Bullet_Enemy_Kefos_"+i) && contactBody02.getUserData().toString().equals("Player") ||
+                    contactBody02.getUserData().toString().equals("Bullet_Enemy_Kefos_"+i) && contactBody01.getUserData().toString().equals("Player")) {
+                gameScreen.getWorldLoader().getPlayer().looseLife(1);
+                if (contactBody02.getUserData().toString().equals("Player")){
+                    gameScreen.getWorldLoader().getEnemies_alien_kefos().get(i).getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
+                            gameScreen.getWorldLoader().getEnemies_alien_kefos().get(i).getParticles().getExplosion_blitzkugel());
+                }else if (contactBody01.getUserData().toString().equals("Player")){
+                    gameScreen.getWorldLoader().getEnemies_alien_kefos().get(i).getParticles().playEffect(contactBody02.getPosition().x, contactBody02.getPosition().y,
+                            gameScreen.getWorldLoader().getEnemies_alien_kefos().get(i).getParticles().getExplosion_blitzkugel());
+                }
+                gameScreen.getWorldLoader().getEnemies_alien_kefos().get(i).getBullet().setRemoveFlag(true);
             }
         }
 
@@ -286,6 +299,38 @@ public class CollisionListener implements ContactListener {
             }
         }
 
+        //COLLISION ENEMY KEFOS -- PLAYER
+        for(int i = 0;i < gameScreen.getWorldLoader().getEnemies_alien_kefos().size;i++) {
+            if (contactBody01.getUserData().toString().equals("Enemy_Alien_Kefos_" + i) && contactBody02.getUserData().toString().equals("Player") ||
+                    contactBody02.getUserData().toString().equals("Enemy_Alien_Kefos_" + i) && contactBody01.getUserData().toString().equals("Player")) {
+                if (gameScreen.getWorldLoader().getPlayer().getDamageCoolDownTime() >= 0.7){
+                    gameScreen.getWorldLoader().getPlayer().looseLife( gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
+
+                    if (contactBody01.getUserData().toString().equals("Player")){
+
+                        if (contactBody02.getLinearVelocity().x > 0) {
+                            this.gameScreen.getWorldLoader().getPlayer().getBody().setLinearVelocity(
+                                    this.gameScreen.getWorldLoader().getPlayer().getBody().getLinearVelocity().x + 15,this.gameScreen.getWorldLoader().getPlayer().getBody().getLinearVelocity().y + 8);
+                        }else{
+                            this.gameScreen.getWorldLoader().getPlayer().getBody().setLinearVelocity(
+                                    -this.gameScreen.getWorldLoader().getPlayer().getBody().getLinearVelocity().x + -15, this.gameScreen.getWorldLoader().getPlayer().getBody().getLinearVelocity().y + 8);
+                        }
+                    }
+                    if (contactBody02.getUserData().toString().equals("Player")){
+
+                        if (contactBody01.getLinearVelocity().x > 0){
+                            this.gameScreen.getWorldLoader().getPlayer().getBody().setLinearVelocity(
+                                    this.gameScreen.getWorldLoader().getPlayer().getBody().getLinearVelocity().x + 7,this.gameScreen.getWorldLoader().getPlayer().getBody().getLinearVelocity().y + 4);
+                        }else{
+                            this.gameScreen.getWorldLoader().getPlayer().getBody().setLinearVelocity(
+                                    -this.gameScreen.getWorldLoader().getPlayer().getBody().getLinearVelocity().x + -7,this.gameScreen.getWorldLoader().getPlayer().getBody().getLinearVelocity().y + 4);
+                        }
+                    }
+                    gameScreen.getWorldLoader().getPlayer().setDamageCoolDownTime(0);
+                }
+            }
+        }
+
         //COLLISION ENEMY_ALIEN_FINGUS--- PLAYER BULLET
         for(int i = 0; i < gameScreen.getWorldLoader().getEnemies_alien_zombie().size; i++){
             if (contactBody01.getUserData().toString().equals("Enemy_"+i) && contactBody02.getUserData().toString().equals("Bullet_Player") ||
@@ -311,7 +356,7 @@ public class CollisionListener implements ContactListener {
             if (contactBody01.getUserData().toString().equals("Enemy_"+ (i + gameScreen.getWorldLoader().getEnemies_alien_zombie().size)) && contactBody02.getUserData().toString().equals("Bullet_Player") ||
                     contactBody02.getUserData().toString().equals("Enemy_"+(i + gameScreen.getWorldLoader().getEnemies_alien_zombie().size)) && contactBody01.getUserData().toString().equals("Bullet_Player")){
 
-                gameScreen.getWorldLoader().getEnemies_alien_takel().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_takel().get(i).getLives() -  gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
+                gameScreen.getWorldLoader().getEnemies_alien_takel().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_takel().get(i).getLives() - gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
 
                 if (contactBody01.getUserData().toString().equals("Bullet_Player")){
                     gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
@@ -325,12 +370,14 @@ public class CollisionListener implements ContactListener {
                 }
             }
         }
+
+
         //COLLISION ENEMY_BIGMAMA --- PLAYER BULLET
         for(int i = 0; i < gameScreen.getWorldLoader().getEnemies_alien_bigmama().size; i++){
             if (contactBody01.getUserData().toString().equals("Enemy_Alien_Bigmama_" + i)&& contactBody02.getUserData().toString().equals("Bullet_Player") ||
                     contactBody02.getUserData().toString().equals("Enemy_Alien_Bigmama_" + i) && contactBody01.getUserData().toString().equals("Bullet_Player")){
 
-                gameScreen.getWorldLoader().getEnemies_alien_bigmama().get(i).looseLife( gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
+                gameScreen.getWorldLoader().getEnemies_alien_bigmama().get(i).looseLife(gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
 
                 if (contactBody01.getUserData().toString().equals("Bullet_Player")){
                     gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
@@ -350,7 +397,7 @@ public class CollisionListener implements ContactListener {
             if (contactBody01.getUserData().toString().equals("Enemy_Alien_Kugus_"+i) && contactBody02.getUserData().toString().equals("Bullet_Player") ||
                     contactBody02.getUserData().toString().equals("Enemy_Alien_Kugus_"+i) && contactBody01.getUserData().toString().equals("Bullet_Player")){
 
-                gameScreen.getWorldLoader().getEnemies_alien_kugus().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_kugus().get(i).getLives() -  gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
+                gameScreen.getWorldLoader().getEnemies_alien_kugus().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_kugus().get(i).getLives() - gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
 
                 if (contactBody01.getUserData().toString().equals("Bullet_Player")){
                     gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
@@ -381,6 +428,46 @@ public class CollisionListener implements ContactListener {
                 }
                 if (gameScreen.getWorldLoader().getEnemies_alien_kefos().get(i).getLives() <= 0){
                     gameScreen.getWorldLoader().getEnemies_alien_kefos().get(i).setRemoveFlag(true);
+                }
+            }
+        }
+
+        //COLLISION ENEMY_BIGDADDY --- PLAYER BULLET
+        for(int i = 0; i < gameScreen.getWorldLoader().getEnemies_alien_bigdaddy().size; i++){
+            if (contactBody01.getUserData().toString().equals("Enemy_Alien_Bigdaddy_"+i) && contactBody02.getUserData().toString().equals("Bullet_Player") ||
+                    contactBody02.getUserData().toString().equals("Enemy_Alien_Bigdaddy_"+i) && contactBody01.getUserData().toString().equals("Bullet_Player")){
+
+                gameScreen.getWorldLoader().getEnemies_alien_bigdaddy().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_bigdaddy().get(i).getLives() -  gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
+
+                if (contactBody01.getUserData().toString().equals("Bullet_Player")){
+                    gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
+                            gameScreen.getWorldLoader().getPlayer().getParticles().getExplosion_bullet_01());
+                }else if (contactBody02.getUserData().toString().equals("Bullet_Player")){
+                    gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
+                            gameScreen.getWorldLoader().getPlayer().getParticles().getExplosion_bullet_01());
+                }
+                if (gameScreen.getWorldLoader().getEnemies_alien_bigdaddy().get(i).getLives() <= 0){
+                    gameScreen.getWorldLoader().getEnemies_alien_bigdaddy().get(i).setRemoveFlag(true);
+                }
+            }
+        }
+
+        //COLLISION ENEMY_SPECIAL --- PLAYER BULLET
+        for(int i = 0; i < gameScreen.getWorldLoader().getEnemies_alien_special().size; i++){
+            if (contactBody01.getUserData().toString().equals("Enemy_Alien_Special_"+i) && contactBody02.getUserData().toString().equals("Bullet_Player") ||
+                    contactBody02.getUserData().toString().equals("Enemy_Alien_Special_"+i) && contactBody01.getUserData().toString().equals("Bullet_Player")){
+
+                gameScreen.getWorldLoader().getEnemies_alien_special().get(i).setLives(gameScreen.getWorldLoader().getEnemies_alien_special().get(i).getLives() -  gameScreen.getWorldLoader().getPlayer().getBullet().getBulletDamage());
+
+                if (contactBody01.getUserData().toString().equals("Bullet_Player")){
+                    gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
+                            gameScreen.getWorldLoader().getPlayer().getParticles().getExplosion_bullet_01());
+                }else if (contactBody02.getUserData().toString().equals("Bullet_Player")){
+                    gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody01.getPosition().x, contactBody01.getPosition().y,
+                            gameScreen.getWorldLoader().getPlayer().getParticles().getExplosion_bullet_01());
+                }
+                if (gameScreen.getWorldLoader().getEnemies_alien_special().get(i).getLives() <= 0){
+                    gameScreen.getWorldLoader().getEnemies_alien_special().get(i).setRemoveFlag(true);
                 }
             }
         }
