@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-up" width="400" height="100" tilewidth="32" tileheight="32" nextobjectid="481">
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="400" height="100" tilewidth="32" tileheight="32" nextobjectid="489">
  <tileset firstgid="1" name="texture" tilewidth="32" tileheight="32" tilecount="256">
   <image source="texture.png" width="512" height="512"/>
  </tileset>
@@ -31,6 +31,7 @@
  </objectgroup>
  <objectgroup name="End">
   <object id="203" x="11936" y="3008" width="96" height="32"/>
+  <object id="488" x="1952" y="2816" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Collision">
   <object id="30" x="2336" y="2624" width="416" height="32"/>
@@ -74,7 +75,7 @@
   <object id="173" x="4896" y="32" width="32" height="224"/>
   <object id="174" x="5344" y="32" width="32" height="224"/>
   <object id="175" x="4928" y="32" width="416" height="32"/>
-  <object id="202" x="0" y="2912" width="12288" height="32"/>
+  <object id="202" x="0" y="2912.46" width="11937.3" height="31.0868"/>
   <object id="204" x="11456" y="2752" width="512" height="32"/>
   <object id="206" x="12032" y="2752" width="32" height="160"/>
   <object id="207" x="11456" y="2560" width="32" height="192"/>
@@ -202,6 +203,9 @@
   <object id="458" x="9824" y="2336" width="32" height="32"/>
   <object id="459" x="9824" y="2144" width="32" height="32"/>
   <object id="460" x="9824" y="1952" width="32" height="32"/>
+  <object id="481" x="12032" y="2912" width="256" height="32"/>
+  <object id="482" x="11904" y="2944" width="32" height="96"/>
+  <object id="483" x="12032" y="2944" width="32" height="96"/>
  </objectgroup>
  <objectgroup name="Item_Point_100">
   <object id="217" x="992" y="1504" width="32" height="32"/>
@@ -325,12 +329,7 @@
   <object id="57" x="1120" y="192" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Enemy_Alien_BigMama"/>
- <objectgroup name="Enemy_Alien_BigDaddy">
-  <object id="478" x="2112" y="2304" width="32" height="32"/>
- </objectgroup>
- <objectgroup name="Enemy_Alien_Special">
-  <object id="479" x="1408" y="2400" width="32" height="32"/>
-  <object id="480" x="1568" y="2400" width="32" height="32"/>
- </objectgroup>
+ <objectgroup name="Enemy_Alien_BigDaddy"/>
+ <objectgroup name="Enemy_Alien_Special"/>
  <objectgroup name="Enemy_Alien_Kefos"/>
 </map>

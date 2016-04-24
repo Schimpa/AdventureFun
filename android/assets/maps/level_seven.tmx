@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-up" width="400" height="100" tilewidth="32" tileheight="32" nextobjectid="582">
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="400" height="100" tilewidth="32" tileheight="32" nextobjectid="590">
  <tileset firstgid="1" name="texture" tilewidth="32" tileheight="32" tilecount="256">
   <image source="texture.png" width="512" height="512"/>
  </tileset>
@@ -16,7 +16,7 @@
  </layer>
  <layer name="Ground" width="400" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt3V1u4jAUBlBGqtCsYFbUhXT/qxj1oepMBUkwJvfH50iWqpYHX0LuRwxxLxcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCj9wUGAPN176/d6wOI0r2/dq8PIEr3/tq9PoAo3ftr9/oAonTvr93rA4jSvb92rw8gSvf+2r0+gCjd+2v3+oB+3qIncMAK99d1rw/opUJ2fOneX7vXB/RRKTs+de+v3esDenjbGFl176/d6wP6yJwVt3Tvr93rA3qplCHd+2v3+oB+tjIkej/zlfZKzzgngFHRPV5+AMA2+QHACPkB7Mm+jrKyyGPitQDs0Sfykh9AZvoEt3hdAHve7/zM2rwWgD1H86P791X5n2ME7Dna1+XHa2R9PjLOCYBv8gOATuQHACPkB0Bd7v8AYIT8AKAa+QHACPkBkJvv7wIwQn4A0In/xwjACPkBQDXyA+A5q74XX7FmgJnkBwAcJz8AGCE/ABghPwAYIT8A5nCPBAAjtvJDtgAwQrYAMJv8AGC2kb2nztz/6s/l8nHGmPR0QkvR++DZQy+nAvlxygDui84A+dGD4wLrqXjOV5xzd44JrKfieV9xzp259oA1VTzvK865s1n54ZhCLRV7ccU5z3C983Mk1x6wrornfsU5z3C9fOeG/ACiVTz3K855hn+zI0N+yA5YW8Xzv+KcZ8i2fiU/YG3Vz//fv6Jn8BrZj4nsAPSAOq4/RiT5AegBdWRZv5IdwCd9oI5s+QGsLXoPqzP3w3rmfXOG99wZ1q8yPA9ADtE9/1X5cVaujNqa897vHvn7bLIDINaj+fHz2uNrnNnPXXsAVT27fpWJ/AA4T9a+dWQN7dmxlx9R64QAFVTrXfIDIAe9C4AR8gOAESPrK0fWXh59DAA9bd1jd+szhEcfc++ziAz39wEAAAAAAAAAAAAAAAAAAADAX1hpAh8=
+   eJzt3V1O4zAUBtA8oC6BFbGQ2f8qRjwgZlCbpK7J/fE5kiUEffBtmvs1bmO2DQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAyOhjgQHAfN37a/f6AKJ076/d6wOI0r2/dq8PIEr3/tq9PoAo3ftr9/oAonTvr93rA4jSvb92rw8gSvf+2r0+oJ+36AmcsML9dd3rA3qpkB1fuvfX7vUBfVTKjk/d+2v3+oAe3nZGVt37a/f6gD4yZ8U93ftr9/qAXiplSPf+2r0+oJ+9DInez3ylvdIzzglgVHSPlx8AsE9+ADBCfgBHsq+jrCzymHgtAEf0ibzkB5CZPsE9XhfAkY8HP7M2rwXgyNn86P59Vf7nGAFHzvZ1+fE7sj4fGecEwDf5AUAn8gOAEfIDoC73fwAwQn4AUI38AGCE/ADIzfd3ARghPwDoxP9jBGCE/ACgGvkB8JpV34uvWDPATPIDAM6THwCMkB8AjJAfAIyQHwBzuEcCgBF7+SFbABghWwCYTX4AMNvI3lNX7n/1vm1/rhiTnk5oKXofPHvo5VQgPy4ZwGPRGSA/enBcYD0Vz/mKc+7OMYH1VDzvK865M9cesKaK533FOXc2Kz8cU6ilYi+uOOcZbg9+juTaA9ZV8dyvOOcZbtt3bsgPIFrFc7/inGf4Nzsy5IfsgLVVPP8rznmGbOtX8gPW5vxnhOwA9IA6bj9GJPkB6AF1ZFm/kh3AJ32gjmz5Aawteg+rK/fDeuV9c4b33BnWrzI8D0AO0T3/t/LjqlwZtTfno9898/fZZAdArGfz4+e1x9e4sp+79gCqenX9KhP5AXCdrH3rzBraq+MoP6LWCQEqqNa75AdADnoXACPkBwAjRtZXzqy9PPsYAHrau8fu3mcIzz7m0WcRGe7vAwAAAAAAAAAAAAAAAAAAAIC/y2MB0g==
   </data>
  </layer>
  <layer name="Overlay" width="400" height="100">
@@ -32,7 +32,9 @@
  <objectgroup name="Spawn">
   <object id="469" x="1024" y="2400" width="32" height="32"/>
  </objectgroup>
- <objectgroup name="End"/>
+ <objectgroup name="End">
+  <object id="582" x="6496" y="2016" width="32" height="32"/>
+ </objectgroup>
  <objectgroup name="Collision">
   <object id="457" x="896" y="2176" width="32" height="384"/>
   <object id="458" x="928" y="2176" width="1408" height="32"/>
@@ -129,8 +131,6 @@
   <object id="472" x="2368" y="2720" width="32" height="32"/>
   <object id="578" x="3552" y="1504" width="32" height="32"/>
   <object id="579" x="3712" y="1504" width="32" height="32"/>
-  <object id="580" x="3996" y="3228" height="72"/>
-  <object id="581" x="948" y="3140" width="1620"/>
  </objectgroup>
  <objectgroup name="Item_Health">
   <object id="471" x="2304" y="2720" width="32" height="32"/>
@@ -147,19 +147,27 @@
   <object id="537" x="2528" y="2720" width="32" height="32"/>
   <object id="569" x="1536" y="1472" width="32" height="32"/>
   <object id="570" x="2208" y="1504" width="32" height="32"/>
+  <object id="586" x="4640" y="1856" width="32" height="32"/>
+  <object id="587" x="3680" y="2592" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Enemy_Alien_Soldier">
   <object id="534" x="2144" y="2432" width="32" height="32"/>
   <object id="541" x="1152" y="1248" width="32" height="32"/>
+  <object id="588" x="1856" y="1472" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Enemy_Alien_Kugus">
   <object id="538" x="5856" y="1952" width="32" height="32"/>
   <object id="539" x="2688" y="928" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Enemy_Alien_BigMama"/>
- <objectgroup name="Enemy_Alien_BigDaddy"/>
- <objectgroup name="Enemy_Alien_Special"/>
+ <objectgroup name="Enemy_Alien_BigDaddy">
+  <object id="583" x="6112" y="1888" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Enemy_Alien_Special">
+  <object id="584" x="4928" y="2560" width="32" height="32"/>
+ </objectgroup>
  <objectgroup name="Enemy_Alien_Kefos">
   <object id="572" x="1568" y="1248" width="32" height="32"/>
+  <object id="589" x="3744" y="960" width="32" height="32"/>
  </objectgroup>
 </map>

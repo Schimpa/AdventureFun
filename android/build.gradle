@@ -1,3 +1,13 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    //this ensures we have gson.jar and anything else in the /lib folder
+    compile fileTree(dir: 'lib', include: '*.jar')
+}
+
+repositories {
+    mavenCentral()
+}
 android {
     buildToolsVersion '23.0.2'
     compileSdkVersion 23

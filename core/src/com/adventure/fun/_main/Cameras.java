@@ -28,6 +28,7 @@ public class Cameras {
 
     private Stage hudStage;
     private Stage gameOverStage;
+    private Stage gameEndStage;
     private Stage menuStage;
 
     private MainWindow game;
@@ -50,6 +51,7 @@ public class Cameras {
     private TextButton nothingButton;
     private TextButton buttonShoot;
     private TextButton buttonMenu;
+    private TextButton buttonEndBack;
 
     //Pause Screen
     private TextButton buttonContinue;
@@ -106,6 +108,7 @@ public class Cameras {
         shapeRenderer = new ShapeRenderer();
 
         gameOverStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),batch);
+        gameEndStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),batch);
         menuStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),batch);
 
         playerCamera = new OrthographicCamera();
@@ -147,6 +150,7 @@ public class Cameras {
 
         createGameOverScreen();
         createPauseScreen();
+        createGameEndScreen();
 
 
 
@@ -299,6 +303,22 @@ public class Cameras {
         });
     }
 
+    public void createGameEndInputListener(){
+        buttonEndBack.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("TouchDown:  " + event);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                game.setScreen(new LevelChooseScreen(game));
+            }
+        });
+    }
+
     public void createHUD_16_9(){
         hudStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),new OrthographicCamera()),batch);
 
@@ -343,8 +363,8 @@ public class Cameras {
         buttonMenu = new TextButton("#",game.getSkin(),"default");
         buttonMenu.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.01f, (Gdx.graphics.getHeight() / 100) * 0.01f);
         buttonMenu.setColor(0.4f, 1, 0.4f, 0.6f);
-        buttonMenu.setSize(Gdx.graphics.getWidth() / 100f * 4f, Gdx.graphics.getHeight() / 100f * 4f);
-        buttonMenu.setPosition(Gdx.graphics.getWidth() / 100f * 95f, Gdx.graphics.getHeight() / 100f * 95f);
+        buttonMenu.setSize(Gdx.graphics.getWidth() / 100f * 8f, Gdx.graphics.getHeight() / 100f * 8f);
+        buttonMenu.setPosition(Gdx.graphics.getWidth() / 100f * 91f, Gdx.graphics.getHeight() / 100f * 91f);
 
         nothingButton = new TextButton("",game.getSkin(),"default");
         nothingButton.setColor(1, 1, 1, 1);
@@ -391,8 +411,8 @@ public class Cameras {
         buttonMenu = new TextButton("#",game.getSkin(),"default");
         buttonMenu.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.01f, (Gdx.graphics.getHeight() / 100) * 0.01f);
         buttonMenu.setColor(0.4f, 1, 0.4f, 0.6f);
-        buttonMenu.setSize(Gdx.graphics.getWidth() / 100f * 4f, Gdx.graphics.getHeight() / 100f * 4f);
-        buttonMenu.setPosition(Gdx.graphics.getWidth() / 100f * 95f, Gdx.graphics.getHeight() / 100f * 95f);
+        buttonMenu.setSize(Gdx.graphics.getWidth() / 100f * 8f, Gdx.graphics.getHeight() / 100f * 8f);
+        buttonMenu.setPosition(Gdx.graphics.getWidth() / 100f * 91f, Gdx.graphics.getHeight() / 100f * 91f);
 
         nothingButton = new TextButton("",game.getSkin(),"default");
         nothingButton.setColor(1, 1, 1, 1);
@@ -439,8 +459,8 @@ public class Cameras {
         buttonMenu = new TextButton("#",game.getSkin(),"default");
         buttonMenu.getLabel().setFontScale((Gdx.graphics.getWidth() / 100) * 0.01f, (Gdx.graphics.getHeight() / 100) * 0.01f);
         buttonMenu.setColor(0.4f, 1, 0.4f, 0.6f);
-        buttonMenu.setSize(Gdx.graphics.getWidth() / 100f * 4f, Gdx.graphics.getHeight() / 100f * 4f);
-        buttonMenu.setPosition(Gdx.graphics.getWidth() / 100f * 95f, Gdx.graphics.getHeight() / 100f * 95f);
+        buttonMenu.setSize(Gdx.graphics.getWidth() / 100f * 8f, Gdx.graphics.getHeight() / 100f * 8f);
+        buttonMenu.setPosition(Gdx.graphics.getWidth() / 100f * 91f, Gdx.graphics.getHeight() / 100f * 91f);
 
         nothingButton = new TextButton("",game.getSkin(),"default");
         nothingButton.setColor(1, 1, 1, 1);
@@ -471,6 +491,17 @@ public class Cameras {
         gameOverStage.addActor(buttonRetry);
 
         createGameOverInputListener();
+    }
+
+    public void createGameEndScreen(){
+        buttonEndBack = new TextButton("Back",game.getSkin(),"default");
+        buttonEndBack.setColor(0.7f, 1, 0.4f, 0.5f);
+        buttonEndBack.setSize(Gdx.graphics.getWidth() / 100 * 40, Gdx.graphics.getHeight() / 100 * 30);
+        buttonEndBack.setPosition(Gdx.graphics.getWidth() / 100 * 30, Gdx.graphics.getHeight() / 100 * 10);
+
+        gameEndStage.addActor(buttonEndBack);
+
+        createGameEndInputListener();
     }
 
     public void createPauseScreen(){
@@ -911,5 +942,21 @@ public class Cameras {
 
     public void setBarScaleY(float barScaleY) {
         this.barScaleY = barScaleY;
+    }
+
+    public Stage getGameEndStage() {
+        return gameEndStage;
+    }
+
+    public void setGameEndStage(Stage gameEndStage) {
+        this.gameEndStage = gameEndStage;
+    }
+
+    public TextButton getButtonEndBack() {
+        return buttonEndBack;
+    }
+
+    public void setButtonEndBack(TextButton buttonEndBack) {
+        this.buttonEndBack = buttonEndBack;
     }
 }

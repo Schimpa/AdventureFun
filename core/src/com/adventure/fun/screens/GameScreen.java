@@ -21,6 +21,7 @@ public class GameScreen implements Screen {
 
 	private boolean showGameOverScreen;
 	private boolean showMenuScreen;
+	private boolean showGameEndScreen;
 
 	private Cameras camera;
 
@@ -126,6 +127,8 @@ public class GameScreen implements Screen {
 
 		}else if (showMenuScreen == true){
 			camera.getMenuStage().draw();
+		}else if (showGameEndScreen == true){
+			camera.getGameEndStage().draw();
 		}else{
 			camera.render(game.getBatch());
 		}
@@ -257,5 +260,11 @@ public class GameScreen implements Screen {
 		this.showMenuScreen = showMenuScreen;
 	}
 
+	public boolean isShowGameEndScreen() {
+		return showGameEndScreen;
+	}
 
+	public void setShowGameEndScreen(boolean showGameEndScreen) {
+		this.showGameEndScreen = showGameEndScreen;
+	}
 }

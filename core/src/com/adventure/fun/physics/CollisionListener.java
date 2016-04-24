@@ -40,6 +40,13 @@ public class CollisionListener implements ContactListener {
             this.gameScreen.getWorldLoader().getPlayer().getWalkAnimation().setIsActive(true);
         }
 
+        if (contactBody01.getUserData().toString().equals("Player") && contactBody02.getUserData().toString().equals("End") ||
+                contactBody02.getUserData().toString().equals("Player") && contactBody01.getUserData().toString().equals("End")){
+            //this.gameScreen.getCamera().createGameEndScreen();
+            Gdx.input.setInputProcessor(this.gameScreen.getCamera().getGameEndStage());
+            this.gameScreen.setShowGameEndScreen(true);
+        }
+
 
         if (contactBody02.getUserData().toString().equals("Bullet_Player") && !contactBody01.getUserData().toString().contains("Bullet_Enemy")) {
             gameScreen.getWorldLoader().getPlayer().getParticles().playEffect(contactBody02.getPosition().x, contactBody02.getPosition().y,

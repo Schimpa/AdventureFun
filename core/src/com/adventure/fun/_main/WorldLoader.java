@@ -302,11 +302,29 @@ public class WorldLoader {
         renderer = new OrthogonalTiledMapRenderer(map, 1/32f);
 
         //PLAYER SPAWN
-
         for(MapObject object: map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             player = new Player(game,rect.getX() / 32 + rect.getWidth() / 2 / 32,rect.getY() / 32 + rect.getHeight() / 2 / 32,1.6f,3.4f,world);
         }
+
+
+        //PLAYER END
+        for(MapObject object: map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            BodyDef bdef = new BodyDef();
+            bdef.position.set(rect.getX() / 32 + rect.getWidth() / 2 / 32, rect.getY() / 32 + rect.getHeight() / 2 / 32);
+
+            Body body = world.createBody(bdef);
+            body.setUserData("End");
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(0.01f,0.01f);
+            FixtureDef fdef = new FixtureDef();
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            body.createFixture(fdef);
+        }
+
 
         //COLLISION
         int i = 0;
